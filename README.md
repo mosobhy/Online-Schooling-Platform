@@ -1,1 +1,1 @@
-# O-S-P
+# Online-Schooling-Platform
