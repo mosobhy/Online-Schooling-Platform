@@ -25,7 +25,8 @@ SECRET_KEY = '2i4g_nv4qzm=p#1ek&g=_&e)g5hi-&201k&@fnlby%*^oubj#+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# added the allowed hostes to contanct with apis
+ALLOWED_HOSTS = ['127.0.0.1', 'cfe.sh', 'localhost']
 
 
 # Application definition
