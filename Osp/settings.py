@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',      # the cors header added in order to allow the communication between frontend and backend
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # added the cors middleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,3 +122,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+'''
+the Django-cors-header documentation
+https://pypi.org/project/django-cors-headers/
+'''
+CORS_ALLOW_ALL_ORIGINS = True     # in order to allow the access of the frontend to backend
+CORS_URLS_REGEX = r'^/api/.*$'    # allow contact with the following url regex
+
+
+
