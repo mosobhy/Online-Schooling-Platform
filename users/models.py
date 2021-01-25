@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Info(models.Model):
     user_id = models.OneToOneField(User , on_delete=models.CASCADE)
-    SSN = models.CharField(null=True,max_length=20)
+    ssn = models.CharField(null=True,max_length=20)
     university_id = models.CharField(null=True,max_length=20)
     level = models.IntegerField(null=True)
 
