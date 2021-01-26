@@ -27,7 +27,7 @@ class Course(models.Model):
     # course_obje = Course.enrolled_students.exculde(is_staff=True)
 
     @classmethod
-    def _getCourseCoun(cls):
+    def _getCourseCount(cls):
         ''' 
         we need to use this function when the front-end checks for any changes or
         in the database in order to notify the user
