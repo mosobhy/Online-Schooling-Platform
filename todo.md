@@ -30,4 +30,8 @@ its just simple counter to keep track of how many object get instantiated
 
 of some particular class, and this is going to help us when dealing with
 
-the notificaion part. 
+the notificaion part.
+
+In the frontside there will be a function its only purpose of life is to make
+
+somesort of request to some URL everyday in order to check for these changes
