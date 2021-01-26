@@ -163,7 +163,7 @@ def register_as_student(request):
         except:
             error.append({"levelint" : "level must be integer"})
 
-        # if found error return array of error 
+        # if found error in errors array return array of error 
         if len(error) != 0:
             return JsonResponse({'errors': error}, status=400)
 
