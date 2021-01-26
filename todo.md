@@ -1,13 +1,13 @@
 
 # login
-# usage: 
+### usage: 
         '127.0.0.1:8000/api/login/'     OR
         'localhost/api/login/'
         
-# method 
+### method 
         'POST'
 
-# returings
+### returings
     if not success
         {
             'error': 'message',
@@ -24,3 +24,10 @@
         }
         
         code(200): OK
+
+### What is the observer I had added?
+its just simple counter to keep track of how many object get instantiated
+
+of some particular class, and this is going to help us when dealing with
+
+the notificaion part. 
