@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.http import requeire_http_methods
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from .models import *
@@ -7,7 +7,7 @@ from .helpers import user_serializer
 
 
 # limiting request method to this view for just the post method
-@requeire_http_methods(['POST'])
+@require_http_methods(['POST'])
 def login_user(request):
     """
     This veiw function should check if user exiting into the database via
@@ -31,6 +31,7 @@ def login_user(request):
 
             # return the user object
             user = user_serializer(user)
+            print(user)
             success = {'success': True}
 
             return JsonResponse({ **success , **user }, status=200)
