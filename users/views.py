@@ -75,8 +75,8 @@ def register_as_instructor(request):
         if validate_email(email) == False:
             error.append({"email" : "User name already exist"})
         # check if ssn is less than 20 number
-        if MaxLengthValidator(20 , ssn) == False:
-            error.append({"SSN" : "SSN is greater than 20"})
+        if MaxLengthValidator(14 , ssn) == False:
+            error.append({"SSN" : "SSN is greater than 14"})
         # check if ssn is less than 20 number
         if MaxLengthValidator(20 , university_id) == False:
             error.append({"SSN" : "University_id is greater than 20"})
