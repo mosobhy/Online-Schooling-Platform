@@ -1,0 +1,124 @@
+.parent{
+
+  position: fixed;
+ top: 0px;
+ bottom: 0px;
+ left: 0px;
+ z-index: 55;
+ display: grid;
+ grid-template-columns: 1fr 0.2fr ;
+ transition: 1s;
+
+ 
+}
+
+.left-side{
+padding: 1rem;
+background-color: rgba(0, 51, 102 , 0.8);
+text-align: center;
+border-right: 1px solid rgba(255, 255, 255, 0.3) ;
+
+}
+
+.left-side:first-child svg{
+  color: aliceblue ;
+  cursor: pointer;
+  margin: 0.3rem !important;
+  font-size: 1.4rem;
+
+}
+
+.left-side p a{
+  text-decoration: none;
+  color: white;
+  /* font-family: 'Arapey', serif; */
+  font-family: 'Bodoni Moda', serif;
+  font-size: 1.1rem;
+  padding: 0.2rem 2rem;
+  transition: 0.5s;
+
+}
+
+.left-side p a:hover{
+ animation: box 0.9s ease-in-out ;
+}
+@keyframes box{
+  0%{
+    border-top: 1px solid #fff;
+
+  }
+  25%{
+    border-right: 1px solid #fff;
+  
+  }
+  50%{
+    border-left: 1px solid #fff;
+
+
+  }
+  75%{
+    border-bottom: 1px solid #fff;
+  
+   
+  }
+}
+
+.left-side:first-child p{
+margin-top: 2rem;
+}
+
+.all-icons{
+  position: absolute;
+  bottom: 15% ;
+  left: 8%;
+}
+
+
+.all-icons > svg{
+
+  font-size: 0px;
+  cursor: pointer;
+  margin: 15px 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  padding: 5px;
+  border-style: dotted;
+  border: 2px solid #fff;
+
+
+}
+
+.all-icons .icon-1 , .all-icons .icon-2 , .all-icons .icon-3 , .all-icons .icon-4{
+  transition: 0.5s;
+}
+
+.all-icons .icon-1:hover{
+background-color: white;
+color: tomato;
+
+}
+.all-icons .icon-2:hover{
+  background-color: white;
+  color: #09c;
+  
+}
+.all-icons .icon-3:hover{
+    background-color: white;
+    color: tomato;
+}
+.all-icons .icon-4:hover{
+      background-color: white;
+      color: #09c;
+      
+}
+.open-icon{
+  background-color: transparent;
+}
+
+.open-icon svg{
+  font-size: 3rem !important;
+  cursor: pointer;
+  color: #fff;
+}
