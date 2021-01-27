@@ -183,7 +183,7 @@ def register_as_student(request):
         if validate_email(email) == False:
             error.append({"email" : "It's not valid email"})
         # check if ssn is less than 20 number
-        if len(ssn) > 14 or len(ssn) < 14:
+        if len(ssn) != 14:
             error.append({"SSN" : "SSN must be 14"})
         # check if ssn is less than 20 number
         if len(university_id) > 10 and len(university_id) < 5:
@@ -224,5 +224,59 @@ def register_as_student(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+def create_course(request):
+    """
+    This veiw function should take form from frontend and validate each input
+    and make new course
 
+    if data was valid Return: 
+        json = success:True 
+        and save data in database
+    if data not valid Return:
+        json = success:false , errors = errors
+
+    """
+
+    # git data from post form
+    if request.method == "POST":
+        course_code = request.POST['code']
+        course_name = request.POST['name']
+        level = request.POST['level']
+
+        # validate fileds
+        errors = []
+
+        # check if course code is exists 
+        if (value_is_exists("course_code",course_code,Course)):
+            errors.append({"course_code":"course code already exist"})
+
+        # check if course name is valid 
+        if course_name.isalpha() == False:
+            errors.append({"coursename" : "course name is not valid"})
+
+        # validate level 
+        try:
+            int(level)
+            if int(level) > 7:
+                errors.append({"levellen" : "level must be less than 7"})
+        except:
+            errors.append({"levelint" : "level must be integer"})
+
+        # check if not found errors 
+        if len(errors) != 0:
+            return JsonResponse({'errors': errors}, status=400)
+        
+        # get instructor that create the course will change to user session but this is test
+        user = User.objects.get(username="admin")
+
+        # add data to database 
+        course = Course(user_id = user,course_code = course_code, course_name = course_name, level = level)
+        
+        # commit change 
+        course.save()
+
+        # if no errors return success 
+        return JsonResponse({'success': True}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 # other views

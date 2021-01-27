@@ -27,12 +27,12 @@ class NavBar extends Component {
             <div className="parent" >
                 <div className="left-side " id="left-side ">
                     <div className="d-flex justify-content-between">
-                        <Link to="/"><img src="/image/logo.gif"  width="100px" height="80px" /></Link>
+                       <img src="/image/logo-1.jpg"  width="100px" height="80px" />
                         <AiOutlineClose onClick={this.closeNav}  />
                     </div>
                     <p className="mt-5"> <Link to="/docter">Doctor Register</Link></p>
                     <p ><Link to="/student">Student Register</Link></p>
-                    <p >  <Link to="/login">Login</Link></p>
+                    <p >  <Link to="/">Login</Link></p>
 
                     <div className="all-icons">
                         <AiFillGithub className="icon-1" />

@@ -10,44 +10,53 @@ import { FaUserTag } from "react-icons/fa";
 class Student extends Component {
     render() {
         return (
-            <div className="home-parent" style={{ backgroundImage: `url('/image/bg-1.jpg')` }}>
-                <div className="layer"></div>
+            <div className="home-parent" >
+          
                 <div className="doctor-form">
                     <img src="/image/student-1.jpg" className="img-fluid rounded-circle" width="60" height="60" />
                     <h4>Student Register</h4>
-                    <form >
-                        <div>
+                    <form  className="text-left">
+                        <div className="my-3">
                             <BiUserCircle />
                             <input type="text" placeholder="First Name" />
-                        </div>
-                        <div>
                             <BiUserPlus />
                             <input type="text" placeholder="Last Name" />
                         </div>
-                        <div>
+                   
+                        <div className="my-3 ">
                             <FiUserCheck />
-                            <input type="text" placeholder="User Name" />
+                            <input type="text" placeholder="User Name" className="w-75"/>
                         </div>
-                        <div>
+                        <div className="my-3">
                             <FaUserTag />
                             <input type="text" placeholder="National Id" />
-                        </div>
-                        <div>
                             <FaUserTag />
                             <input type="text" placeholder="University Id" />
                         </div>
+                        <div className="my-3">
+                     
+                            <select name="Select Level">
+                                <option>Level 1</option>
+                                <option>Level 2</option>
+                                <option>Level 3</option>
+                                <option>Leve 4</option>
+                            </select>
+                        </div>
                     
-                        <div>
+                        <div className="my-3 ">
                             <MdEmail />
-                            <input type="email" placeholder="name@example.com" />
+                            <input type="email" placeholder="name@example.com" className="w-75" />
                         </div>
-                        <div>
+                        <div className="my-3 ">
                             <RiLockPasswordLine />
-                            <input type="password" placeholder="Password" />
+                            <input type="password" placeholder="Password" className="w-75"/>
                         </div>
+                        <div className="text-center">
+    
+                        <button type="submit" className="btn">Submit</button>
 
-                        <button type="submit" className="btn ">Submit</button>
-
+                        </div>
+                    
                     </form>
 
                 </div>
