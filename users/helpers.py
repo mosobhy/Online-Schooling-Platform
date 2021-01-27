@@ -28,11 +28,11 @@ def validate_email(email):
         return False  
 
 def courseQuerySetSerializer(course_set):
-    ''' This function accepts a course list and convert it to dictionary object '''
+    ''' This function accepts a course set and convert it to list object '''
     if not course_set:
         return None
     courses = []
     for course in course_set:
         courses.append(list(course))
-        
+
     return courses
