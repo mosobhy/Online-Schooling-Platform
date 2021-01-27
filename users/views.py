@@ -6,6 +6,32 @@ from .models import *
 from .helpers import *
 
 
+# view courses that a student has registerd for.
+@require_http_methods(['GET'])
+def view_student_courses(request, username):
+    """
+    This function should return all the courses that a user of type student
+    has registerd for,
+    Recieved data: The logged-in username as a url parameter
+    Return data: list of all the courses data
+    """
+    if request.method == 'GET':
+        
+        # check if the user logged in
+        if request.session['username'] != username:
+            return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
+        
+        # query the user's registered in courses
+        user = User.objects.get(username=username)
+        courses = courseQuerySetSerializer(User.enrolled_courses.all())
+        if courses is None:
+            return JsonResponse({'error': 'No courses to view'}, status=404)
+        
+        return JsonResponse({'success': True, 'courses': courses}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
 # limiting request method to this view for just the post method
 @require_http_methods(['POST'])
 def login_user(request):
@@ -103,8 +129,15 @@ def register_as_instructor(request):
         # commit change 
         user.save()
         info.save()
+
+        # now login the user
+        login(request, user)
+
+        user = user_serializer(user)
+        success = {'success': True}
+
         # return success message 
-        return JsonResponse({'success': True}, status=200)
+        return JsonResponse({ **user, **success }, status=200)
 
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -178,8 +211,16 @@ def register_as_student(request):
         # commit change 
         user.save()
         info.save()
+
+        # now login the user
+        login(request, user)
+
+        user = user_serializer(user)
+        success = {'success': True}
+
         # return success message 
-        return JsonResponse({'success': True}, status=200)
+        return JsonResponse({ **user, **success }, status=200)
+
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 

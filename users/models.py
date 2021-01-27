@@ -10,7 +10,7 @@ class UserInfo(models.Model):
     level = models.IntegerField(null=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.user.username)
 
 
 class Course(models.Model):
@@ -21,7 +21,7 @@ class Course(models.Model):
     course_name = models.CharField(null=True,max_length=50)
     level = models.IntegerField(null=True)
     # user_id = models.ForeignKey(User , on_delete=models.CASCADE)
-    students = models.ManyToManyField(User, blank=True ,related_name='enrolled_students')
+    students = models.ManyToManyField(User, blank=True ,related_name='enrolled_courses')
 
     # when querying the course for the registered students
     # course_obje = Course.enrolled_students.exculde(is_staff=True)
