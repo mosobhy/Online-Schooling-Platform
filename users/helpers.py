@@ -39,6 +39,7 @@ def courseQuerySetSerializer(course_set):
     if not course_set:
         return None
     courses = {}
+    
     for course in course_set:
         courses.update({
             'course_name': course.course_name,
