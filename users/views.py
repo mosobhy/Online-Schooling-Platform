@@ -23,7 +23,7 @@ def view_student_courses(request, username):
         
         # query the user's registered in courses
         user = User.objects.get(username=username)
-        courses = courseQuerySetSerializer(User.enrolled_courses.all())
+        courses = courseQuerySetSerializer(user.enrolled_courses.all())
         if courses is None:
             return JsonResponse({'error': 'No courses to view'}, status=404)
         
