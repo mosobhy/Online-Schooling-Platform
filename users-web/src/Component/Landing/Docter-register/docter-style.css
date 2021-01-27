@@ -1,0 +1,77 @@
+.doctor-form{
+    position: relative;
+    box-sizing: border-box;
+    overflow: auto;
+    background-color: #fff;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    width: 40%;
+    padding: 1rem;
+  
+}
+
+.doctor-form h4{
+    font-family: 'Lobster', cursive;
+    padding: 0.5rem;
+  
+}
+.doctor-form form input{
+
+    margin: 0.8rem 5px;
+    background-color: transparent;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 0.003rem solid #000000;
+    cursor: pointer;
+}
+
+.doctor-form form input:focus{
+  outline: none;
+}
+.doctor-form form input::-webkit-input-placeholder{
+    color: #999999;
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    font-family: 'Merriweather', serif;
+ 
+}
+.doctor-form form svg{
+  margin: 0.3rem;
+ font-size: 1.3rem;
+}
+.doctor-form form button{
+ 
+    border-radius: 0px;
+    margin: 0.3rem;
+    background-color: #003366; 
+    color: #fff;
+    font-family: 'Merriweather', serif;
+}
+.doctor-form form label{
+    font-size: 0.9rem;
+    font-family: 'Merriweather', serif;
+}
+.doctor-form form select{
+    width: 75%;
+    color: #999999;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 0.003rem solid #000000;
+    margin-left: 2rem;
+
+}
+.doctor-form form button:hover{
+    color: #fff;
+}
+
+.doctor-form form button::-moz-focus-inner{
+    outline: none;
+    border: none;
+    
+}
+.doctor-form form select::-moz-focus-inner{
+    outline: none;
+}

@@ -14,14 +14,14 @@
 
 .left-side{
 padding: 1rem;
-background-color: rgba(0, 51, 102 , 0.8);
+background-color: #fff;
 text-align: center;
-border-right: 1px solid rgba(255, 255, 255, 0.3) ;
+
 
 }
 
 .left-side:first-child svg{
-  color: aliceblue ;
+  color: #000 ;
   cursor: pointer;
   margin: 0.3rem !important;
   font-size: 1.4rem;
@@ -30,9 +30,9 @@ border-right: 1px solid rgba(255, 255, 255, 0.3) ;
 
 .left-side p a{
   text-decoration: none;
-  color: white;
+  color: #000;
   /* font-family: 'Arapey', serif; */
-  font-family: 'Bodoni Moda', serif;
+  font-family: 'Merriweather', serif;
   font-size: 1.1rem;
   padding: 0.2rem 2rem;
   transition: 0.5s;
@@ -44,20 +44,20 @@ border-right: 1px solid rgba(255, 255, 255, 0.3) ;
 }
 @keyframes box{
   0%{
-    border-top: 1px solid #fff;
+    border-top: 1px solid #000;
 
   }
   25%{
-    border-right: 1px solid #fff;
+    border-right: 1px solid #000;
   
   }
   50%{
-    border-left: 1px solid #fff;
+    border-left: 1px solid #000;
 
 
   }
   75%{
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #000;
   
    
   }
@@ -82,7 +82,7 @@ margin-top: 2rem;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  color: #fff;
+  color: #000;
   padding: 5px;
   border-style: dotted;
   border: 2px solid #fff;
@@ -95,21 +95,21 @@ margin-top: 2rem;
 }
 
 .all-icons .icon-1:hover{
-background-color: white;
-color: tomato;
+border: 1px solid #000;
+color: gray;
 
 }
 .all-icons .icon-2:hover{
-  background-color: white;
-  color: #09c;
+  border: 1px solid #000;
+  color:midnightblue;
   
 }
 .all-icons .icon-3:hover{
-    background-color: white;
+  border: 1px solid #000;
     color: tomato;
 }
 .all-icons .icon-4:hover{
-      background-color: white;
+  border: 1px solid #000;
       color: #09c;
       
 }
