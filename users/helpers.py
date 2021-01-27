@@ -17,6 +17,13 @@ def username_exists(username):
         return True
     return False
 
+def value_is_exists(attribute,value,table):
+    """ This function accept a attribute and value and table return true if value exist in database """
+    if table.objects.filter(**{attribute:value}).exists():
+        return True
+    return False
+
+
 def validate_email(email):
 
     """ This function accept a email and return true if is valid email """

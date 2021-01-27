@@ -20,9 +20,9 @@ class Course(models.Model):
     course_code = models.CharField(null=True,max_length=50)
     course_name = models.CharField(null=True,max_length=50)
     level = models.IntegerField(null=True)
-    # user_id = models.ForeignKey(User , on_delete=models.CASCADE)
-    students = models.ManyToManyField(User, blank=True ,related_name='enrolled_courses')
-
+    user_id = models.ForeignKey(User , on_delete=models.CASCADE,null=True)
+    students = models.ManyToManyField(User, blank=True ,related_name='enrolled_students',null=True)
+    
     # when querying the course for the registered students
     # course_obje = Course.enrolled_students.exculde(is_staff=True)
     # add student to the course
