@@ -26,7 +26,7 @@ SECRET_KEY = '2i4g_nv4qzm=p#1ek&g=_&e)g5hi-&201k&@fnlby%*^oubj#+'
 DEBUG = True
 
 # added the allowed hostes to contanct with apis
-ALLOWED_HOSTS = ['127.0.0.1', 'cfe.sh', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'cfe.sh', 'localhost:3000']
 
 
 # Application definition
