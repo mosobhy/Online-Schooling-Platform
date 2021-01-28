@@ -1,5 +1,6 @@
 import react, { Component } from "react";
 import './docter-style.css';
+import jQuery from "jquery";
 import { BiUserCircle, BiUserPlus } from 'react-icons/bi';
 import { MdEmail } from "react-icons/md";
 import { FiUserCheck } from "react-icons/fi";
@@ -17,40 +18,60 @@ class Docter extends Component {
         document.getElementById("instructorForm").addEventListener("submit", (e) => {
             e.preventDefault();
             checkData();
-            
-            // //get data
-            // const userName = document.getElementById("userName").value;
-            // const nationalId = document.getElementById("nationId").value;
-            // const email = document.getElementById("email").value;
-            // const password = document.getElementById("password").value;
-            // const rePassword = document.getElementById("rePassword").value;
 
-            // // send data to api
-            // const request = new XMLHttpRequest();
-            // request.open("post", "http://127.0.0.1:8000/api/docter");
+            //get data
+            const firstName = document.getElementById("fname").value;
+            const lastName = document.getElementById("lname").value;
+            const department = document.getElementById("department").value;
+            const userName = document.getElementById("userName").value;
+            const nationalId = document.getElementById("nationId").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-            // const csrftoken = getCookie('csrftoken');
-            // request.setRequestHeader("Content-Type", "application/json");
-            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
-            // request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            // request.setRequestHeader("X-CSRFToken", csrftoken);
+            // send data to api
+            const request = new XMLHttpRequest();
 
-            // request.onload = () => {
-            //     console.log(request.responseText);
-            // }
+            const csrftoken = getCookie('csrftoken');
+            request.open("post", "http://127.0.0.1:8000/api/docter/");
+            request.setRequestHeader("Content-Type", "application/json");
+            request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            request.setRequestHeader("X-CSRFToken", csrftoken);
 
-            // const data = {
-            //     "username": userName, 
-            //     "email": email,
-            //     "nationalid": nationalId,
-            //     "password": password,
-            //     "repassword": rePassword
-                
-            // }
-            // request.send(data) 
-            // return false;
+            request.onload = () => {
+                const respons = JSON.parse(respons);
+                console.log(respons);
+            }
+
+            const data = {
+                "firstname": firstName,
+                "lastname": lastName,
+                "department": department,
+                "username": userName,
+                "email": email,
+                "nationalid": nationalId,
+                "password": password,
+
+
+            }
+            request.send(data)
+            return false;
 
         });
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
         const checkData = () => {
 
@@ -59,7 +80,7 @@ class Docter extends Component {
             const nationalId = document.getElementById("nationId");
             const email = document.getElementById("email");
             const password = document.getElementById("password");
-            const rePassword = document.getElementById("rePassword");
+
 
             //username tast
             if (userName.value == '' || userName.value == null) {
@@ -90,16 +111,10 @@ class Docter extends Component {
             if (password.value == '' && password.value <= 5) {
                 setErrorFor(password, "enter a vaild password");
             } else {
-               
+
                 setSeccessFor(password)
             }
-            //  //password tast
-            // if (rePassword.value != "" && rePassword.value != null && rePassword.value == password.value) {
-            //         setSeccessFor(rePassword)
-            //         }
-            //  else {
-            //     setErrorFor(rePassword, "Dissimilar");
-            // }
+
         }
         //handel error 
         const setErrorFor = (input, massage) => {
@@ -132,17 +147,17 @@ class Docter extends Component {
 
                     <form className="text-left" id="instructorForm">
 
-                        <div className=" my-1 d-flex justify-content-between">
-                            <div className="input-control">
+                        <div className=" d-flex justify-content-between">
+                            <div className="input-control my-2">
                                 <BiUserCircle />
-                                <input name="fname" type="text" placeholder="First Name" />
+                                <input id="fname" type="text" placeholder="First Name" />
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
                             </div>
-                            <div className="input-control">
+                            <div className="input-control my-2">
                                 <BiUserPlus />
-                                <input name="lname" type="text" placeholder="Last Name" />
+                                <input id="lname" type="text" placeholder="Last Name" />
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
@@ -151,47 +166,40 @@ class Docter extends Component {
 
                         </div>
 
-                        <div className="input-control my-1 ">
+                        <div className="input-control my-2">
                             <FiUserCheck />
                             <input id="userName" type="text" placeholder="User Name" className="w-75" />
                             <AiFillCheckCircle className="inside-input correct" />
                             <AiFillExclamationCircle className="inside-input uncorrect" />
                             <small>Error Massage</small>
                         </div>
-                        <div className="input-control my-1">
+                        <div className="input-control my-3">
                             <FaUserTag />
                             <input id="nationId" type="text" placeholder="National Id" className="w-75" />
                             <AiFillCheckCircle className="inside-input correct" />
                             <AiFillExclamationCircle className="inside-input uncorrect" />
                             <small>Error Massage</small>
                         </div>
-                        <div className="input-control my-1">
+                        <div className="input-control my-3">
 
-                            <select name="department">
-                                <option>IT</option>
-                                <option>CS</option>
-                                <option>GS</option>
-                                <option>GIS</option>
+                            <select id="department">
+                                <option value="it">IT</option>
+                                <option value="cs">CS</option>
+                                <option value="gs">GS</option>
+                                <option value="gis">GIS</option>
                             </select>
                         </div>
 
-                        <div className="input-control my-1 ">
+                        <div className="input-control my-3">
                             <MdEmail />
                             <input id="email" type="email" placeholder="name@example.com" className="w-75" />
                             <AiFillCheckCircle className="inside-input correct" />
                             <AiFillExclamationCircle className="inside-input uncorrect" />
                             <small>Error Massage</small>
                         </div>
-                        <div className="input-control my-1 ">
+                        <div className="input-control my-3">
                             <RiLockPasswordLine />
                             <input id="password" type="password" placeholder="Password" className="w-75" />
-                            <AiFillCheckCircle className="inside-input correct" />
-                            <AiFillExclamationCircle className="inside-input uncorrect" />
-                            <small>Error Massage</small>
-                        </div>
-                        <div className="input-control my-1 ">
-                            <RiLockPasswordLine />
-                            <input id="repassword" type="password" placeholder="Repassword" className="w-75" />
                             <AiFillCheckCircle className="inside-input correct" />
                             <AiFillExclamationCircle className="inside-input uncorrect" />
                             <small>Error Massage</small>

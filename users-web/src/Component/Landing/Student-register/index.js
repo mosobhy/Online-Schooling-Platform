@@ -1,6 +1,7 @@
 import react, { Component } from "react";
 import { Link } from "react-router-dom";
 import './style.css';
+import jQuery from 'jquery';
 import { BiUserCircle, BiUserPlus } from 'react-icons/bi';
 import { MdEmail } from "react-icons/md";
 import { FiUserCheck } from "react-icons/fi";
@@ -14,42 +15,24 @@ class Student extends Component {
         document.getElementById("studentRegisterForm").addEventListener("submit", (e) => {
             e.preventDefault();
             checkData();
-            
-            // //get data
-            // const userName = document.getElementById("userName").value;
-            // const nationalId = document.getElementById("nationId").value;
-            //const universityId = document.getElementById("universityId").value;
-            // const email = document.getElementById("email").value;
-            // const password = document.getElementById("password").value;
-            // const rePassword = document.getElementById("rePassword").value;
-
-            // // send data to api
-            // const request = new XMLHttpRequest();
-            // request.open("post", "http://127.0.0.1:8000/api/student/");
-
-            // const csrftoken = getCookie('csrftoken');
-            // request.setRequestHeader("Content-Type", "application/json");
-            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
-            // request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            // request.setRequestHeader("X-CSRFToken", csrftoken);
-
-            // request.onload = () => {
-            //     console.log(request.responseText);
-            // }
-
-            // const data = {
-            //     "username": userName, 
-            //     "email": email,
-            //     "nationalid": nationalId,
-            //     "password": password,
-            //     "repassword": rePassword,
-            //     "unvirstayid": universityId
-                
-            // }
-            // request.send(data) 
-            // return false;
+            getRequest();
 
         });
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
         const checkData = () => {
 
@@ -59,7 +42,7 @@ class Student extends Component {
             const email = document.getElementById("email");
             const universityId = document.getElementById("universityId");
             const password = document.getElementById("password");
-            const rePassword = document.getElementById("rePassword");
+        
 
             //username tast
             if (userName.value == '' || userName.value == null) {
@@ -93,13 +76,7 @@ class Student extends Component {
                
                 setSeccessFor(password)
             }
-            //  //password tast
-            // if (rePassword.value != "" && rePassword.value != null && rePassword.value == password.value) {
-            //         setSeccessFor(rePassword)
-            //         }
-            //  else {
-            //     setErrorFor(rePassword, "Dissimilar");
-            // }
+  
         }
 
         //handel error 
@@ -115,6 +92,46 @@ class Student extends Component {
             getParent.className = 'input-control success';
         }
 
+        const getRequest = () => {
+                  //get data
+                  const firstName = document.getElementById("fname").value;
+                  const lastName = document.getElementById("lname").value;
+                  const level = document.getElementById("level").value;
+                  const userName = document.getElementById("userName").value;
+                  const nationalId = document.getElementById("nationalId").value;
+                  const password = document.getElementById("password").value;
+                  const universityId = document.getElementById("universityId").value;
+                  const email = document.getElementById("email").value;
+      
+                  // send data to api
+                  const request = new XMLHttpRequest();
+                  const csrftoken = getCookie('csrftoken');
+                  request.open("post", "http://127.0.0.1:8000/api/student/");
+                  request.setRequestHeader("Content-Type", "application/json");
+                  request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+                  request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                  request.setRequestHeader("X-CSRFToken", csrftoken);
+      
+                  request.onload = () => {
+                      const respons = JSON.parse(respons);
+                      console.log(respons);
+                  }
+      
+                  const data = {
+                      "firstname": firstName,
+                      "lastname": lastName,
+                      "username": userName, 
+                      "nationalid": nationalId,
+                      "unvirstayid": universityId,
+                      "level": level,
+                      "email": email,
+                      "password": password,  
+                  }
+                  request.send(data) 
+                  return false;
+
+        }
+
     }
     render() {
         return (
@@ -128,18 +145,18 @@ class Student extends Component {
                     <form className="text-left" id="studentRegisterForm">
 
 
-                        <div className=" my-3 d-flex justify-content-between">
-                            <div className="input-control">
+                        <div className="d-flex justify-content-between">
+                            <div className="input-control my-2">
                                 <BiUserCircle />
-                                <input type="text" placeholder="First Name" />
+                                <input type="text" placeholder="First Name" id="fname"/>
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
                             </div>
 
-                            <div className="input-control">
+                            <div className="input-control my-2">
                                 <BiUserPlus />
-                                <input type="text" placeholder="Last Name" />
+                                <input type="text" placeholder="Last Name" id="lname"/>
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
@@ -149,7 +166,7 @@ class Student extends Component {
                         </div>
 
 
-                        <div className="input-control my-3 ">
+                        <div className="input-control my-2">
                             <FiUserCheck />
                             <input type="text" placeholder="User Name" id="userName" className="w-75" />
                             <AiFillCheckCircle className="inside-input correct" />
@@ -157,8 +174,8 @@ class Student extends Component {
                             <small>Error Massage</small>
                         </div>
 
-                        <div className=" my-3 d-flex justify-content-between">
-                            <div className="input-control">
+                        <div className="d-flex justify-content-between">
+                            <div className="input-control my-2">
                                 <FaUserTag />
                                 <input type="text" placeholder="National Id" id="nationalId"/>
                                 <AiFillCheckCircle className="inside-input correct" />
@@ -167,7 +184,7 @@ class Student extends Component {
                             </div>
 
 
-                            <div className="input-control">
+                            <div className="input-control my-2">
                                 <FaUserTag />
                                 <input type="text" placeholder="University Id" id="universityId"/>
                                 <AiFillCheckCircle className="inside-input correct" />
@@ -178,16 +195,16 @@ class Student extends Component {
                         </div>
 
 
-                        <div className="input-control my-3">
-                            <select name="Select Level">
-                                <option>Level 1</option>
-                                <option>Level 2</option>
-                                <option>Level 3</option>
-                                <option>Leve 4</option>
+                        <div className="input-control my-2">
+                            <select id="level">
+                                <option value="1">Level 1</option>
+                                <option  value="2">Level 2</option>
+                                <option  value="3">Level 3</option>
+                                <option  value="4">Leve 4</option>
                             </select>
                         </div>
 
-                        <div className="input-control my-3 ">
+                        <div className="input-control my-2">
                             <MdEmail />
                             <input type="email" placeholder="name@example.com" className="w-75" id="email"/>
                             <AiFillCheckCircle className="inside-input correct" />
@@ -196,7 +213,7 @@ class Student extends Component {
                         </div>
 
 
-                        <div className="input-control my-3 ">
+                        <div className="input-control my-2 ">
                             <RiLockPasswordLine />
                             <input type="password" placeholder="Password" className="w-75" id="password"/>
                             <AiFillCheckCircle className="inside-input correct" />
