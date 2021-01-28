@@ -14,6 +14,8 @@ def view_student_courses(request, username):
     has registerd for,
     Recieved data: The logged-in username as a url parameter
     Return data: list of all the courses data
+
+    THE COURSES DATA SHOULD BE CHACHED IN THE CLIENT
     """
     if request.method == 'GET':
         
@@ -40,6 +42,8 @@ def login_user(request):
     authenticate() metod, if not None, login in the user
     Return: 
         json = success:True, user:user_data
+    
+    THE USER DATA SHOULD BE CACHED IN THE CLIENT
     """
     # access the data send from the frontend
     if request.method == 'POST':
@@ -224,6 +228,7 @@ def register_as_student(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+@require_http_methods(['POST'])
 def create_course(request):
     """
     This veiw function should take form from frontend and validate each input
