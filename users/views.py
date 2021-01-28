@@ -294,6 +294,7 @@ def create_course(request, username):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+####
 
 @require_http_methods(['GET'])
 def join_course(request, username, course_code):
