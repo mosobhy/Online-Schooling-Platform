@@ -34,4 +34,4 @@ the notificaion part.
 
 In the frontside there will be a function its only purpose of life is to make
 
-somesort of request to some URL everyday in order to check for these changes
+somesort of request to some URL everyday in order to check for these changes.

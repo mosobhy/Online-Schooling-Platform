@@ -183,7 +183,7 @@ def register_as_student(request):
         if validate_email(email) == False:
             error.append({"email" : "It's not valid email"})
         # check if ssn is less than 20 number
-        if len(ssn) > 14 or len(ssn) < 14:
+        if len(ssn) != 14:
             error.append({"SSN" : "SSN must be 14"})
         # check if ssn is less than 20 number
         if len(university_id) > 10 and len(university_id) < 5:
@@ -279,4 +279,51 @@ def create_course(request):
         return JsonResponse({'success': True}, status=200)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
+def join_course(request):
+    """
+    This view function would make relation between two tables {course, student}
+
+    if data was valid Return: 
+        json = success:True 
+        and save data in database
+    if data not valid Return:
+        json = success:false , errors = errors
+    """
+
+    #get data from post 
+    if request.method == 'POST':
+        course_code = request.POST['course_code']
+        username = request.POST['user_name'] 
+
+        errors = []
+
+        #try to get user
+        try:
+            user = User.objects.get(user=username)
+        except:
+              errors.append({"user" : "user not found"})
+        
+        #try to get course code 
+        try:
+            code = Course.objects.get(course_code=course_code)
+
+        except:
+            errors.append({"code":"course code not found"}) 
+
+        #if there exist an error
+        if len(errors) != 0:
+            return JsonResponse({'errors': errors}, status=400)
+
+        else:
+            code.students.add(user)
+            code.save()
+
+            # if no errors return success 
+            return JsonResponse({'success': True}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
 # other views
