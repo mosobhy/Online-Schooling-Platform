@@ -336,3 +336,53 @@ def join_course(request, username, course_code):
     else:
         return JsonResponse({'error': 'Method not Allowed'}, status=405)
 
+
+@require_http_methods(['GET'])
+def view_material(request, username, course_code):
+    """
+    This view function will return the path of material that belong 
+    to specific course
+
+    if data was valid Return: 
+        json = success:True 
+        and retrive data from database
+    if data not valid Return:
+        json = success:false , errors = errors
+    """
+    if request.method == "GET":
+        #return JsonResponse({"name":username}, status=200)
+        errors = []
+
+        # try to get student that ask the course
+        try:
+            user = User.objects.get(username = username)
+        except:
+            errors.append({"username":"user name not exist"})
+        # try to get the course
+        try:
+            code = Course.objects.get(course_code = course_code)
+        except:
+            errors.append({"course":"course not exist"})
+        
+        # if errors found return errors 
+        if len(errors) != 0:
+            return JsonResponse({'errors': errors}, status=400)
+
+        # check if student join the course
+        if code.students.filter(username = user).count() == 0:
+            errors.append({"student":"student not join course"})
+
+        # if errors fount return errors 
+        if len(errors) != 0:
+            return JsonResponse({'errors': errors}, status=400)
+        
+        
+        else:
+            # fetch matiral from database 
+            matrials = Matrial.objects.filter(course_id = code).values()
+            # list the path of  matiral 
+            list_of_matrial = []
+            for matrial in matrials:
+                list_of_matrial.append(matrial["path"])
+        
+            return JsonResponse({"matrials":list_of_matrial}, status=200)
