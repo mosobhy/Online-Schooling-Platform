@@ -285,7 +285,7 @@ def create_course(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-
+@require_http_methods(['POST'])
 def join_course(request):
     """
     This view function would make relation between two tables {course, student}
