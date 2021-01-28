@@ -20,7 +20,12 @@ def view_student_courses(request, username):
     if request.method == 'GET':
         
         # check if the user logged in
-        if request.session['username'] != username:
+        try:
+            logged_user = request.session[username]
+        except:
+            return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
+ 
+        if logged_user != username:
             return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
         
         # query the user's registered in courses
@@ -229,7 +234,7 @@ def register_as_student(request):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 @require_http_methods(['POST'])
-def create_course(request):
+def create_course(request, username):
     """
     This veiw function should take form from frontend and validate each input
     and make new course
@@ -244,6 +249,12 @@ def create_course(request):
 
     # git data from post form
     if request.method == "POST":
+
+        # check if an instructor
+        instructor = User.objects.get(username=username)
+        if not instructor.is_staff:
+            return JsonResponse({'error': 'Not permitted to create course'}, status=403)
+
         course_code = request.POST['code']
         course_name = request.POST['name']
         level = request.POST['level']
@@ -271,11 +282,9 @@ def create_course(request):
         if len(errors) != 0:
             return JsonResponse({'errors': errors}, status=400)
         
-        # get instructor that create the course will change to user session but this is test
-        user = User.objects.get(username="admin")
 
         # add data to database 
-        course = Course(user_id = user,course_code = course_code, course_name = course_name, level = level)
+        course = Course(created_by_instructor=instructor ,course_code = course_code, course_name = course_name, level = level)
         
         # commit change 
         course.save()
@@ -285,8 +294,9 @@ def create_course(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-@require_http_methods(['POST'])
-def join_course(request):
+
+@require_http_methods(['GET'])
+def join_course(request, username, course_code):
     """
     This view function would make relation between two tables {course, student}
 
@@ -298,37 +308,31 @@ def join_course(request):
     """
 
     #get data from post 
-    if request.method == 'POST':
-        course_code = request.POST['course_code']
-        username = request.POST['user_name'] 
-
-        errors = []
-
-        #try to get user
-        try:
-            user = User.objects.get(user=username)
-        except:
-              errors.append({"user" : "user not found"})
+    if request.method == 'GET':
         
-        #try to get course code 
-        try:
-            code = Course.objects.get(course_code=course_code)
+        # check if the user is in the same level and allowed to enter a course
+        user = User.objects.get(username=username)
+        course_to_join = Course.objects.get(course_code=course_code)
+        
+        if course_to_join is None:
+            return JsonResponse({'error': 'Soemthing went Wrong in frontend, No such Course'}, status=404)
 
-        except:
-            errors.append({"code":"course code not found"}) 
+        if (
+            (username != course_to_join.created_by_instructor.username) 
+            and (not user.is_staff) 
+            and (user.level == course_to_join.level)
+            ):
 
-        #if there exist an error
-        if len(errors) != 0:
-            return JsonResponse({'errors': errors}, status=400)
+            # check if the user didn't yet enrolled
+            is_enrolled = user.enrolled_courses.get(course_code=course_code)
+            if is_enrolled:
+                return JsonResponse({'error': 'Student Already Enrolled in this course'}, status=403)
 
-        else:
-            code.students.add(user)
-            code.save()
+            # log the user into the course
+            course_to_join.students.add(user)
+            course_to_join.save()
 
-            # if no errors return success 
             return JsonResponse({'success': True}, status=200)
     else:
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
 
-
-# other views
