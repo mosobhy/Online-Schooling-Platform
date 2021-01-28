@@ -6,7 +6,7 @@
     top:50%;
     left: 50%;
     transform: translate(-50% , -50%);
-    width: 40%;
+    width: 50%;
     padding: 1rem;
   
 }
@@ -16,7 +16,25 @@
     padding: 0.5rem;
   
 }
-.doctor-form form input{
+.input-control{
+    position: relative;
+    margin: 0.6rem 0px !important;
+}
+.input-control .inside-input{
+    position: absolute;
+    top: 10px;
+    right: 20%;
+    visibility: hidden;
+  
+}
+.input-control small{
+    position: absolute;
+    bottom: -10px;
+    left: 10px;
+    visibility: hidden;
+ 
+}
+.input-control input{
 
     margin: 0.8rem 5px;
     background-color: transparent;
@@ -27,21 +45,21 @@
     cursor: pointer;
 }
 
-.doctor-form form input:focus{
+.input-control input:focus{
   outline: none;
 }
-.doctor-form form input::-webkit-input-placeholder{
+.input-control input::-webkit-input-placeholder{
     color: #999999;
     font-size: 0.9rem;
     padding: 0.3rem;
     font-family: 'Merriweather', serif;
  
 }
-.doctor-form form svg{
+.input-control svg{
   margin: 0.3rem;
  font-size: 1.3rem;
 }
-.doctor-form form button{
+.input-control button{
  
     border-radius: 0px;
     margin: 0.3rem;
@@ -49,11 +67,8 @@
     color: #fff;
     font-family: 'Merriweather', serif;
 }
-.doctor-form form label{
-    font-size: 0.9rem;
-    font-family: 'Merriweather', serif;
-}
-.doctor-form form select{
+
+.input-control select{
     width: 75%;
     color: #999999;
     border-top: none;
@@ -63,15 +78,15 @@
     margin-left: 2rem;
 
 }
-.doctor-form form button:hover{
+.input-control button:hover{
     color: #fff;
 }
 
-.doctor-form form button::-moz-focus-inner{
+.input-control button::-moz-focus-inner{
     outline: none;
     border: none;
     
 }
-.doctor-form form select::-moz-focus-inner{
+.input-control select::-moz-focus-inner{
     outline: none;
 }
