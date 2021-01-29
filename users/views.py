@@ -21,7 +21,7 @@ def delete_course(request, username, course_code):
         # qurey for this course and delete it
         course_to_delete = Course.objects.get(course_code=course_code)
         if not course_to_delete:
-            return JsonResponse({'error': 'Course Not found'}, status=404)
+            return JsonResponse({'error': 'Course Not found, it sounds like an issue with frontend'}, status=404)
         
         # delete
         course_to_delete.delete()
@@ -56,11 +56,15 @@ def view_specific_course(request, username, course_code):
         
         # get the whole data of this particular course
         return JsonResponse({
-            singleCourseSerializer(course)
+            **{ 'success': True },
+            **singleCourseSerializer(course)
         }, status=200)
 
     else:
         return JsonResponse({'error': 'Method not Allowed'}, status=405)
+
+
+# view course's details for a student
 
 
 # view courses that a student has registerd for.

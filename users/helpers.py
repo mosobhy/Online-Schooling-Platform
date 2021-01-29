@@ -16,8 +16,8 @@ def user_serializer(user):
     return {
         'username': user.username,
         'first_name': user.first_name,
-        'email': user.email,
         'last_name': user.last_name,
+        'email': user.email,
         'is_staff': user.is_staff,
         'ssn': user_info.ssn,
         'university_id': user_info.university_id,
@@ -65,7 +65,7 @@ def courseQuerySetSerializer(course_set):
 
 def singleCourseSerializer(course):
     ''' Convert a course object to a dictionary object '''
-    
+
     return {
         'course_code': course.course_code,
         'course_name': course.course_name,
