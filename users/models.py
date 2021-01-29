@@ -7,7 +7,7 @@ import jsonfield
 # create the user class which is going to be populated for all users
 # instructors or studetns
 class UserInfo(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL , on_delete=models.CASCADE, related_name='user_info')
     ssn = models.CharField(null=True,max_length=14)
     university_id = models.CharField(null=True,max_length=20)
     level = models.IntegerField(null=True)
@@ -23,7 +23,7 @@ class UserInfo(models.Model):
         return len(User.objects.filter(is_staff=True))
 
     def __str__(self):
-        return f"{self.username}, {self.id}, {self.level}"
+        return f"{self.user.username}, {self.ssn}, {self.level}"
 
 
 class Course(models.Model):
