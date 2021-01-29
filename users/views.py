@@ -6,6 +6,63 @@ from .models import *
 from .helpers import *
 
 
+# delete a course
+@require_http_methods(['DELETE'])
+def delete_course(request, username, course_code):
+    """
+    This function should delete a course from the database when an instructor
+    clicks the delete button on a specific course
+    """
+    if request.method == 'DELETE':
+        user = User.objects.get(username=username)
+        if not user.is_staff:
+            return JsonResponse({'error': 'User not allowed to delete'}, status=403)
+
+        # qurey for this course and delete it
+        course_to_delete = Course.objects.get(course_code=course_code)
+        if not course_to_delete:
+            return JsonResponse({'error': 'Course Not found'}, status=404)
+        
+        # delete
+        course_to_delete.delete()
+
+        # THIS METHOD SHOULD NOT RETURN ANYTHING BUT FOR TESTING, RETURN SUCCESS
+        return JsonResponse({'success': True}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
+
+
+# view specific course details
+@require_http_methods(['GET'])
+def view_specific_course(request, username, course_code):
+    """ 
+    This view function should be executed when an instructor is trying to 
+    access a specific course in order to upload its related matrials or make quizes
+    so when the view course button is clicked, frontend should send a request with the course_code
+    of the clicked upon course to this endpoint
+    """
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        if not user.is_staff:
+            return JsonResponse({'error': 'User not an instructor'}, status=403)
+
+        # query the db for this course
+        course = Course.objects.get(course_code=course_code)
+        if course is None:
+            return JsonResponse(
+                {'error': 'Something went wrong, Course has not been fetched from db'},
+                status=401
+            )
+        
+        # get the whole data of this particular course
+        return JsonResponse({
+            singleCourseSerializer(course)
+        }, status=200)
+
+    else:
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
+
+
 # view courses that a student has registerd for.
 @require_http_methods(['GET'])
 def view_student_courses(request, username):
@@ -34,7 +91,7 @@ def view_student_courses(request, username):
         if courses is None:
             return JsonResponse({'error': 'No courses to view'}, status=404)
         
-        return JsonResponse({'success': True, 'courses': courses}, status=200)
+        return JsonResponse({'success': True, 'courses': courses}, status=200)  # each course_code should be stored in data-course attribte inorder to grap it when perfoming actions on a speific course
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
@@ -146,7 +203,7 @@ def register_as_instructor(request):
         success = {'success': True}
 
         # return success message 
-        return JsonResponse({ **user, **success }, status=200)
+        return JsonResponse({ **success, **user }, status=200)
 
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -294,7 +351,6 @@ def create_course(request, username):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-####
 
 @require_http_methods(['GET'])
 def join_course(request, username, course_code):
@@ -370,20 +426,24 @@ def view_material(request, username, course_code):
             return JsonResponse({'errors': errors}, status=400)
 
         # check if student join the course
-        if code.students.filter(username = user).count() == 0:
+        if code.students.filter(username=username).count() == 0:
             errors.append({"student":"student not join course"})
 
         # if errors fount return errors 
         if len(errors) != 0:
             return JsonResponse({'errors': errors}, status=400)
         
-        
         else:
             # fetch matiral from database 
-            matrials = Matrial.objects.filter(course_id = code).values()
+            matrials = code.uploaded_materials.all()
+            # matrials = Matrial.objects.filter(course=code).values()
+
             # list the path of  matiral 
             list_of_matrial = []
             for matrial in matrials:
-                list_of_matrial.append(matrial["path"])
+                list_of_matrial.append(matrial.path)
         
-            return JsonResponse({"matrials":list_of_matrial}, status=200)
+            return JsonResponse({ "matrials": list_of_matrial }, status=200)
+    
+    else:
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
