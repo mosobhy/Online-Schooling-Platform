@@ -1,5 +1,7 @@
 import react, { Component } from "react";
+import NavBar from "../Navbar/index";
 import './docter-style.css';
+import {Link} from "react-router-dom";
 import jQuery from "jquery";
 import { BiUserCircle, BiUserPlus } from 'react-icons/bi';
 import { MdEmail } from "react-icons/md";
@@ -137,7 +139,7 @@ class Docter extends Component {
 
         return (
             <div className="home-parent" >
-
+                <NavBar />
                 <div className="doctor-form">
                     <div id="demo"></div>
 
@@ -206,7 +208,7 @@ class Docter extends Component {
                         </div>
                         <div className="input-control text-center">
 
-                            <button type="submit" className="btn">Submit</button>
+                            <button type="submit" className="btn"><Link to={this.props.history.push("/admin/")}>submit</Link></button>
 
                         </div>
 

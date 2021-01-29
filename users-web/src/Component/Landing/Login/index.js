@@ -1,4 +1,5 @@
 import react, { Component } from "react";
+import NavBar from "../Navbar/index";
 import './style.css';
 import jQuery from "jquery";
 import { FiUserCheck } from "react-icons/fi";
@@ -71,6 +72,7 @@ class Login extends Component {
 
             
             <div className="home-parent">
+                <NavBar />
                 <div className="doctor-form">
                     <img src="/image/login-5.jpg" className="img-fluid rounded-circle" width="70" height="60" />
                     <h4>Welcome back...</h4>

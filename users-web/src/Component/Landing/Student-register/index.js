@@ -1,5 +1,6 @@
 import react, { Component } from "react";
 import { Link } from "react-router-dom";
+import NavBar from "../Navbar/index";
 import './style.css';
 import jQuery from 'jquery';
 import { BiUserCircle, BiUserPlus } from 'react-icons/bi';
@@ -137,6 +138,7 @@ class Student extends Component {
         return (
             <div className="home-parent" >
 
+                <NavBar />
                 <div className="doctor-form">
                     <img src="/image/student-1.jpg" className="img-fluid rounded-circle" width="60" height="60" />
                     <h4>Student Register</h4>

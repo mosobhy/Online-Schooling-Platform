@@ -1,0 +1,59 @@
+.notification-parent h2{
+    font-family: 'Fredericka the Great', cursive;
+    position: relative;
+}
+
+.notification-body{
+    padding: 1rem;
+    width: 80%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: 1px 1px 5px 1px #bfbfbf !important;
+    position: relative;
+}
+.notification-body svg{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 50%;
+}
+.notification-body svg:hover{
+   color: #999999;
+
+}
+.notification-body:hover{
+    box-shadow: 2px 2px 10px 2px #bfbfbf !important;
+    background-color: #F1F1E6;
+}
+.notification-body h5{
+    margin-left: 2rem;
+    font-family: 'Chela One', cursive;
+    position: relative;
+}
+
+.notification-body span{
+    color: rgb(24, 118, 242);
+}
+
+.notification-body h5::after{
+    content: "";
+    position: absolute;
+    width:4%;
+    height: 1px;
+    left: -4.5%;
+    top: 52%;
+ background-color: #999999;
+}
+.notification-body p{
+    font-family: 'Libre Caslon Display', serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 0px 1.6rem;
+    color: #4d4d4d;
+
+}
