@@ -228,6 +228,78 @@ the following data should be sent as json object
     }
     ```
 
+#create course
+### url endpoint
+
+    '127.0.0.1:8000/api/create-course/<str:username>/'
+
+### HTTP Method
+
+    'POST'
+
+### required data
+    this route accepts data as url parameters and post parameters
+    	username (instructor)
+    post parameters
+	code
+    	name
+   	level (less than 7)
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        errors: [{"coursecode":"course code already exist"},
+		{"coursename" : "course name is not valid"},
+		{"levellen" : "level must be less than 7"},
+		{"levelint" : "level must be integer"}
+		]
+    }
+    
+    ** success **
+    ```json
+    {
+        success: True
+    }
+    ```
+
+
+#join course
+### url endpoint
+
+    '127.0.0.1:8000/api/join-course/<str:username>/<str:course_code>/'
+
+### HTTP Method
+
+    'GET'
+
+### required data
+    this route accepts data as url parameters
+    	username (student)
+	coursecode
+   
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        {'error': 'Soemthing went Wrong in frontend, No such Course'}
+    }
+	
+    ```json
+    {
+        {'error': 'Student Already Enrolled in this course'}
+    }
+    
+    ** success **
+    ```json
+    {
+        success: True
+    }
+    ```
+
 
 ### What is the observer I had added?
 its just simple counter to keep track of how many object get instantiated

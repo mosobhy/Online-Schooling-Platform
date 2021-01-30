@@ -338,7 +338,7 @@ def create_course(request, username):
 
         # check if course code is exists 
         if (value_is_exists("course_code",course_code,Course)):
-            errors.append({"course_code":"course code already exist"})
+            errors.append({"coursecode":"course code already exist"})
 
         # check if course name is valid 
         if course_name.isalpha() == False:
@@ -466,7 +466,7 @@ def view_material(request, username, course_code):
         return JsonResponse({'error': 'Method not Allowed'}, status=405)
 
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def upload_material(request, username, course_code):
     """
     This view function will take file and save it in media folder 
@@ -478,7 +478,7 @@ def upload_material(request, username, course_code):
         json = errors = errors
     """
 
-    if request.method == "GET":
+    if request.method == "POST":
        
         errors = []
 
