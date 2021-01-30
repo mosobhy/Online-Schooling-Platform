@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 import json
 from .models import *
 from .helpers import *
+import os
+from django.core.files.storage import FileSystemStorage
 
 
 # delete a course
@@ -462,3 +464,58 @@ def view_material(request, username, course_code):
     
     else:
         return JsonResponse({'error': 'Method not Allowed'}, status=405)
+
+
+@require_http_methods(['GET'])
+def upload_material(request, username, course_code):
+    """
+    This view function will take file and save it in media folder 
+    to specific course
+
+    if data was valid Return: 
+        json = success:True 
+    if data not valid Return:
+        json = errors = errors
+    """
+
+    if request.method == "GET":
+       
+        errors = []
+
+        # try to get user that upload file
+        try:
+            user = User.objects.get(username = username)
+        except:
+            errors.append({"username":"user name not exist"})
+        # try to get the course
+        try:
+            course_code = Course.objects.get(course_code = course_code)
+        except:
+            errors.append({"course":"course not exist"})
+        
+        # if errors found return errors 
+        if len(errors) != 0:
+            return JsonResponse({'errors': errors}, status=400)
+        # check if student join the course or is staff
+        try:
+            course_code.students.filter(username=user) or user.is_staff
+        except:
+            return JsonResponse({"error":"user and course not match"}, status=400)
+            
+        # get file that come from server 
+        myfile = request.FILES['file']
+        fs = FileSystemStorage()
+        # get base dir of project
+        base_dir = os.path.dirname(os.path.dirname(__file__))
+        # make dir called media to upload file 
+        media_root = os.path.join(os.path.dirname(base_dir), 'Online-Schooling-Platform' , 'media')
+        # save uploaded file in media folder
+        filename = fs.save(os.path.join(media_root , myfile.name), myfile)
+        # get name of file
+        uploaded_file_name = fs.path(filename).split("\\")[-1]
+        # save data in database 
+        matrial = Matrial(user=user ,course = course_code, path = uploaded_file_name)
+
+        matrial.save()
+            
+        return JsonResponse({'success': True}, status=200)
