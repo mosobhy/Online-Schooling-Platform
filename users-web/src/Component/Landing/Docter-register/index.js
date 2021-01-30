@@ -41,21 +41,19 @@ class Docter extends Component {
             request.setRequestHeader("X-CSRFToken", csrftoken);
 
             request.onload = () => {
-                const respons = JSON.parse(respons);
+                const respons = JSON.parse(request.responseText);
                 console.log(respons);
             }
 
             const data = {
                 "firstname": firstName,
                 "lastname": lastName,
-                "department": department,
                 "username": userName,
                 "email": email,
-                "nationalid": nationalId,
+                "ssn": nationalId,
                 "password": password,
-
-
             }
+
             request.send(data)
             return false;
 

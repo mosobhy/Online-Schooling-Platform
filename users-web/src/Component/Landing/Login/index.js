@@ -7,48 +7,48 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 
 
-
-
-
 class Login extends Component {
 
-
-
     componentDidMount() {
-        document.getElementById("loginForm").addEventListener("submit", (e) => {
+        document.getElementById("loginForm").onsubmit = (e) => {
             e.preventDefault();
-            const userName = document.getElementById("userName");
-            const password = document.getElementById("password");
           //  send data to api
             const request = new XMLHttpRequest();
 
             const csrftoken = getCookie('csrftoken');
+
             request.open("post", "http://127.0.0.1:8000/api/login/");
 
-         
-            request.setRequestHeader("Content-Type", "application/json");
             request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
             request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             request.setRequestHeader("X-CSRFToken", csrftoken);
+
             request.onload = () => {
                 const response = JSON.parse(request.responseText);
-                console.log(response)
+                console.log(response);
+
+                // HERE YOU HAVE TO HANDLE THE RETURNED MESSAGES AND TAKE ACTIONS 
+                // DEPENDS ON IT
+                // 1. REDIRECT TO THE NEXT PAGE IF SUCCESS
+                // 2. DISPLAY THE ERROR MESSAGE LIKE (NOT REGISTERD OR WRONG PASSWORD OR WRONG USERNAME)
             }
 
-            const data = {
-                "username": userName, 
-                "password": password
-            }
-            request.send(data) 
+            const data = new FormData();
+            data.append('username', document.getElementById('userName').value);
+            data.append('password', document.getElementById('password').value);
+
+            request.send(data);
             return false;
          
-        });
+        };
+        
         function getCookie(name) {
-            var cookieValue = null;
+            let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
                     if (cookie.substring(0, name.length + 1) === (name + '=')) {
                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                         break;

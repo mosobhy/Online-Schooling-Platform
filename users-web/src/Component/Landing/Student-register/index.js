@@ -94,43 +94,44 @@ class Student extends Component {
         }
 
         const getRequest = () => {
-                  //get data
-                  const firstName = document.getElementById("fname").value;
-                  const lastName = document.getElementById("lname").value;
-                  const level = document.getElementById("level").value;
-                  const userName = document.getElementById("userName").value;
-                  const nationalId = document.getElementById("nationalId").value;
-                  const password = document.getElementById("password").value;
-                  const universityId = document.getElementById("universityId").value;
-                  const email = document.getElementById("email").value;
-      
-                  // send data to api
-                  const request = new XMLHttpRequest();
-                  const csrftoken = getCookie('csrftoken');
-                  request.open("post", "http://127.0.0.1:8000/api/student/");
-                  request.setRequestHeader("Content-Type", "application/json");
-                  request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
-                  request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                  request.setRequestHeader("X-CSRFToken", csrftoken);
-      
-                  request.onload = () => {
-                      const respons = JSON.parse(respons);
-                      console.log(respons);
-                  }
-      
-                  const data = {
-                      "firstname": firstName,
-                      "lastname": lastName,
-                      "username": userName, 
-                      "nationalid": nationalId,
-                      "unvirstayid": universityId,
-                      "level": level,
-                      "email": email,
-                      "password": password,  
-                  }
-                  request.send(data) 
-                  return false;
+            //get data
+            const firstName = document.getElementById("fname").value;
+            const lastName = document.getElementById("lname").value;
+            const level = document.getElementById("level").value;
+            const userName = document.getElementById("userName").value;
+            const nationalId = document.getElementById("nationalId").value;
+            const password = document.getElementById("password").value;
+            const universityId = document.getElementById("universityId").value;
+            const email = document.getElementById("email").value;
 
+            // send data to api
+            const request = new XMLHttpRequest();
+            const csrftoken = getCookie('csrftoken');
+            request.open("post", "http://127.0.0.1:8000/api/student/");
+            request.setRequestHeader("Content-Type", "application/json");
+            request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            request.setRequestHeader("X-CSRFToken", csrftoken);
+
+            request.onload = () => {
+                console.log(request.responseText)
+                // const respons = JSON.parse(request.responseText);
+                // console.log(respons);
+            }
+
+            const data = {
+                "firstname": firstName,
+                "lastname": lastName,
+                "username": userName, 
+                "ssn": nationalId,
+                "unvirstayid": universityId,
+                "level": level,
+                "email": email,
+                "password": password,  
+            };
+
+            request.send(data);
+            return false;
         }
 
     }

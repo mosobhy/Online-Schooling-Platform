@@ -26,7 +26,8 @@ SECRET_KEY = '2i4g_nv4qzm=p#1ek&g=_&e)g5hi-&201k&@fnlby%*^oubj#+'
 DEBUG = True
 
 # added the allowed hostes to contanct with apis
-ALLOWED_HOSTS = ['127.0.0.1', 'cfe.sh', 'localhost:3000']
+# ALLOWED_HOSTS = ['127.0.0.1', 'cfe.sh', 'localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -141,8 +142,8 @@ STATIC_URL = '/static/'
 the Django-cors-header documentation
 https://pypi.org/project/django-cors-headers/
 '''
-CORS_ALLOW_ALL_ORIGINS = True     # in order to allow the access of the frontend to backend
-CORS_URLS_REGEX = r'^/api/.*$'    # allow contact with the following url regex
+# CORS_ALLOW_ALL_ORIGINS = True     # in order to allow the access of the frontend to backend
+# CORS_URLS_REGEX = r'^/api/.*$'    # allow contact with the following url regex
 
-
+CORS_ORIGIN_WHITELIST = 'http://127.0.0.1:3000',
 

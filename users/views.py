@@ -1,7 +1,9 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+import json
 from .models import *
 from .helpers import *
 
@@ -102,6 +104,8 @@ def view_student_courses(request, username):
 
 # limiting request method to this view for just the post method
 @require_http_methods(['POST'])
+# @ensure_csrf_cookie
+@csrf_exempt
 def login_user(request):
     """
     This veiw function should check if user exiting into the database via
@@ -112,33 +116,38 @@ def login_user(request):
     THE USER DATA SHOULD BE CACHED IN THE CLIENT
     """
     # access the data send from the frontend
-    if request.method == 'POST':
 
-        # access the json object of user's cridentials sent from frontend
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.is_ajax():
+        if request.method == 'POST':
 
-        # check upon the user
-        user = authenticate(request, username=username, password=password)
+            # access the json object of user's cridentials sent from frontend
+            username = request.POST['username']
+            password = request.POST['password']
 
-        if user is not None:
-            # log in the user
-            login(request, user)
+            # check upon the user
+            user = authenticate(request, username=username, password=password)
 
-            # return the user object
-            user = user_serializer(user)
-            success = {'success': True}
+            if user is not None:
+                # log in the user
+                login(request, user)
 
-            return JsonResponse({ **success , **user }, status=200)
+                # return the user object
+                # cors = {"Access-Control-Allow-Origin": "*"}
+                user = user_serializer(user)
+                success = {'success': True}
+
+                return JsonResponse({ **success, **user }, status=200)
+            else:
+                return JsonResponse({'error': 'Invalid credinitals'}, status=401)   # unauthorized
+
         else:
-            return JsonResponse({'error': 'Invalid credinitals'}, status=401)   # unauthorized
-
+            return JsonResponse({'error': 'Method not allowed'}, status=405)
     else:
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
-
+        JsonResponse({'error': 'Ajax requests only'}, status=405)
 
 
 @require_http_methods(['POST'])
+@csrf_exempt
 def register_as_instructor(request):
     """
     This veiw function should take form from frontend and validate each input
@@ -215,6 +224,7 @@ def register_as_instructor(request):
 
 
 @require_http_methods(['POST'])
+@csrf_exempt
 def register_as_student(request):
     """
     This veiw function should take form from frontend and validate each input
@@ -295,6 +305,7 @@ def register_as_student(request):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 @require_http_methods(['POST'])
+@csrf_exempt
 def create_course(request, username):
     """
     This veiw function should take form from frontend and validate each input
