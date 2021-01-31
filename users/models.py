@@ -53,6 +53,7 @@ class Matrial(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)   # instructor
     course = models.ForeignKey(Course , default=None, on_delete=models.CASCADE, related_name='uploaded_materials')
     path = models.TextField(null=True)
+    description = models.TextField(null=True)
     
     @staticmethod
     def _getMaterialCount(course_code):
