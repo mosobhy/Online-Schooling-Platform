@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 import json
 from .models import *
 from .helpers import *
@@ -11,13 +12,14 @@ from django.core.files.storage import FileSystemStorage
 
 
 # delete a course
-@require_http_methods(['DELETE'])
+@require_http_methods(['GET'])
+@login_required(login_url='/api/login/')
 def delete_course(request, username, course_code):
     """
     This function should delete a course from the database when an instructor
     clicks the delete button on a specific course
     """
-    if request.method == 'DELETE':
+    if request.method == 'GET':
         user = User.objects.get(username=username)
         if not user.is_staff:
             return JsonResponse({'error': 'User not allowed to delete'}, status=403)
@@ -143,9 +145,9 @@ def login_user(request):
                 return JsonResponse({'error': 'Invalid credinitals'}, status=401)   # unauthorized
 
         else:
-            return JsonResponse({'error': 'Method not allowed'}, status=405)
+            return JsonResponse({'error': 'Method not Allowed'}, status=405)    # this to handle the login required part ( if the user reached via)
     else:
-        JsonResponse({'error': 'Ajax requests only'}, status=405)
+        JsonResponse({'error': 'Redirect To Login'}, status=303)
 
 
 @require_http_methods(['POST'])
@@ -519,3 +521,6 @@ def upload_material(request, username, course_code):
         matrial.save()
             
         return JsonResponse({'success': True}, status=200)
+        
+    else:
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
