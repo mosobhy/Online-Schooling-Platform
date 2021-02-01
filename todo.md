@@ -228,6 +228,205 @@ the following data should be sent as json object
     }
     ```
 
+#create course
+### url endpoint
+
+    '127.0.0.1:8000/api/create-course/<str:username>/'
+
+### HTTP Method
+
+    'POST'
+
+### required data
+    this route accepts data as url parameters and post parameters
+    	username (instructor)
+    post parameters
+	code
+    	name
+   	level (less than 7)
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        errors: [{"coursecode":"course code already exist"},
+		{"coursename" : "course name is not valid"},
+		{"levellen" : "level must be less than 7"},
+		{"levelint" : "level must be integer"}
+		]
+    }
+    
+    ** success **
+    ```json
+    {
+        success: True
+    }
+    ```
+
+
+#join course
+### url endpoint
+
+    '127.0.0.1:8000/api/join-course/<str:username>/<str:course_code>/'
+
+### HTTP Method
+
+    'GET'
+
+### required data
+    this route accepts data as url parameters
+    	username (student)
+	coursecode
+   
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        {'error': 'Soemthing went Wrong in frontend, No such Course'}
+    }
+	
+    ```json
+    {
+        {'error': 'Student Already Enrolled in this course'}
+    }
+    
+    ** success **
+    ```json
+    {
+        success: True
+    }
+    ```
+
+#view material
+### url endpoint
+
+    '127.0.0.1:8000/api/view-material/<str:username>/<str:course_code>/'
+
+### HTTP Method
+
+    'GET'
+
+### required data
+    this route accepts data as url parameters
+    	username (student)
+	coursecode
+   
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        errors [
+		{"username":"user name not exist"}
+		{"course":"course not exist"}
+	]
+    }
+	
+    ```json
+    {
+        {"error":"student not join course"}
+    }
+    
+    ** success **
+    ```json
+    {
+        success: True
+    }
+    ```
+
+
+#upload material
+### url endpoint
+
+    '127.0.0.1:8000/api/upload-material/<str:username>/<str:course_code>/'
+
+### HTTP Method
+
+    'POST'
+
+### required data
+    this route accepts data as url parameters
+    	username (student)
+	coursecode
+    in POST method
+	file (type file)
+	description (text)
+   
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        errors [
+		{"username":"user name not exist"}
+		{"course":"course not exist"}
+	]
+    }
+	
+    ```json
+    {
+        {"error":"user and course not match"}
+    }
+    
+    ** success **
+    ```json
+    {
+        "matrials": [
+		{"path": "dsdfdsc.txt", "description": null}, 
+		{"path": "debug_29sxBVy.log", "description": "adfasdfsdf"}
+	]
+    }
+    ```
+
+#delete material
+### url endpoint
+
+    '127.0.0.1:8000/api/delete-material/<str:username>/<str:materialid>/'
+
+### HTTP Method
+
+    'GET'
+
+### required data
+    this route accepts data as url parameters
+    	username (student)
+	materialid   
+
+### returns
+
+    ** errors **
+    ```json
+    {
+        {'error': 'User not found'}
+    }
+
+	
+    ```json
+    {
+        {'error': 'material no found'}
+    }
+
+    ```json
+    {
+        {'error': 'user name not match'}
+    }
+
+    ```json
+    {
+        {'error': 'User not allowed to delete'}
+    }
+    
+    ** success **
+    ```json
+    {
+        success: True
+    }
+    ```
 
 ### What is the observer I had added?
 its just simple counter to keep track of how many object get instantiated

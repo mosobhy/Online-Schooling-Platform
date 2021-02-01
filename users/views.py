@@ -340,7 +340,7 @@ def create_course(request, username):
 
         # check if course code is exists 
         if (value_is_exists("course_code",course_code,Course)):
-            errors.append({"course_code":"course code already exist"})
+            errors.append({"coursecode":"course code already exist"})
 
         # check if course name is valid 
         if course_name.isalpha() == False:
@@ -446,11 +446,7 @@ def view_material(request, username, course_code):
 
         # check if student join the course
         if code.students.filter(username=username).count() == 0:
-            errors.append({"student":"student not join course"})
-
-        # if errors fount return errors 
-        if len(errors) != 0:
-            return JsonResponse({'errors': errors}, status=400)
+            return JsonResponse({"error":"student not join course"}, status=400)
         
         else:
             # fetch matiral from database 
@@ -460,7 +456,7 @@ def view_material(request, username, course_code):
             # list the path of  matiral 
             list_of_matrial = []
             for matrial in matrials:
-                list_of_matrial.append(matrial.path)
+                list_of_matrial.append({"id":matrial.id,"path" : matrial.path , "description":matrial.description})
         
             return JsonResponse({ "matrials": list_of_matrial }, status=200)
     
@@ -468,8 +464,10 @@ def view_material(request, username, course_code):
         return JsonResponse({'error': 'Method not Allowed'}, status=405)
 
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
+@csrf_exempt
 def upload_material(request, username, course_code):
+
     """
     This view function will take file and save it in media folder 
     to specific course
@@ -480,7 +478,7 @@ def upload_material(request, username, course_code):
         json = errors = errors
     """
 
-    if request.method == "GET":
+    if request.method == "POST":
        
         errors = []
 
@@ -503,6 +501,9 @@ def upload_material(request, username, course_code):
             course_code.students.filter(username=user) or user.is_staff
         except:
             return JsonResponse({"error":"user and course not match"}, status=400)
+        
+        # get description and check it 
+        description = request.POST["description"];
             
         # get file that come from server 
         myfile = request.FILES['file']
@@ -516,11 +517,53 @@ def upload_material(request, username, course_code):
         # get name of file
         uploaded_file_name = fs.path(filename).split("\\")[-1]
         # save data in database 
-        matrial = Matrial(user=user ,course = course_code, path = uploaded_file_name)
-
+        matrial = Matrial(user=user ,course = course_code, path = uploaded_file_name, description=description)
         matrial.save()
             
         return JsonResponse({'success': True}, status=200)
         
+    else:
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
+
+        return JsonResponse({'success': True}, status=200)
+
+
+@require_http_methods(['GET'])
+def delete_material(request, username, mat_id):
+    """
+    This view function will take username and material id and delete the material 
+
+    if data was valid Return: 
+        json = success:True 
+    if data not valid Return:
+        json = errors = errors
+     """
+    
+    # i use get becouse delete not work 
+    if request.method == 'GET':
+        # try to get user name 
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return JsonResponse({'error': 'User not found'}, status=403)
+        # try to get material 
+        try:
+            mat_to_delete = Matrial.objects.get(id=mat_id)
+        except:
+            return JsonResponse({'error': 'material no found'}, status=403)
+        # check if user log in login 
+        #must use it even if use @login_require
+        if user.username != request.user.username:
+            return JsonResponse({'error': 'user name not match'}, status=403)
+
+        # check if user is staff 
+        if not user.is_staff:
+            return JsonResponse({'error': 'User not allowed to delete'}, status=403)
+
+        # delete
+        mat_to_delete.delete()
+
+        # THIS METHOD SHOULD NOT RETURN ANYTHING BUT FOR TESTING, RETURN SUCCESS
+        return JsonResponse({'success': True}, status=200)
     else:
         return JsonResponse({'error': 'Method not Allowed'}, status=405)

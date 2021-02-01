@@ -11,6 +11,7 @@ urlpatterns = [
     path('join-course/<str:username>/<str:course_code>/', views.join_course),
     path('view-material/<str:username>/<str:course_code>/', views.view_material),   
     path('upload-material/<str:username>/<str:course_code>', views.upload_material),
+    path('delete-material/<str:username>/<str:mat_id>', views.delete_material),
     path('login/', views.login_user),
     path('doctor/', views.register_as_instructor),
     path('student/', views.register_as_student),
