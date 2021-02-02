@@ -1,0 +1,26 @@
+.course-Nav-parent{
+ width: 20%;
+ position: fixed;
+ top: 0px;
+ left: 0px ;
+ height: 100% ;
+ z-index: 10;
+ display: flex;
+ flex-direction: column;
+ background-color:  #003366;
+justify-content: center;
+}
+
+.course-Nav-parent a{
+    color: #fff !important;
+    font-family: 'Gidugu', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    margin: 1rem 1px;
+    transition: 0.5s;
+} 
+
+.course-Nav-parent a:hover{
+    color: #D6A419 !important;
+}

@@ -1,0 +1,127 @@
+.parent-live{
+    background-color: #262626;
+    height: 100vh;
+    border: 10px solid #003366;
+}
+
+.parent-live .live-Control{
+    background-color: #003366;
+    padding: 1rem;
+    border-top: 1px solid #b3b3b3;
+}
+
+.parent-live .live-Control svg{
+    color: #fff ;
+    font-size: 1.4rem;
+    margin: 0px 1rem;
+    cursor: pointer;
+}
+
+.parent-live .live-Control span{
+    color: #fff;
+    font-family: 'Big Shoulders Inline Display', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+   
+}
+.parent-live .live-Control .sound-parent{
+    position: relative;
+}
+
+.parent-live .live-Control .sound-parent div{
+    position: absolute;
+    top: 0px;
+    left: -5rem;
+}
+
+.parent-live .live-Control .camera-parent{
+    position: relative;
+}
+
+.parent-live .live-Control .camera-parent div{
+    position: absolute;
+    top: 0px;
+    left: -10rem;
+}
+
+/* ========================================================== */
+
+.member-parent{
+    overflow: auto !important;
+    padding-top: 1rem;
+    width: 20%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: #003366;
+    height: 100%;
+    text-align: left;
+    color: #fff;
+    /* font-family: 'PT Sans', sans-serif; */
+     font-family: 'Big Shoulders Inline Display', cursive; 
+    /* font-family: 'Gidugu', sans-serif; */
+    letter-spacing: 1px;
+    font-weight: 100;
+    display: none;
+
+
+}
+
+.member-parent .member-name-parent{
+    border-bottom: 1px solid #004080;
+    padding: 5px 5px
+}
+.member-parent .member-name-parent svg{
+    margin: 0px 5px;
+    color: #D6A419;
+}
+
+/* ================================================================= */
+
+.chat-box{
+    width: 20%;
+    height: 45%;
+    background-color: #fff;
+    position: absolute;
+    right: 0px !important;
+    bottom: 10%;
+    border-radius: 15px;
+    display: none;
+}
+
+.option{
+    text-align: right;
+    padding: 0.2rem 0.3rem;
+    border-bottom: 1px solid #b3b3b3;
+}
+.option svg{
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.option svg:hover{
+ color: #D6A419;
+}
+.input-massage{
+    position: absolute;
+    bottom: 2px;
+    left: 0px;
+    border-top: 1px solid #b3b3b3;
+    width: 100%;
+    padding: 0.3rem !important;
+}
+
+.input-massage input{
+    border: none !important;
+    background-color: transparent;
+
+}
+.input-massage input::placeholder{
+    font-family: 'Big Shoulders Inline Display', cursive; 
+      color: #000;
+ font-size: 1.1rem;
+}
+.input-massage input:focus{
+    outline: none !important;
+    border: none !important;
+}

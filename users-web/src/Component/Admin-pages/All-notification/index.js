@@ -1,4 +1,5 @@
 import react, { Component } from "react";
+import Navbar from '../Navbar/index';
 import { Jumbotron, Button } from 'react-bootstrap';
 import { BsThreeDots } from 'react-icons/bs'
 import "./style.css";
@@ -25,7 +26,7 @@ class AllNotification extends Component {
         const { notification } = this.state
         const items = notification.map((item) => {
             return (
-                <div className="text-left notification-body my-3">
+                <div className="text-left notification-body my-3" key={item.id}>
 
                     <h5><span>{item.id}</span> {item.name}</h5>
                     <p>
@@ -36,10 +37,15 @@ class AllNotification extends Component {
             )
         })
         return (
-            <Jumbotron className="notification-parent text-left">
-                <h2>Notification</h2>
-                {items}
-            </Jumbotron>
+            <react.Fragment>
+                <Navbar />
+                <Jumbotron className="notification-parent text-left">
+                    <h2>Notification</h2>
+                    {items}
+                </Jumbotron>
+
+            </react.Fragment>
+
 
         )
     }

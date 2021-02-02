@@ -1,6 +1,12 @@
 /*========================== Navbar style =============================== */
 .Admin-navbar{
     background-color: #003366;
+    position: fixed !important;
+    width: 100%;
+    top: 0px;
+    z-index: 55;
+    border-bottom: 1px solid #b3b3b3;
+
 }
 .Admin-navbar a{
     color: #fff !important;

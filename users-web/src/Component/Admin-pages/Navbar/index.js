@@ -22,20 +22,24 @@ class AdminNav extends Component {
 
     render() {
         return (
-            <react.Fragment>
-                <Navbar className="Admin-navbar">
+            <div>
+                <Navbar className="Admin-navbar" expand="lg">
                     <div className="container">
                         <Navbar.Brand ><Link to="/admin/"><img src="/image/logo.gif" width="70px" height="50px" /></Link></Navbar.Brand>
-                        <Nav className="m-auto">
-                            <Nav.Link onClick={this.handleShow}>create course</Nav.Link>
-                            <Nav.Link ><Link to="/admin/view">View courses</Link></Nav.Link>
-                        </Nav>
-                        <div className="text-white icone-group" >
-                            <IoMdNotificationsOutline />
-                            <IoIosHelpCircleOutline />
-                            <FaUserTie />
-                        </div>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="m-auto">
+                                <Nav.Link onClick={this.handleShow}>create course</Nav.Link>
+                                <Nav.Link ><Link to="/admin/view">View courses</Link></Nav.Link>
+                            </Nav>
+                            <div className="text-white icone-group" >
+                                <IoMdNotificationsOutline />
+                                <IoIosHelpCircleOutline />
+                                <FaUserTie />
+                            </div>
+                        </Navbar.Collapse>
                     </div>
+
                 </Navbar>
                 {/* create course pop up */}
 
@@ -68,7 +72,7 @@ class AdminNav extends Component {
                     </Modal.Footer>
                 </Modal>
 
-            </react.Fragment >
+            </div >
 
 
 

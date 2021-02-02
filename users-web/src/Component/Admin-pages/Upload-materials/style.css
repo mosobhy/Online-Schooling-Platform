@@ -1,0 +1,34 @@
+.start-page{
+    position: absolute;
+    top: 45%;
+    left:50%;
+    transform: translate(-50% , -50%);
+    width: 100%;
+  
+  
+  }
+.start-page img{
+      padding-top: 1rem;
+      width: 25%;
+      height: 25%;
+  }
+.start-page p{
+      font-family: 'Tinos', serif;
+      color: #8c8c8c;
+      padding: 3px;
+  }
+#fileForm input::-webkit-file-upload-button{
+    outline: none;
+  border: none;
+  font-family: 'Tinos', serif;
+  color:steelblue ;
+  padding: 3px;
+  background-color: transparent;
+    cursor: pointer;
+    margin-left: 35% !important;
+}
+
+#fileForm input{
+   color: transparent;
+   cursor: pointer;
+}
