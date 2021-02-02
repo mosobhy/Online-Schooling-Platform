@@ -172,7 +172,7 @@ def register_as_instructor(request):
         email = request.POST['email']
         password = request.POST['password']
         ssn = request.POST['ssn']
-        university_id = request.POST['universityid']
+        
 
         # make array of error in eorm
         error = []
@@ -192,9 +192,7 @@ def register_as_instructor(request):
         if len(ssn) > 14 or len(ssn) < 14:
             error.append({"SSN" : "SSN is must be 14"})
         # check if ssn is less than 20 number
-        if len(university_id) > 10 and len(university_id) < 5:
-            error.append({"SSN" : "University_id is greater than 10"})
-
+       
         # if fount error return array of error 
         if len(error) != 0:
             return JsonResponse({'errors': error}, status=400)
@@ -208,7 +206,7 @@ def register_as_instructor(request):
         user.is_staff = True
 
         # add information to the user 
-        info = UserInfo(user = user, ssn = ssn, university_id = university_id)
+        info = UserInfo(user = user, ssn = ssn)
         # commit change 
         user.save()
         info.save()
