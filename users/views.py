@@ -178,13 +178,13 @@ def register_as_instructor(request):
         error = []
         #check if first  naem valid
         if first_name.isalpha() == False:
-            error.append({"first name" : "First name is not valid"})
+            error.append({"firstname" : "First name is not valid"})
         #check if first  naem valid
         if last_name.isalpha() == False:
-            error.append({"first name" : "Last name is not valid"})
+            error.append({"lastname" : "Last name is not valid"})
         # check if user exist 
         if username_exists(user_name):
-            error.append({"user name" : "User name already exist"})
+            error.append({"username" : "User name already exist"})
         # check if email is valid 
         if validate_email(email) == False:
             error.append({"email" : "It's not valid email"})
@@ -254,13 +254,13 @@ def register_as_student(request):
         error = []
         #check if first  naem valid
         if first_name.isalpha() == False:
-            error.append({"first name" : "First name is not valid"})
+            error.append({"firstname" : "First name is not valid"})
         #check if first  naem valid
         if last_name.isalpha() == False:
-            error.append({"last name" : "Last name is not valid"})
+            error.append({"lastname" : "Last name is not valid"})
         # check if user exist 
         if username_exists(user_name):
-            error.append({"user name" : "User name already exist"})
+            error.append({"username" : "User name already exist"})
         # check if email is valid 
         if validate_email(email) == False:
             error.append({"email" : "It's not valid email"})
