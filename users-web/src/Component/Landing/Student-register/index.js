@@ -13,12 +13,12 @@ import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 class Student extends Component {
 
     componentDidMount() {
-        document.getElementById("studentRegisterForm").addEventListener("submit", (e) => {
+        document.getElementById("studentRegisterForm").onsubmit = (e) => {
             e.preventDefault();
             checkData();
             getRequest();
 
-        });
+        };
 
         function getCookie(name) {
             var cookieValue = null;
@@ -108,27 +108,27 @@ class Student extends Component {
             const request = new XMLHttpRequest();
             const csrftoken = getCookie('csrftoken');
             request.open("post", "http://127.0.0.1:8000/api/student/");
-            request.setRequestHeader("Content-Type", "application/json");
-            request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+            
+            // request.setRequestHeader("Content-Type", "application/json");
+            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
             request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             request.setRequestHeader("X-CSRFToken", csrftoken);
 
             request.onload = () => {
                 console.log(request.responseText)
-                // const respons = JSON.parse(request.responseText);
-                // console.log(respons);
+                const respons = JSON.parse(request.responseText);
+                console.log(respons);
             }
 
-            const data = {
-                "firstname": firstName,
-                "lastname": lastName,
-                "username": userName, 
-                "ssn": nationalId,
-                "unvirstayid": universityId,
-                "level": level,
-                "email": email,
-                "password": password,  
-            };
+            const data = new FormData();
+            data.append('firstname', firstName);
+            data.append('lastname', lastName);
+            data.append('username', userName);
+            data.append('ssn', nationalId);
+            data.append('universityid', universityId);
+            data.append('level', level);
+            data.append('email', email);
+            data.append('password', password);
 
             request.send(data);
             return false;

@@ -19,7 +19,7 @@ class Login extends Component {
 
             request.open("post", "http://127.0.0.1:8000/api/login/");
 
-            request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
             request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             request.setRequestHeader("X-CSRFToken", csrftoken);
 
