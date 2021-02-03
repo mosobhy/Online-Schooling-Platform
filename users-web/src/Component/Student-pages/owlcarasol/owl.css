@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
 .p-primary {
   padding-bottom: 1.5rem;
   font-weight: bold;
@@ -27,4 +31,38 @@
   background-color: white !important;
   border:  1px solid black !important;
   color: black !important;
+<<<<<<< HEAD
+=======
+=======
+.p-primary {
+  padding-bottom: 1.5rem;
+  font-weight: bold;
+  color: #424656;
+}
+
+.my-slider {
+    padding: 3rem 0 ;
+}
+.my-slider h2 {
+  color: #D6A419;
+}
+
+.my-card {
+  border: none !important;
+  box-shadow: 2px 2px 3px #727787;
+}
+
+.primary-btn { 
+  margin: 3rem 0;
+  padding: .4rem 2rem  !important;
+  background-color: black !important;
+  border: none !important;
+}
+
+.primary-btn:hover {
+  background-color: white !important;
+  border:  1px solid black !important;
+  color: black !important;
+>>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
 }

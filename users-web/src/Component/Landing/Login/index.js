@@ -42,9 +42,21 @@ class Login extends Component {
 
                     response.is_staff ? (
 
+<<<<<<< HEAD
                         this.props.history.push("/admin/")
                     ) : (
                             this.props.history.push(`/studentPages/`)
+=======
+<<<<<<< HEAD
+                        this.props.history.push("/admin/")
+                    ) : (
+                            this.props.history.push("/studentPages/")
+=======
+                        this.props.history.push(`/admin/${this.state.data.username}`)
+                    ) : (
+                            this.props.history.push(`/studentPages/${this.state.data.username}`)
+>>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
                         );
 
 

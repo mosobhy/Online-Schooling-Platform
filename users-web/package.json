@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
 {
   "name": "osp",
   "version": "0.1.0",
@@ -46,3 +50,56 @@
     ]
   }
 }
+<<<<<<< HEAD
+=======
+=======
+{
+  "name": "osp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.2",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1",
+    "particles.js": "^2.0.0",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^17.0.1",
+    "react-fancybox": "^0.2.5",
+    "react-icons": "^4.1.0",
+    "react-owl-carousel": "^2.3.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+>>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d

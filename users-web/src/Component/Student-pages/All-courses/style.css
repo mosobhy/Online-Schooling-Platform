@@ -1,0 +1,25 @@
+.table-student-control{
+    width: 80% !important;
+    margin-top: 8rem !important;
+
+}
+.table-student-control thead th{
+    font-family: 'Chicle', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+.table-student-control tbody td{
+    font-family: 'Gidugu', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+}
+
+.table-student-control tbody .view-button a{
+    background-color: #e4af1b;
+    font-size: 1.1rem;
+    color: #fff;
+    padding: 5px 1.1rem;
+    font-family: 'Source Sans Pro', sans-serif !important;
+    border-radius: 5px;
+    text-decoration: none !important;
+}

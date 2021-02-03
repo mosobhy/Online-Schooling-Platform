@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 body {
@@ -45,3 +49,55 @@ body {
 
 
 
+<<<<<<< HEAD
+=======
+=======
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.header { 
+  height: 100vh;
+  display: flex ; 
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-container h1 span {
+  display: block;
+  text-transform: capitalize;
+  letter-spacing: .2rem;
+  font-weight: bold;
+  color: #D6A419;
+}
+
+.header-container p {
+  font-weight: 500;
+  line-height: 1.8rem;
+}
+
+.header-container { 
+  background-color: #dfe6f0;
+  box-shadow: 0.3rem 0.3rem 0.4rem #ccc, -0.1rem -0.1rem 0.4rem #ccc;
+  border-radius: 0.5rem;
+  perspective: 100rem;
+  padding: 5rem;
+}
+
+.test {
+  clip-path: polygon(0 0 , 100% 0 , 100% 90% , 0 100%);
+  transform: rotateY(20deg);
+} 
+
+
+
+>>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
+>>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
