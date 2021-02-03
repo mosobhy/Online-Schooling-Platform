@@ -11,15 +11,67 @@ import os
 from django.core.files.storage import FileSystemStorage
 
 
+# creating a quiz by instructor
+@require_http_methods(['POST'])
+@csrf_exempt
+@login_required(login_url='/api/login/')
+def create_quiz(request, username, course_code):
+    ''' Create a quiz record '''
+
+    if request.is_ajax():
+        if request.method == 'POST':
+
+            # access the quiz data
+            if not username or not course_code:
+                return JsonResponse({'error': 'Could not access url parameters'}, status=404)
+            
+            # check upon the post data
+            # note the version of json passed by the frontend should be
+            # stringfyied and i will convert it here into json
+            if not request.POST['questions']:
+                return JsonResponse({'error': 'No Questions has recieved'}, status=404)
+
+            # get the course name
+            course = Course.objects.get(course_code=course_code)
+            course_instructor = course.created_by_instructor
+
+            # get the user object
+            user = User.objects.get(username=username)
+
+            if course_instructor != user:
+                return JsonResponse({'error': 'Not allowed to create quizes'}, status=401)
+
+            # now make the quiz record
+            # the questions object will contain all the questions and answers to it and 
+            # the grading system to each question
+            quiz = Quiz(
+                course=course,
+                satrt_time=request.POST['start_time'],
+                end_time=request.POST['end_time'],
+                questions=json.dumps(request.POST['questions'])
+            )
+
+            if not quiz:
+                return JsonResponse({'error': 'something went wrong.. traceback'}, status=404)
+
+            # successfully created quiz
+            return JsonResponse({'success': True}, status=200)
+
+        else:
+            return JsonResponse({'error': 'Method not allowed'}, status=405)
+    else:
+        return JsonResponse({'error': 'Not ajax'}, status=405)
+
+
 # delete a course
-@require_http_methods(['GET'])
+@require_http_methods(['DELETE'])
 @login_required(login_url='/api/login/')
 def delete_course(request, username, course_code):
     """
     This function should delete a course from the database when an instructor
     clicks the delete button on a specific course
     """
-    if request.method == 'GET':
+    if request.method == 'DELETE':
         user = User.objects.get(username=username)
         if not user.is_staff:
             return JsonResponse({'error': 'User not allowed to delete'}, status=403)
