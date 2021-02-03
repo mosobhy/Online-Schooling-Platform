@@ -11,7 +11,10 @@ import { FaUserTag } from "react-icons/fa";
 import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 
 class Student extends Component {
-
+    state = {
+        users: {},
+        error: {}
+    }
     componentDidMount() {
         document.getElementById("studentRegisterForm").onsubmit = (e) => {
             e.preventDefault();
@@ -43,7 +46,7 @@ class Student extends Component {
             const email = document.getElementById("email");
             const universityId = document.getElementById("universityId");
             const password = document.getElementById("password");
-        
+
 
             //username tast
             if (userName.value == '' || userName.value == null) {
@@ -52,10 +55,18 @@ class Student extends Component {
                 setSeccessFor(userName)
             }
             //national id tast
-            if (nationalId.value < 14) {
-                setErrorFor(nationalId, "Enter a vaild id");
-            } else {
+            if (nationalId.value == 14) {
+
                 setSeccessFor(nationalId)
+            } else {
+                setErrorFor(nationalId, "Enter a vaild id");
+            }
+            //universityId id tast
+            if (universityId.value == 14) {
+
+                setSeccessFor(universityId)
+            } else {
+                setErrorFor(universityId, "Enter a vaild university Id");
             }
             //email tast
             if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)) {
@@ -74,10 +85,10 @@ class Student extends Component {
             if (password.value == '' && password.value <= 5) {
                 setErrorFor(password, "enter a vaild password");
             } else {
-               
+
                 setSeccessFor(password)
             }
-  
+
         }
 
         //handel error 
@@ -108,16 +119,27 @@ class Student extends Component {
             const request = new XMLHttpRequest();
             const csrftoken = getCookie('csrftoken');
             request.open("post", "http://127.0.0.1:8000/api/student/");
-            
+
             // request.setRequestHeader("Content-Type", "application/json");
             // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
             request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             request.setRequestHeader("X-CSRFToken", csrftoken);
 
             request.onload = () => {
-                console.log(request.responseText)
-                const respons = JSON.parse(request.responseText);
-                console.log(respons);
+                const response = JSON.parse(request.responseText);
+                if (response.errors) {
+                    this.setState({
+                        error: response.errors
+                    })
+                    console.log(this.state.error)
+                } else if (response.success) {
+                    this.setState({
+                        users: response
+                    })
+                    this.props.history.push(`/studentPages/${this.state.username}`);
+                }
+
+
             }
 
             const data = new FormData();
@@ -151,7 +173,7 @@ class Student extends Component {
                         <div className="d-flex justify-content-between">
                             <div className="input-control my-2">
                                 <BiUserCircle />
-                                <input type="text" placeholder="First Name" id="fname"/>
+                                <input type="text" placeholder="First Name" id="fname" />
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
@@ -159,7 +181,7 @@ class Student extends Component {
 
                             <div className="input-control my-2">
                                 <BiUserPlus />
-                                <input type="text" placeholder="Last Name" id="lname"/>
+                                <input type="text" placeholder="Last Name" id="lname" />
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
@@ -180,7 +202,7 @@ class Student extends Component {
                         <div className="d-flex justify-content-between">
                             <div className="input-control my-2">
                                 <FaUserTag />
-                                <input type="text" placeholder="National Id" id="nationalId"/>
+                                <input type="text" placeholder="National Id" id="nationalId" />
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
@@ -189,7 +211,7 @@ class Student extends Component {
 
                             <div className="input-control my-2">
                                 <FaUserTag />
-                                <input type="text" placeholder="University Id" id="universityId"/>
+                                <input type="text" placeholder="University Id" id="universityId" />
                                 <AiFillCheckCircle className="inside-input correct" />
                                 <AiFillExclamationCircle className="inside-input uncorrect" />
                                 <small>Error Massage</small>
@@ -201,15 +223,15 @@ class Student extends Component {
                         <div className="input-control my-2">
                             <select id="level">
                                 <option value="1">Level 1</option>
-                                <option  value="2">Level 2</option>
-                                <option  value="3">Level 3</option>
-                                <option  value="4">Leve 4</option>
+                                <option value="2">Level 2</option>
+                                <option value="3">Level 3</option>
+                                <option value="4">Leve 4</option>
                             </select>
                         </div>
 
                         <div className="input-control my-2">
                             <MdEmail />
-                            <input type="email" placeholder="name@example.com" className="w-75" id="email"/>
+                            <input type="email" placeholder="name@example.com" className="w-75" id="email" />
                             <AiFillCheckCircle className="inside-input correct" />
                             <AiFillExclamationCircle className="inside-input uncorrect" />
                             <small>Error Massage</small>
@@ -218,7 +240,7 @@ class Student extends Component {
 
                         <div className="input-control my-2 ">
                             <RiLockPasswordLine />
-                            <input type="password" placeholder="Password" className="w-75" id="password"/>
+                            <input type="password" placeholder="Password" className="w-75" id="password" />
                             <AiFillCheckCircle className="inside-input correct" />
                             <AiFillExclamationCircle className="inside-input uncorrect" />
                             <small>Error Massage</small>
@@ -227,7 +249,9 @@ class Student extends Component {
                         <div className="input-control text-center">
                             <button type="submit" className="btn">Submit</button>
                         </div>
-
+                        {/* <div className="errorHandel">
+                            <small>{this.state.error}</small>
+                        </div> */}
                     </form>
 
                 </div>

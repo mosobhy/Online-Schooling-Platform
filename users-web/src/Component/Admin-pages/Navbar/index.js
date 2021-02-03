@@ -6,6 +6,7 @@ import { FaUserTie } from "react-icons/fa";
 import "./style.css";
 
 class AdminNav extends Component {
+  
     state = {
         show: false
     }
@@ -25,12 +26,12 @@ class AdminNav extends Component {
             <div>
                 <Navbar className="Admin-navbar" expand="lg">
                     <div className="container">
-                        <Navbar.Brand ><Link to="/admin/"><img src="/image/logo.gif" width="70px" height="50px" /></Link></Navbar.Brand>
+                        <Navbar.Brand ><Link to={"/admin/" + this.props}><img src="/image/logo.gif" width="70px" height="50px" /></Link></Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="m-auto">
                                 <Nav.Link onClick={this.handleShow}>create course</Nav.Link>
-                                <Nav.Link ><Link to="/admin/view">View courses</Link></Nav.Link>
+                                <Nav.Link ><Link to="/view">View courses</Link></Nav.Link>
                             </Nav>
                             <div className="text-white icone-group" >
                                 <IoMdNotificationsOutline />
@@ -45,7 +46,7 @@ class AdminNav extends Component {
 
                 <Modal show={this.state.show} onHide={this.handleClose} centered keyboard={false} className="pop-parent">
                     <Modal.Header closeButton className="pop-header">
-                        <Modal.Title>Your course</Modal.Title>
+                        <Modal.Title>Create course</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="pop-body">
 
@@ -67,7 +68,7 @@ class AdminNav extends Component {
                     </Modal.Body>
                     <Modal.Footer className="pop-footer">
                         <Button onClick={this.handleClose}>
-                            Close
+                            Create
                             </Button>
                     </Modal.Footer>
                 </Modal>

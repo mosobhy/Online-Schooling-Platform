@@ -1,18 +1,21 @@
 import react, { Component } from "react";
 import NavBar from "../Navbar/index";
 import './style.css';
-import jQuery from "jquery";
+import $ from "jquery";
 import { FiUserCheck } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 
 
 class Login extends Component {
-
+    state = {
+        data: {},
+        error: ''
+    }
     componentDidMount() {
         document.getElementById("loginForm").onsubmit = (e) => {
             e.preventDefault();
-          //  send data to api
+            //  send data to api
             const request = new XMLHttpRequest();
 
             const csrftoken = getCookie('csrftoken');
@@ -25,12 +28,31 @@ class Login extends Component {
 
             request.onload = () => {
                 const response = JSON.parse(request.responseText);
-                console.log(response);
 
-                // HERE YOU HAVE TO HANDLE THE RETURNED MESSAGES AND TAKE ACTIONS 
-                // DEPENDS ON IT
-                // 1. REDIRECT TO THE NEXT PAGE IF SUCCESS
-                // 2. DISPLAY THE ERROR MESSAGE LIKE (NOT REGISTERD OR WRONG PASSWORD OR WRONG USERNAME)
+                if (response.error) {
+                    this.setState({
+                        error: response.error
+                    });
+                
+
+                } else if (response.success) {
+                    this.setState({
+                        data: response
+                    });
+
+                    response.is_staff ? (
+
+                        this.props.history.push(`/admin/${this.state.data.username}`)
+                    ) : (
+                            this.props.history.push(`/studentPages/${this.state.data.username}`)
+                        );
+
+
+
+
+
+                }
+
             }
 
             const data = new FormData();
@@ -39,9 +61,9 @@ class Login extends Component {
 
             request.send(data);
             return false;
-         
+
         };
-        
+
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -63,14 +85,14 @@ class Login extends Component {
 
 
 
-       
+
 
 
     render() {
-   
+
         return (
 
-            
+
             <div className="home-parent">
                 <NavBar />
                 <div className="doctor-form">
@@ -101,6 +123,9 @@ class Login extends Component {
 
 
                     </form>
+                    <div className="errorHandel">
+                        <small>{ this.state.error}</small>
+                    </div>
                 </div>
 
             </div>
