@@ -26,12 +26,12 @@ class AdminNav extends Component {
             <div>
                 <Navbar className="Admin-navbar" expand="lg">
                     <div className="container">
-                        <Navbar.Brand ><Link to={"/admin/" + this.props}><img src="/image/logo.gif" width="70px" height="50px" /></Link></Navbar.Brand>
+                        <Navbar.Brand ><Link to="/admin/"><img src="/image/logo.gif" width="70px" height="50px" /></Link></Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="m-auto">
                                 <Nav.Link onClick={this.handleShow}>create course</Nav.Link>
-                                <Nav.Link ><Link to="/view">View courses</Link></Nav.Link>
+                                <Nav.Link ><Link to="/admin/view">View courses</Link></Nav.Link>
                             </Nav>
                             <div className="text-white icone-group" >
                                 <IoMdNotificationsOutline />

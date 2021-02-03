@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { AiOutlineClose, AiFillGithub, AiOutlineAmazon, AiOutlineBehance, AiOutlineTwitter } from "react-icons/ai";
 import { BsJustify } from "react-icons/bs";
 import $ from "jquery";
-import {findDOMNode} from "react-dom";
 import './Nav-style.css';
 
 class NavBar extends Component {

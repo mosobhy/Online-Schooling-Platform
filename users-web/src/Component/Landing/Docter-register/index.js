@@ -73,7 +73,7 @@ class Docter extends Component {
                     this.setState({
                         admin: response
                     })
-                    this.props.history.push(`/admin/${this.state.admin.username}`);
+                    this.props.history.push("/admin/");
                 }
             }
 

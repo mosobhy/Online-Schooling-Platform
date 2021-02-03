@@ -136,7 +136,7 @@ class Student extends Component {
                     this.setState({
                         users: response
                     })
-                    this.props.history.push(`/studentPages/${this.state.username}`);
+                    this.props.history.push("/studentPages/");
                 }
 
 
