@@ -4,6 +4,7 @@ from . import views
 
 # the url patters
 urlpatterns = [
+    path('create-quiz/<str:username>/<str:course_code>/', views.create_quiz),
     path('delete-course/<str:username>/<str:course_code>/', views.delete_course),
     path('view-a-course/<str:username>/<str:course_code>/', views.view_specific_course),
     path('view-courses/<str:username>/', views.view_student_courses),

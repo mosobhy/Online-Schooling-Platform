@@ -12,6 +12,10 @@ class UserInfo(models.Model):
     university_id = models.CharField(null=True,max_length=20)
     level = models.IntegerField(null=True)
 
+    def userSerializer(self):
+        ''' Return the user object as a dictionary object '''
+        pass
+
     # track the number of students created 
     @staticmethod
     def _studentsCount():
@@ -31,8 +35,15 @@ class Course(models.Model):
     course_code = models.CharField(null=True, max_length=50, unique=True)
     course_name = models.CharField(null=True, max_length=50)
     level = models.IntegerField(null=True)
-    created_by_instructor = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE, null=True)
+    created_by_instructor = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE, related_name='created_courses', null=True)
     students = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='enrolled_courses')    # to retieve the courses that some strudent has been mentioned in its students field
+
+    def courseSerializer(self):
+        ''' 
+            Return the course object and all of its related stuff as a
+            dictionary object 
+        '''
+        pass
 
     @staticmethod
     def _getCourseCount(username):
@@ -55,6 +66,13 @@ class Matrial(models.Model):
     path = models.TextField(null=True)
     description = models.TextField(null=True)
     
+    def matrialSerializer(self):
+        '''
+            Return the matrial object and all of its related stuff 
+            as a dictionray object
+        '''
+        pass
+
     @staticmethod
     def _getMaterialCount(course_code):
         ''' 
@@ -79,6 +97,14 @@ class Quiz(models.Model):
     end_time = models.DateTimeField(null=True)
     question = jsonfield.JSONField(default=None, null=True)    # this is going to store a json object
 
+    def quizSerializer(self):
+        '''
+            Return the quiz object and all of its related stuff as 
+            a dicitonary object
+        '''
+        pass
+
+
     @staticmethod
     def _getQuizCount(course_code):
         ''' 
@@ -100,6 +126,13 @@ class Result(models.Model):
     # result = Result.quiz_details.get(pk=Quiz.objects.get(pk=id))
     # results = quiz_obj.quiz_details.all()
     grade = models.IntegerField(null=True)
+
+    def resultSerializer(self):
+        '''
+            Return the result object and all of its related stuff
+            as a dictionray object
+        '''
+        pass
 
     def __str__(self):
         return str(self.user)

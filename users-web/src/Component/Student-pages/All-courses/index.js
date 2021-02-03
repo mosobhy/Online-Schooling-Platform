@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import react, { Component } from "react";
 import Navbar from "../Navbar/index";
 import { Table } from 'react-bootstrap';
@@ -62,4 +63,22 @@ class AllCourses extends Component {
     }
 }
 
+=======
+import react, { Component } from "react";
+import Navbar from "../Navbar/index";
+import './style.css';
+
+class AllCourses extends Component{
+    render() {
+        return (
+            <react.Fragment>
+                <Navbar />
+              <h1>All Courses</h1>
+            </react.Fragment>
+        
+        )
+    }
+}
+
+>>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
 export default AllCourses;

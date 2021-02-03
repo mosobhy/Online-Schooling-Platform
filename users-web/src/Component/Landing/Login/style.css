@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .home-parent{
     background-color: #003366;
     height : 120vh;
@@ -30,4 +31,38 @@
     font-weight: bold;
     color: #e74c32;
 
+=======
+.home-parent{
+    background-color: #003366;
+    height : 120vh;
+}
+
+.input-control.success input{
+    border: 1px solid #2ecc71 !important;
+}
+.input-control.success .correct{
+    visibility: visible;
+    color: #2ecc71;
+}
+
+.input-control.error input{
+ 
+    border: 1px solid #e74c32 !important;
+}
+.input-control.error .uncorrect{
+    visibility: visible;
+    color: #e74c32;
+}
+.input-control.error small{
+    visibility: visible;
+    color: #e74c32;
+}
+
+
+.errorHandel small{
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    color: #e74c32;
+
+>>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
 }
