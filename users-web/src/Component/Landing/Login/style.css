@@ -23,3 +23,11 @@
     visibility: visible;
     color: #e74c32;
 }
+
+
+.errorHandel small{
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    color: #e74c32;
+
+}

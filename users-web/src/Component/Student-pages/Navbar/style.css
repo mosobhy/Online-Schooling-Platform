@@ -1,3 +1,119 @@
-.Studen-Nav{
-    background-color: red !important;
+/* ****************** Utility Classes ********************** */
+.display-none {
+    display: none;
 }
+
+.navbar img.logo {
+    transform: scale( 3 , 1.9);
+}
+
+.navbar {
+    background-color: #003366;
+    position: fixed !important;
+    width: 100%;
+    z-index: 99999;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white !important;
+}
+
+.nav-link-animation {
+    position: relative;
+}
+.nav-link-animation::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width:0;
+  height: 1px;
+  transition: all 1s ;
+}
+
+.nav-link-animation:hover::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: white;
+}
+
+.nav-link:hover {
+    color: rgb(106, 104, 104) !important;
+}
+.nav-icons {
+    margin-right: 0;
+    transform: translateX(15px);
+
+}
+
+.nav-icons svg {
+    color: white;
+    margin: 0 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+}
+
+.nav-icons svg:last-child {
+    margin-right: 0;
+}
+
+.dropdown svg:first-child{
+    font-size: 2rem;
+}
+
+.nav-icons svg:hover {
+    color:  rgb(106, 104, 104);
+}
+
+.nav-toggle {
+    transform: translateX(32px);
+    background-color: white;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgb(255,255, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.navbar-light .navbar-toggler {
+    border:none !important;
+}
+
+/* ************************* Drop Down **********************************  */
+
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 75px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+
+  /*    ************************************* End Of Navbar *************************************************  */
+
+  

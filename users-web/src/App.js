@@ -28,17 +28,17 @@ class App extends Component {
           <Route exact path="/student" component={Student}></Route>
 
           {/* docter links public */}
-          <Route exact path="/admin/" component={Home}></Route>
-          <Route exact path="/admin/view" component={ViewAllCourses}></Route>
+          <Route exact path="/admin/:username" component={Home}></Route>
+          <Route exact path="/view" component={ViewAllCourses}></Route>
         
           {/* course detalis links */}
-          <Route exact path="/admin/course/" component={News}></Route>
-          <Route exact path="/admin/course/materials" component={UploadMaterials}></Route>
-          <Route exact path="/admin/course/live" component={GoLive}></Route>
-          <Route exact path="/admin/course/quiz" component={CreateQuiz}></Route>
+          <Route exact path="/course/" component={News}></Route>
+          <Route exact path="/course/materials" component={UploadMaterials}></Route>
+          <Route exact path="/course/live" component={GoLive}></Route>
+          <Route exact path="/course/quiz" component={CreateQuiz}></Route>
 
           {/* student pages links */}
-          <Route exact path="/studentPages/" component={StudentHome}></Route>
+          <Route exact path="/studentPages/:username" component={StudentHome}></Route>
           <Route exact path="/studentPages/courses" component={StudentCourses}></Route>
           <Route exact path="/studentPages/notifiction" component={StudentNotifiction}></Route>
 

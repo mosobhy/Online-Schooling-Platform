@@ -4,12 +4,24 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.core.cache import cache
+from django.conf import settings
 import json
 from .models import *
 from .helpers import *
 import os
 from django.core.files.storage import FileSystemStorage
 
+
+# configure this applicaion to use the redis api
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
+
+@require_http_methods(['GET'])
+@login_required(login_url='/api/login/')
+def dotdotdot(request):
+    pass
 
 # creating a quiz by instructor
 @require_http_methods(['POST'])
@@ -175,6 +187,9 @@ def login_user(request):
 
     if request.is_ajax():
         if request.method == 'POST':
+
+            c = cache.get('first_key')
+            print(f'-------{c}-------')
 
             # access the json object of user's cridentials sent from frontend
             username = request.POST['username']

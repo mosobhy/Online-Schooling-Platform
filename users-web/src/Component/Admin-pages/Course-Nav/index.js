@@ -7,10 +7,10 @@ class CourseNav extends Component {
     render() {
         return (
             <div className="course-Nav-parent">
-                <Link to="/admin/course/">News</Link>
-                <Link to="/admin/course/materials">Uplode Materials</Link>
-                <Link to="/admin/course/live" target="_blank">Go Live</Link>
-                <Link to="/admin/course/quiz" >Quiz</Link>
+                <Link to="/course/">News</Link>
+                <Link to="/course/materials">Uplode Materials</Link>
+                <Link to="/course/live" target="_blank">Go Live</Link>
+                <Link to="/course/quiz" >Quiz</Link>
 
             </div>
         )

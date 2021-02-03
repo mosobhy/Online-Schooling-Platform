@@ -18,6 +18,7 @@ class AllNotification extends Component {
                     notification: data
                 })
             })
+            console.log(this.props);
 
     }
 

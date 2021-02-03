@@ -146,3 +146,18 @@ https://pypi.org/project/django-cors-headers/
 # CORS_URLS_REGEX = r'^/api/.*$'    # allow contact with the following url regex
 
 CORS_ORIGIN_WHITELIST = 'http://localhost:3000', 'http://127.0.0.1:3000',
+
+
+# cache ttl corresponds to 1 minute
+CACHE_TTL = 60 * 1
+
+# configuring the redis server
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}

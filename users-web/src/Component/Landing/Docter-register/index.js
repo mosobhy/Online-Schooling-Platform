@@ -1,7 +1,6 @@
 import react, { Component } from "react";
 import NavBar from "../Navbar/index";
 import './docter-style.css';
-import {Link} from "react-router-dom";
 import jQuery from "jquery";
 import { BiUserCircle, BiUserPlus } from 'react-icons/bi';
 import { MdEmail } from "react-icons/md";
@@ -15,49 +14,19 @@ import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 
 
 class Docter extends Component {
+    state = {
+        admin: [],
+        errors: []
+    }
 
     componentDidMount() {
         document.getElementById("instructorForm").addEventListener("submit", (e) => {
             e.preventDefault();
             checkData();
-
-            //get data
-            const firstName = document.getElementById("fname").value;
-            const lastName = document.getElementById("lname").value;
-            const department = document.getElementById("department").value;
-            const userName = document.getElementById("userName").value;
-            const nationalId = document.getElementById("nationId").value;
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            // send data to api
-            const request = new XMLHttpRequest();
-
-            const csrftoken = getCookie('csrftoken');
-            request.open("post", "http://127.0.0.1:8000/api/docter/");
-            request.setRequestHeader("Content-Type", "application/json");
-            request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
-            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            request.setRequestHeader("X-CSRFToken", csrftoken);
-
-            request.onload = () => {
-                const respons = JSON.parse(request.responseText);
-                console.log(respons);
-            }
-
-            const data = {
-                "firstname": firstName,
-                "lastname": lastName,
-                "username": userName,
-                "email": email,
-                "ssn": nationalId,
-                "password": password,
-            }
-
-            request.send(data)
-            return false;
+            getRequest();
 
         });
+
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -72,6 +41,53 @@ class Docter extends Component {
             }
             return cookieValue;
         }
+        const getRequest = () => {
+            //get data
+            const firstName = document.getElementById("fname").value;
+            const lastName = document.getElementById("lname").value;
+            const userName = document.getElementById("userName").value;
+            const nationalId = document.getElementById("nationId").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // send data to api
+            const request = new XMLHttpRequest();
+            const csrftoken = getCookie('csrftoken');
+            request.open("post", "http://127.0.0.1:8000/api/doctor/");
+
+            // request.setRequestHeader("Content-Type", "application/json");
+            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            request.setRequestHeader("X-CSRFToken", csrftoken);
+
+            request.onload = () => {
+                const response = JSON.parse(request.responseText);
+                console.log(response);
+                if (response.errors) {
+                    this.setState({
+                        errors: response.errors
+                    })
+                    console.log(this.state.errors)
+
+                } else if (response.success) {
+                    this.setState({
+                        admin: response
+                    })
+                    this.props.history.push(`/admin/${this.state.admin.username}`);
+                }
+            }
+
+            const data = new FormData();
+            data.append('firstname', firstName);
+            data.append('lastname', lastName);
+            data.append('username', userName);
+            data.append('ssn', nationalId);
+            data.append('email', email);
+            data.append('password', password);
+
+            request.send(data)
+            return false;
+        };
 
         const checkData = () => {
 
@@ -127,13 +143,12 @@ class Docter extends Component {
         const setSeccessFor = (input) => {
             const getParent = input.parentElement;
             getParent.className = 'input-control success';
+            
         }
 
     }
 
-
     render() {
-
 
         return (
             <div className="home-parent" >
@@ -206,12 +221,12 @@ class Docter extends Component {
                         </div>
                         <div className="input-control text-center">
 
-                            <button type="submit" className="btn"><Link to={this.props.history.push("/admin/")}>submit</Link></button>
-
+                            <button type="submit" className="btn">submit</button>
                         </div>
-
                     </form>
-
+                    {/* <div className="errorHandel">
+                        <small>{this.state.errors[0]}</small>
+                    </div> */}
                 </div>
 
 
