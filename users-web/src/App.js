@@ -12,7 +12,8 @@ import CreateQuiz from "./Component/Admin-pages/Create-quiz/index";
 import News from "./Component/Admin-pages/News/index";
 import StudentHome from "./Component/Student-pages/Home-Page/index";
 import StudentCourses from "./Component/Student-pages/All-courses/index";
-import StudentNotifiction from "./Component/Student-pages/Notification/index"
+import StudentNotifiction from "./Component/Student-pages/Notification/index";
+import YourCourse from "./Component/Student-pages/YourCourse/index"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -28,7 +29,7 @@ class App extends Component {
           <Route exact path="/student" component={Student}></Route>
 
           {/* docter links public */}
-          <Route exact path="/admin/:username" component={Home}></Route>
+          <Route exact path="/admin/" component={Home}></Route>
           <Route exact path="/view" component={ViewAllCourses}></Route>
         
           {/* course detalis links */}
@@ -38,9 +39,10 @@ class App extends Component {
           <Route exact path="/course/quiz" component={CreateQuiz}></Route>
 
           {/* student pages links */}
-          <Route exact path="/studentPages/:username" component={StudentHome}></Route>
+          <Route exact path="/studentPages/" component={StudentHome}></Route>
           <Route exact path="/studentPages/courses" component={StudentCourses}></Route>
           <Route exact path="/studentPages/notifiction" component={StudentNotifiction}></Route>
+          <Route exact path="/YourCourse/" component={YourCourse}></Route>
 
 
         </BrowserRouter>

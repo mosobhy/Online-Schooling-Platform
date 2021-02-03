@@ -12,7 +12,11 @@
     position: fixed !important;
     width: 100%;
     z-index: 99999;
-    font-family: 'Roboto', sans-serif;
+    color: #fff !important;
+    font-family: 'Gidugu', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    top: 0px;
 
 }
 
@@ -42,7 +46,7 @@
 }
 
 .nav-link:hover {
-    color: rgb(106, 104, 104) !important;
+    color: #D6A419 !important;
 }
 .nav-icons {
     margin-right: 0;
@@ -55,6 +59,7 @@
     margin: 0 1rem;
     font-size: 1.2rem;
     cursor: pointer;
+    transition: 0.5s;
 
 }
 
@@ -67,7 +72,7 @@
 }
 
 .nav-icons svg:hover {
-    color:  rgb(106, 104, 104);
+    color:  #D6A419;
 }
 
 .nav-toggle {
