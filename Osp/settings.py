@@ -145,4 +145,4 @@ https://pypi.org/project/django-cors-headers/
 # CORS_ALLOW_ALL_ORIGINS = True     # in order to allow the access of the frontend to backend
 # CORS_URLS_REGEX = r'^/api/.*$'    # allow contact with the following url regex
 
-CORS_ORIGIN_WHITELIST = 'http://localhost:3000',
+CORS_ORIGIN_WHITELIST = 'http://localhost:3000', 'http://127.0.0.1:3000',

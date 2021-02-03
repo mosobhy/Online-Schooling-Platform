@@ -4,10 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars');
-var redis = require('redis');
+var fetch = require('node-fetch');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
 
 // configure the express application
 var app = express();
