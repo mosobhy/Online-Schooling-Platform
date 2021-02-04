@@ -4,7 +4,7 @@ import { ImVolumeMedium, ImVolumeMute2 } from "react-icons/im";
 import { IoVideocam } from "react-icons/io5";
 import { MdVideocamOff } from "react-icons/md";
 import { GrChatOption } from "react-icons/gr";
-import { AiOutlineClose , AiOutlineMinus } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineMinus } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import { BiUserCircle } from "react-icons/bi";
@@ -30,7 +30,7 @@ class GoLive extends Component {
     }
 
     handelOpenChat = () => {
-       
+
         $(".chat-box").slideDown();
     }
     handelCloseChat = () => {
@@ -64,8 +64,9 @@ class GoLive extends Component {
 
             <div className="parent-live">
 
-                <div className="container">
-                    <Navbar fixed="bottom" className="live-Control">
+                <Navbar  className="live-Control">
+                    <div className="container">
+
                         <div className="memberControl" onClick={this.handelMember}>
                             <FaUsers />
                             <span>Members</span>
@@ -108,8 +109,10 @@ class GoLive extends Component {
                         </div>
 
 
-                    </Navbar>
-                </div>
+                    </div>
+                </Navbar>
+
+
 
                 <div className="member-parent">
                     {items}

@@ -33,7 +33,7 @@ class StudentNav extends Component {
             <react.Fragment>
 
 
-                <Navbar collapseOnSelect expand="lg" className="navbar">
+                <Navbar collapseOnSelect expand="lg" className="student-navber">
                     <Container>
                         {/* ********************** Nav Logo *****************  */}
                         <Navbar.Brand >
@@ -45,8 +45,8 @@ class StudentNav extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" className="nav-toggle" onClick={this.handleToggler} />
                         <Navbar.Collapse id="responsive-navbar-nav" >
                             <Nav className="m-auto">
-                                <Nav.Link className="nav-link-animation" ><Link className='nav-link' to="/studentPages/courses">All courses</Link></Nav.Link>
-                                <Nav.Link className="nav-link-animation" > <Link className='nav-link' to="/studentPages/notifiction">Notifiction</Link></Nav.Link>
+                                <Nav.Link className="nav-link-animation" ><Link className='student-nav-link' to="/studentPages/courses">All courses</Link></Nav.Link>
+                                <Nav.Link className="nav-link-animation" > <Link className='student-nav-link' to="/studentPages/notifiction">Notifiction</Link></Nav.Link>
 
                             </Nav>
                             {/*  */}

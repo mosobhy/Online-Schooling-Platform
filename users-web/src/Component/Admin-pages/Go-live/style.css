@@ -2,8 +2,15 @@
     background-color: #262626;
     height: 100vh;
     border: 10px solid #003366;
+    position: relative;
 }
-
+.live-Control{
+    position: absolute !important;
+    bottom: 0px !important;
+    left: 0px !important;
+    width: 100%;
+    z-index: 55;
+}
 .parent-live .live-Control{
     background-color: #003366;
     padding: 1rem;
