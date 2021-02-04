@@ -27,7 +27,7 @@ class AllCourses extends Component {
                         <td>{item.userId}</td>
                         <td>{item.title}</td>
                         <td>{item.completed}</td>
-                        <td><button className="btn view-button" ><Link to="/YourCourse/">Visit</Link></button></td>
+                        <td><button className="btn view-button" ><Link to="/YourMaterials/">Visit</Link></button></td>
                     </tr>
                 </react.Fragment>
 

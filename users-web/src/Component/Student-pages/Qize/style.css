@@ -1,0 +1,24 @@
+.Student-Qize-Parent{
+    position: absolute;
+    top: 45%;
+    left:50%;
+    transform: translate(-50% , -50%);
+    width: 100%;
+  
+  
+  }
+.Student-Qize-Parent img{
+      padding-top: 1rem;
+      width: 30%;
+      height: 40%;
+  }
+.Student-Qize-Parent span{
+   font-weight: bold;
+   color: #D6A419;
+   text-transform: capitalize;
+}
+.Student-Qize-Parent p{
+      font-family: 'Tinos', serif;
+      color: #8c8c8c;
+      padding: 3px;
+  }

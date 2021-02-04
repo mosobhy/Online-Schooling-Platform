@@ -46,14 +46,14 @@ class StudentNav extends Component {
                         <Navbar.Collapse id="responsive-navbar-nav" >
                             <Nav className="m-auto">
                                 <Nav.Link className="nav-link-animation" ><Link className='student-nav-link' to="/studentPages/courses">All courses</Link></Nav.Link>
-                                <Nav.Link className="nav-link-animation" > <Link className='student-nav-link' to="/studentPages/notifiction">Notifiction</Link></Nav.Link>
+                                {/* <Nav.Link className="nav-link-animation" > <Link className='student-nav-link' to="/studentPages/notifiction">Notifiction</Link></Nav.Link> */}
 
                             </Nav>
                             {/*  */}
                         </Navbar.Collapse>
                         {/* ********************** Nav Icons *****************  */}
                         <div className="icon-parent nav-icons">
-                            <IoMdNotifications />
+                          <Link to="/studentPages/notifiction"><IoMdNotifications /></Link>
                           <FcShop />
                             <FaUserGraduate />
                             <div className="dropdown">

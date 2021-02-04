@@ -13,10 +13,11 @@
     width: 100%;
     z-index: 99999;
     color: #fff !important;
-    font-family: 'Gidugu', sans-serif;
+    font-family: 'Indie Flower', cursive;
     font-size: 1.3rem;
     letter-spacing: 0.5px;
     top: 0px;
+    border-bottom: 1px solid #005F91;
 
 }
 

@@ -13,7 +13,8 @@ import News from "./Component/Admin-pages/News/index";
 import StudentHome from "./Component/Student-pages/Home-Page/index";
 import StudentCourses from "./Component/Student-pages/All-courses/index";
 import StudentNotifiction from "./Component/Student-pages/Notification/index";
-import YourCourse from "./Component/Student-pages/Your-Course/index"
+import StudentMaterials from "./Component/Student-pages/Materials/index";
+import StudentQuiz from "./Component/Student-pages/Qize/index";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -42,7 +43,8 @@ class App extends Component {
           <Route exact path="/studentPages/" component={StudentHome}></Route>
           <Route exact path="/studentPages/courses" component={StudentCourses}></Route>
           <Route exact path="/studentPages/notifiction" component={StudentNotifiction}></Route>
-          <Route exact path="/YourCourse/" component={YourCourse}></Route>
+          <Route exact path="/YourMaterials/" component={StudentMaterials}></Route>
+          <Route exact path="/YourQuiz/" component={StudentQuiz}></Route>
 
 
         </BrowserRouter>

@@ -1,5 +1,6 @@
 import react, { Component } from "react";
 import Navbar from "../Navbar/index";
+import StudentSideNav from "../student-sideNav/index";
 import './style.css';
 
 class Qize extends Component {
@@ -7,7 +8,14 @@ class Qize extends Component {
         return (
             <react.Fragment>
                 <Navbar />
-                <h1>Qize</h1>
+                <StudentSideNav />
+                <div className="Student-Qize-Parent">
+                <img src="/image/quiz-1.jpg" className="img-fluid" />
+                    <p>There are no <span>QIZE</span> uploaded for this class.</p>
+                    <p>Check back later. 👍</p>
+
+
+            </div>
             </react.Fragment>
 
 
