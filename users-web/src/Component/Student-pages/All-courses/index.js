@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 import react, { Component } from "react";
 import Navbar from "../Navbar/index";
 import { Table } from 'react-bootstrap';
@@ -35,7 +32,6 @@ class AllCourses extends Component {
                 </react.Fragment>
 
             )
-
         });
         return (
             <div>
@@ -65,26 +61,4 @@ class AllCourses extends Component {
     }
 }
 
-=======
->>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
-import react, { Component } from "react";
-import Navbar from "../Navbar/index";
-import './style.css';
-
-class AllCourses extends Component{
-    render() {
-        return (
-            <react.Fragment>
-                <Navbar />
-              <h1>All Courses</h1>
-            </react.Fragment>
-        
-        )
-    }
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> 1e1f50e637a7ac6a753c44b8411abcdeba92b254
->>>>>>> 4a9d9251ed24421a972f6c45c2b660aa346f817d
 export default AllCourses;

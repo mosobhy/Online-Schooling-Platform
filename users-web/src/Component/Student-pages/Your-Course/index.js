@@ -7,7 +7,7 @@ class YourCourse extends Component {
         return (
             <react.Fragment>
                 <Navbar />
-                <h1>your course</h1>
+                <h1>YourCourse</h1>
             </react.Fragment>
 
 
