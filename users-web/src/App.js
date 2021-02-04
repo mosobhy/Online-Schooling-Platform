@@ -15,6 +15,7 @@ import StudentCourses from "./Component/Student-pages/All-courses/index";
 import StudentNotifiction from "./Component/Student-pages/Notification/index";
 import StudentMaterials from "./Component/Student-pages/Materials/index";
 import StudentQuiz from "./Component/Student-pages/Qize/index";
+import StudentJoinCourse from "./Component/Student-pages/Join-Course/index"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -45,6 +46,7 @@ class App extends Component {
           <Route exact path="/studentPages/notifiction" component={StudentNotifiction}></Route>
           <Route exact path="/YourMaterials/" component={StudentMaterials}></Route>
           <Route exact path="/YourQuiz/" component={StudentQuiz}></Route>
+          <Route exact path="/studentPages/JoinCorse" component={StudentJoinCourse}></Route>
 
 
         </BrowserRouter>

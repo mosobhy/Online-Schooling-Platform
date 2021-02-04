@@ -383,7 +383,7 @@ the following data should be sent as json object
     }
     ```
 
-#delete material
+# delete material
 ### url endpoint
 
     '127.0.0.1:8000/api/delete-material/<str:username>/<str:materialid>/'
@@ -427,6 +427,63 @@ the following data should be sent as json object
         success: True
     }
     ```
+
+## create quiz
+### url endpoint
+    '127.0.0.1:8000/api/create-quiz/<str:username>/<str:course_code>/'
+
+### http method
+    'POST'
+
+### required data
+
+    **url parameters**
+    this route accepts two url parameters (course_code) for which you are going
+    to create this quiz and (username) of the currently logged in instructor
+
+    **post data**
+    a formData obj with all of this data
+    1. start_time
+    2. end_time
+    3. questions
+    
+    NOTE: the questions should be a json object with all the questions and answers
+
+
+### returns
+
+    **error**
+    {
+        'error': 'could not access the url parameters'
+    }
+    if you forget to send the url parameters
+
+
+    {
+        'error': 'no questions has been recieved;
+    }
+    if you attempt to send an empty request to the endpoint
+
+
+    {
+        'error': 'user not allowed to create quiz'
+    }
+    if the someone who not authenticated is trying to access the endpoint
+
+
+    {
+        'error': 'method not allowed'
+    }
+    if you attempt to send the request with method other than POST  
+
+
+    **success**
+    {
+        'success': true
+    }
+    quiz has been created successfully now you have to notify the whole students enrolled for this
+    course with this quiz
+
 
 ### What is the observer I had added?
 its just simple counter to keep track of how many object get instantiated
