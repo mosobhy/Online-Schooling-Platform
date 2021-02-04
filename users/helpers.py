@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 import re 
-
+from .models import *
 """
 Inside this file, we have to create the helper static functions
 LIKE

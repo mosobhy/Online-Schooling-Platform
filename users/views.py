@@ -192,8 +192,8 @@ def login_user(request):
     if request.is_ajax():
         if request.method == 'POST':
 
-            redis_name = redis_server.get('name')
-            print(f'Data fetched from redis is: {redis_name}')
+            # redis_name = redis_server.get('name')
+            # print(f'Data fetched from redis is: {redis_name}')
 
             # access the json object of user's cridentials sent from frontend
             username = request.POST['username']
@@ -246,24 +246,24 @@ def register_as_instructor(request):
         
 
         # make array of error in eorm
-        error = []
+        error = {}
         #check if first  naem valid
         if first_name.isalpha() == False:
-            error.append({"firstname" : "First name is not valid"})
+            error.update({"firstname" : "First name is not valid"})
         #check if first  naem valid
         if last_name.isalpha() == False:
-            error.append({"lastname" : "Last name is not valid"})
+            error.update({"lastname" : "Last name is not valid"})
         # check if user exist 
         if username_exists(user_name):
-            error.append({"username" : "User name already exist"})
+            error.update({"username" : "User name already exist"})
         # check if email is valid 
         if validate_email(email) == False:
-            error.append({"email" : "It's not valid email"})
+            error.update({"email" : "It's not valid email"})
         # check if ssn is less than 20 number
         if len(ssn) > 14 or len(ssn) < 14:
-            error.append({"SSN" : "SSN is must be 14"})
+            error.update({"SSN" : "SSN is must be 14"})
         # check if ssn is less than 20 number
-       
+
         # if fount error return array of error 
         if len(error) != 0:
             return JsonResponse({'errors': error}, status=400)
@@ -322,32 +322,32 @@ def register_as_student(request):
         level = request.POST['level']
 
         # make array of error in eorm
-        error = []
+        error = {}
         #check if first  naem valid
         if first_name.isalpha() == False:
-            error.append({"firstname" : "First name is not valid"})
+            error.update({"firstname" : "First name is not valid"})
         #check if first  naem valid
         if last_name.isalpha() == False:
-            error.append({"lastname" : "Last name is not valid"})
+            error.update({"lastname" : "Last name is not valid"})
         # check if user exist 
         if username_exists(user_name):
-            error.append({"username" : "User name already exist"})
+            error.update({"username" : "User name already exist"})
         # check if email is valid 
         if validate_email(email) == False:
-            error.append({"email" : "It's not valid email"})
+            error.update({"email" : "It's not valid email"})
         # check if ssn is less than 20 number
-        if len(ssn) != 14:
-            error.append({"SSN" : "SSN must be 14"})
+        if len(ssn) > 14 or len(ssn) < 14:
+            error.update({"SSN" : "SSN is must be 14"})
         # check if ssn is less than 20 number
         if len(university_id) > 10 and len(university_id) < 5:
-            error.append({"universityid" : "University id is greater than 10"})
+            error.update({"universityid" : "University id is greater than 10"})
         #check level is correct pr not
         try:
             int(level)
             if int(level) > 7:
-                error.append({"levellen" : "level must be less than 7"})
+                error.update({"levellen" : "level must be less than 7"})
         except:
-            error.append({"levelint" : "level must be integer"})
+            error.update({"levelint" : "level must be integer"})
 
         # if found error in errors array return array of error 
         if len(error) != 0:
