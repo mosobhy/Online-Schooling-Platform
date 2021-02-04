@@ -1,6 +1,6 @@
 .home-parent{
     background-color: #003366;
-    height : 120vh;
+    height : 125vh;
 }
 
 .input-control.success input{
@@ -25,7 +25,7 @@
 }
 
 
-.errorHandel small{
+.errorHandel p{
     font-family: 'Merriweather', serif;
     font-weight: bold;
     color: #e74c32;

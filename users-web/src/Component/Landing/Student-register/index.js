@@ -13,7 +13,7 @@ import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 class Student extends Component {
     state = {
         users: {},
-        error: {}
+        errors: {}
     }
     componentDidMount() {
         document.getElementById("studentRegisterForm").onsubmit = (e) => {
@@ -127,9 +127,9 @@ class Student extends Component {
                 const response = JSON.parse(request.responseText);
                 if (response.errors) {
                     this.setState({
-                        error: response.errors
+                        errors: response.errors
                     })
-                    console.log(this.state.error)
+                    console.log(this.state.errors)
                 } else if (response.success) {
                     this.setState({
                         users: response
@@ -246,11 +246,16 @@ class Student extends Component {
                         <div className="input-control text-center">
                             <button type="submit" className="btn">Submit</button>
                         </div>
-                        {/* <div className="errorHandel">
-                            <small>{this.state.error}</small>
-                        </div> */}
+
                     </form>
 
+                    <div className="errorHandel ">
+                            <p>{this.state.errors.firstname}</p>
+                            <p>{this.state.errors.lastname}</p>
+                            <p>{this.state.errors.email}</p>
+                            <p>{this.state.errors.SSN}</p>
+                            <p>{this.state.errors.username}</p>
+                        </div>
                 </div>
 
 

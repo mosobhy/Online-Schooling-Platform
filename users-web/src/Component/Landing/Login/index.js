@@ -174,7 +174,7 @@ class Login extends Component {
 
                     </form>
                     <div className="errorHandel">
-                        <small>{this.state.error}</small>
+                        <p>{this.state.error}</p>
                     </div>
                 </div>
 

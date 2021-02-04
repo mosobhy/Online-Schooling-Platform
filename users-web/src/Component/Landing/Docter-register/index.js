@@ -16,7 +16,7 @@ import { AiFillCheckCircle, AiFillExclamationCircle } from "react-icons/ai";
 class Docter extends Component {
     state = {
         admin: [],
-        errors: []
+        errors: {}
     }
 
     componentDidMount() {
@@ -72,7 +72,7 @@ class Docter extends Component {
                     this.setState({
                         admin: response
                     })
-                    localStorage.setItem("doctorInfo" , JSON.stringify(this.state.admin))
+                    localStorage.setItem("doctorInfo", JSON.stringify(this.state.admin))
                     this.props.history.push("/admin/");
                 }
             }
@@ -105,7 +105,7 @@ class Docter extends Component {
                 setSeccessFor(userName)
             }
             //national id tast
-            if (nationalId.value.length == 14) {  
+            if (nationalId.value.length == 14) {
                 setSeccessFor(nationalId)
             } else {
                 setErrorFor(nationalId, "Enter a vaild id");
@@ -150,14 +150,17 @@ class Docter extends Component {
 
     render() {
 
-        const { errors } = this.state;
-        const error = errors.map((item) => {
-            return (
-                <div className="errorHandel" key={item.ssn}>
-                    <small>{item.ssn}</small>
-                </div>
-            )
-        })
+        // const { errors } = this.state;
+        // const error = errors.map((item) => {
+        //     return (
+        //         <div className="errorHandel" key={item.ssn}>
+        //             <small>{item.firstname}</small>
+        //             <small>{item.lastname}</small>
+        //             <small>{item.email}</small>
+        //             <small>{item.ssn}</small>
+        //         </div>
+        //     )
+        // })
 
         return (
             <div className="home-parent" >
@@ -234,7 +237,17 @@ class Docter extends Component {
                         </div>
                     </form>
 
-                    {error}
+                    <div className="errorHandel ">
+                        <p>{this.state.errors.firstname}</p>
+              
+                        <p>{this.state.errors.lastname}</p>
+                 
+                        <p>{this.state.errors.email}</p>
+         
+                        <p>{this.state.errors.SSN}</p>
+                    
+                        <p>{this.state.errors.username}</p>
+                    </div>
 
                 </div>
 
