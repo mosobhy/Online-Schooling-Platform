@@ -4,9 +4,10 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+import redis
 import json
 from .models import *
 from .helpers import *
@@ -16,6 +17,9 @@ from django.core.files.storage import FileSystemStorage
 
 # configure this applicaion to use the redis api
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
+# connect this application to the same server as nodejs server
+redis_server = redis.Redis('localhost')
 
 
 @require_http_methods(['GET'])
@@ -188,8 +192,8 @@ def login_user(request):
     if request.is_ajax():
         if request.method == 'POST':
 
-            c = cache.get('first_key')
-            print(f'-------{c}-------')
+            redis_name = redis_server.get('name')
+            print(f'Data fetched from redis is: {redis_name}')
 
             # access the json object of user's cridentials sent from frontend
             username = request.POST['username']

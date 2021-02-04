@@ -1,0 +1,56 @@
+.Student-notification-parent{
+    margin-top: 3rem !important;
+    background-color: transparent !important;
+    text-align: center !important;
+}
+.Student-notification-parent h2{
+    font-family: 'Fredericka the Great', cursive;
+    position: relative;
+}
+
+.Student-Notification-body{
+    padding: 1rem;
+    width: 80%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: 1px 1px 5px 1px #bfbfbf !important;
+    position: relative;
+}
+.Student-Notification-body p{
+
+    font-family: 'Tajawal', sans-serif;
+    text-transform:capitalize;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 0px 1.6rem;
+    color: #4d4d4d;
+
+}
+.Student-Notification-body button{
+    background-color: #e4af1b;
+    color: #fff;
+    border-radius: 5px;
+   margin-left: 1rem;
+   padding: 4px 0.8rem;
+   font-family: 'Big Shoulders Display', cursive;
+}
+.Student-Notification-body .notification-view:hover{
+    color: #fff;
+    background-color: #ffdd99;
+}
+.Student-Notification-body .notification-ignore:hover{
+    color: #fff;
+    background-color: #ff8080;
+}
+
+.Student-Notification-body .notification-ignore{
+    background-color: #ff4d4d;
+}
+
+.Student-Notification-body:hover{
+    box-shadow: 1px 1px 5px 1px #fff !important;
+    background-color: #e9ecef;
+}
+
