@@ -62,7 +62,6 @@ class Docter extends Component {
 
             request.onload = () => {
                 const response = JSON.parse(request.responseText);
-                console.log(response);
                 if (response.errors) {
                     this.setState({
                         errors: response.errors
@@ -73,7 +72,7 @@ class Docter extends Component {
                     this.setState({
                         admin: response
                     })
-
+                    localStorage.setItem("doctorInfo" , JSON.stringify(this.state.admin))
                     this.props.history.push("/admin/");
                 }
             }
@@ -106,10 +105,10 @@ class Docter extends Component {
                 setSeccessFor(userName)
             }
             //national id tast
-            if (nationalId.value < 14) {
-                setErrorFor(nationalId, "Enter a vaild id");
-            } else {
+            if (nationalId.value.length == 14) {  
                 setSeccessFor(nationalId)
+            } else {
+                setErrorFor(nationalId, "Enter a vaild id");
             }
             //email tast
             if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)) {
@@ -144,12 +143,21 @@ class Docter extends Component {
         const setSeccessFor = (input) => {
             const getParent = input.parentElement;
             getParent.className = 'input-control success';
-            
+
         }
 
     }
 
     render() {
+
+        const { errors } = this.state;
+        const error = errors.map((item) => {
+            return (
+                <div className="errorHandel" key={item.ssn}>
+                    <small>{item.ssn}</small>
+                </div>
+            )
+        })
 
         return (
             <div className="home-parent" >
@@ -225,9 +233,9 @@ class Docter extends Component {
                             <button type="submit" className="btn">submit</button>
                         </div>
                     </form>
-                    {/* <div className="errorHandel">
-                        <small>{this.state.errors[0]}</small>
-                    </div> */}
+
+                    {error}
+
                 </div>
 
 

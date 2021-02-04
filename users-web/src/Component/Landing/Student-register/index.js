@@ -55,14 +55,14 @@ class Student extends Component {
                 setSeccessFor(userName)
             }
             //national id tast
-            if (nationalId.value == 14) {
+            if (nationalId.value.length == 14) {
 
                 setSeccessFor(nationalId)
             } else {
                 setErrorFor(nationalId, "Enter a vaild id");
             }
             //universityId id tast
-            if (universityId.value == 14) {
+            if (universityId.value.length == 14) {
 
                 setSeccessFor(universityId)
             } else {
@@ -120,8 +120,6 @@ class Student extends Component {
             const csrftoken = getCookie('csrftoken');
             request.open("post", "http://127.0.0.1:8000/api/student/");
 
-            // request.setRequestHeader("Content-Type", "application/json");
-            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
             request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             request.setRequestHeader("X-CSRFToken", csrftoken);
 
@@ -136,6 +134,7 @@ class Student extends Component {
                     this.setState({
                         users: response
                     })
+                    localStorage.setItem("studentInfo", JSON.stringify(this.state.users));
                     this.props.history.push("/studentPages/");
                 }
             }
