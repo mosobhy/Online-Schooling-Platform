@@ -143,7 +143,7 @@ def view_specific_course(request, username, course_code):
 
 # view courses that a student has registerd for.
 @require_http_methods(['GET'])
-def view_student_courses(request, username):
+def view_all_courses(request, username):
     """
     This function should return all the courses that a user of type student
     has registerd for,
@@ -165,7 +165,11 @@ def view_student_courses(request, username):
         
         # query the user's registered in courses
         user = User.objects.get(username=username)
-        courses = courseQuerySetSerializer(user.enrolled_courses.all())
+        if user.is_staff:
+            courses = courseQuerySetSerializer(user.created_courses.all())
+        else:
+            print(user)
+            courses = courseQuerySetSerializer(user.enrolled_courses.all())
         if courses is None:
             return JsonResponse({'error': 'No courses to view'}, status=404)
         
