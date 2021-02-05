@@ -55,8 +55,7 @@ class Docter extends Component {
             const csrftoken = getCookie('csrftoken');
             request.open("post", "http://127.0.0.1:8000/api/doctor/");
 
-            // request.setRequestHeader("Content-Type", "application/json");
-            // request.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+
             request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             request.setRequestHeader("X-CSRFToken", csrftoken);
 
@@ -72,7 +71,7 @@ class Docter extends Component {
                     this.setState({
                         admin: response
                     })
-                    localStorage.setItem("doctorInfo", JSON.stringify(this.state.admin))
+                    localStorage.setItem("userInfo", JSON.stringify(this.state.admin))
                     this.props.history.push("/admin/");
                 }
             }
@@ -149,18 +148,6 @@ class Docter extends Component {
     }
 
     render() {
-
-        // const { errors } = this.state;
-        // const error = errors.map((item) => {
-        //     return (
-        //         <div className="errorHandel" key={item.ssn}>
-        //             <small>{item.firstname}</small>
-        //             <small>{item.lastname}</small>
-        //             <small>{item.email}</small>
-        //             <small>{item.ssn}</small>
-        //         </div>
-        //     )
-        // })
 
         return (
             <div className="home-parent" >

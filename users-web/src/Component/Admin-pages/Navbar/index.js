@@ -40,12 +40,12 @@ class AdminNav extends Component {
         e.preventDefault();
 
         //GET INPUTS VALUE
-        const courseName = document.querySelector('#namefield').value;
-        const courseCode = document.querySelector('#codefield').value;
-        const courseLevel = document.querySelector('#levelfield').value;
+        const courseName = document.querySelector('.namefield').value;
+        const courseCode = document.querySelector('.codefield').value;
+        const courseLevel = document.querySelector('.levelfield').value;
 
         //GET USERNAME FROM LOCALSTORAGE
-        let userInfo = localStorage.getItem("doctorInfo");
+        let userInfo = localStorage.getItem("userInfo");
         userInfo = JSON.parse(userInfo);
 
         //SEND REQUEST TO SERVER
@@ -126,15 +126,15 @@ class AdminNav extends Component {
 
 
                             <Form.Label>Course Name</Form.Label>
-                            <Form.Control id='namefield' name="name" type="text" placeholder="Name...." />
+                            <Form.Control className='namefield' name="name" type="text" placeholder="Name...." />
 
                             <Form.Label>Course Code</Form.Label>
-                            <Form.Control id='codefield' name="code" type="text" placeholder="Code...." value={this.state.randomValue} readOnly />
+                            <Form.Control className='codefield' name="code" type="text" placeholder="Code...." value={this.state.randomValue} readOnly />
                             <button className="btn " type="button" onClick={this.generateCode}>Generate Code</button>
 
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Select Level</Form.Label>
-                                <Form.Control id='levelfield' as="select" name="level">
+                                <Form.Control className='levelfield' as="select" name="level">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

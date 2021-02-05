@@ -38,7 +38,7 @@ class Login extends Component {
                         this.setState({
                             data: response
                         });
-    
+                        localStorage.setItem("userInfo" , JSON.stringify(this.state.data))
                         if (response.is_staff) {
                             this.props.history.push("/admin/")
                         } else {
