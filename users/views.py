@@ -143,9 +143,10 @@ def view_specific_course(request, username, course_code):
 
 # view courses that a student has registerd for.
 @require_http_methods(['GET'])
+@login_required(login_url='/api/login/')
 def view_all_courses(request, username):
     """
-    This function should return all the courses that a user of type student
+    This function should return all the courses that a user of type instrctor
     has registerd for,
     Recieved data: The logged-in username as a url parameter
     Return data: list of all the courses data
