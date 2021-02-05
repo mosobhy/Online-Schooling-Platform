@@ -12,6 +12,7 @@ class CreateQuiz extends Component {
         showQuizForm: false,
         value: '',
         data: [],
+        counter: 0
     }
 
     handleClose = () => {
@@ -43,7 +44,6 @@ class CreateQuiz extends Component {
             showQuizForm: false
 
         })
-        this.FormQuiz();
     };
 
     handleCreateQuizForm = () => {
@@ -57,10 +57,23 @@ class CreateQuiz extends Component {
         this.state.value = e.target.value;
     }
 
+
+
     handleGetData = (e) => {
+     
         e.preventDefault();
-        this.FormQuiz();
-        console.log('hi');
+        if (this.state.counter <= this.state.value) {
+            this.FormQuiz();
+        } else {
+           alert("")
+        }
+
+    }
+
+    decrCounter = () => {
+        this.setState({
+            counter: this.state.counter + 1
+        });
     }
 
 
@@ -86,22 +99,20 @@ class CreateQuiz extends Component {
 
         this.state.data.push(Container);
         console.log(this.state.data);
-
-
     }
 
 
 
     render() {
-
-
-        let FormBodyElement =
-            <Carousel.Item>
-
+      
+    
+        let FormBodyArray =
+            <Carousel.Item >
                 <Modal.Body className="pop-body">
                     <div className="sub-form">
+                       
                         {/* ***** Question ******* */}
-                        <form>
+                        <form onSubmit={this.handleGetData } >
                             <Form.Label>Question Title</Form.Label>
                             <Form.Control type="text" placeholder="Enter Title" id="title" />
                             {/* **** Answers ******** */}
@@ -129,24 +140,21 @@ class CreateQuiz extends Component {
                             <Form.Label>Question Points</Form.Label>
                             <Form.Control type="text" placeholder="Enter the Point" id="point" />
 
-                            <button className="btn-danger btn" type="submit" onClick={this.handleGetData} > Submit </button>
+                            <button className="btn-danger btn" type="submit" onClick={this.decrCounter} > Submit </button>
                         </form>
                     </div>
                 </Modal.Body>
             </Carousel.Item>
 
 
-        let FormBodyArray = [];
-        for (let i = 0; i < this.state.value; i++) {
-            FormBodyArray.push(FormBodyElement);
 
-        }
+
 
         return (
             <div className="App">
                 <Navbar />
                 <CourseNav />
-                
+
                 <div className="d-flex flex-column align-items-center justify-content-center h-100">
                     <div className="quiz-img">
                         <img src="/image/quiz.jpg" className=" img-fluid" />
@@ -179,7 +187,7 @@ class CreateQuiz extends Component {
                         <Modal.Title>Quiz</Modal.Title>
                     </Modal.Header>
 
-                    <Carousel>
+                    <Carousel controls={false}>
 
                         {FormBodyArray}
 
@@ -187,7 +195,7 @@ class CreateQuiz extends Component {
 
 
                     <Modal.Footer className="pop-footer">
-                        <Button type="button">
+                        <Button type="button" >
                             Next
                 </Button>
                     </Modal.Footer>
