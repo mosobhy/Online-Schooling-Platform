@@ -12,68 +12,7 @@ class Login extends Component {
         data: {},
         error: ''
     }
-    // componentDidMount() {
-    //     document.getElementById("loginForm").onsubmit = (e) => {
-    //         e.preventDefault();
-    //         //  send data to api
-    //         const request = new XMLHttpRequest();
-    //         const csrftoken = getCookie('csrftoken');
-    //         request.open("post", "http://127.0.0.1:8000/api/login/");
-    //         request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    //         request.setRequestHeader("X-CSRFToken", csrftoken);
-
-    //         request.onload = () => {
-    //             const response = JSON.parse(request.responseText);
-
-    //             if (response.error) {
-    //                 this.setState({
-    //                     error: response.error
-    //                 });
-
-
-    //             } else if (response.success) {
-    //                 this.setState({
-    //                     data: response
-    //                 });
-
-    //                 if (response.is_staff) {
-    //                     this.props.history.push("/admin/")
-    //                 } else {
-    //                     this.props.history.push("/studentPages/")
-    //                 }
-
-    //             }
-
-    //         }
-
-    //         const data = new FormData();
-    //         data.append('username', document.getElementById('userName').value);
-    //         data.append('password', document.getElementById('password').value);
-
-    //         request.send(data);
-    //         return false;
-
-    //     };
-
-    //     function getCookie(name) {
-    //         let cookieValue = null;
-    //         if (document.cookie && document.cookie !== '') {
-    //             const cookies = document.cookie.split(';');
-    //             for (let i = 0; i < cookies.length; i++) {
-    //                 const cookie = cookies[i].trim();
-    //                 // Does this cookie string begin with the name we want?
-    //                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
-    //                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //         return cookieValue;
-    //     }
-
-
-    // }
-
+   
     handelLoginForm = (e) => {
         e.preventDefault();
         this.handelRequest();

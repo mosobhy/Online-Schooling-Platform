@@ -6,9 +6,10 @@ import { FaUserTie } from "react-icons/fa";
 import "./style.css";
 
 class AdminNav extends Component {
-  
+
     state = {
-        show: false
+        show: false,
+        randomValue: ''
     }
     handleClose = () => {
         this.setState({
@@ -21,6 +22,78 @@ class AdminNav extends Component {
         })
     };
 
+    //GANERATE RANDOM CODE
+    generateCode = () => {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < 6; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        this.setState({
+            randomValue: result
+        });
+
+    }
+
+    getRequest = (e) => {
+        e.preventDefault();
+
+        //GET INPUTS VALUE
+        let courseName = document.getElementsByName("name").value;
+        let courseCode = document.getElementsByName("code").value;
+        let courseLevel = document.getElementsByName("level").value;
+
+        //GET USERNAME FROM LOCALSTORAGE
+        let userInfo = localStorage.getItem("doctorInfo");
+        userInfo = JSON.parse(userInfo);
+
+        //SEND REQUEST TO SERVER
+        const request = new XMLHttpRequest();
+        const csrftoken = this.getCookie('csrftoken');
+        request.open("post", `http://127.0.0.1:8000/api/create-course/${userInfo.username}/`);
+        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        request.setRequestHeader("X-CSRFToken", csrftoken);
+
+
+        request.onload = () => {
+            const response = JSON.parse(request.responseText);
+            console.log(response);
+
+        }
+
+        //SEND DATA TO SERVER
+        const data = new FormData();
+        data.append('name', courseName);
+        data.append('code', courseCode);
+        data.append('level', courseLevel);
+
+        request.send(data);
+        return false;
+
+
+    };
+
+    getCookie = (name) => {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+
+
+
     render() {
         return (
             <div>
@@ -30,8 +103,8 @@ class AdminNav extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="m-auto">
-                                <Nav.Link onClick={this.handleShow}>create course</Nav.Link>
-                                <Nav.Link ><Link to="/admin/view">View courses</Link></Nav.Link>
+                                <a onClick={this.handleShow} className="admin-link">create course</a>
+                                <Link to="/admin/view" className="admin-link">View courses</Link>
                             </Nav>
                             <div className="text-white icone-group" >
                                 <IoMdNotificationsOutline />
@@ -44,33 +117,38 @@ class AdminNav extends Component {
                 </Navbar>
                 {/* create course pop up */}
 
-                <Modal show={this.state.show} onHide={this.handleClose} centered keyboard={false} className="pop-parent">
+                <Modal show={this.state.show} onHide={this.handleClose} centered keyboard={false} className="pop-parent" >
                     <Modal.Header closeButton className="pop-header">
                         <Modal.Title>Create course</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="pop-body">
+                    <form onSubmit={this.getRequest}>
+                        <Modal.Body className="pop-body" onSubmit={this.getRequest}>
 
-                        <Form.Label>Course Name</Form.Label>
-                        <Form.Control type="text" placeholder="Name...." />
-                        <Form.Label>Course Code</Form.Label>
-                        <Form.Control type="text" placeholder="Code...." />
 
-                        <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>Select Level</Form.Label>
-                            <Form.Control as="select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </Form.Control>
-                        </Form.Group>
+                            <Form.Label>Course Name</Form.Label>
+                            <Form.Control type="text" placeholder="Name...." name="name" />
 
-                    </Modal.Body>
-                    <Modal.Footer className="pop-footer">
-                        <Button onClick={this.handleClose}>
-                            Create
+                            <Form.Label>Course Code</Form.Label>
+                            <Form.Control type="text" placeholder="Code...." value={this.state.randomValue} readOnly name="code" />
+                            <button className="btn " type="button" onClick={this.generateCode}>Generate Code</button>
+
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                                <Form.Label>Select Level</Form.Label>
+                                <Form.Control as="select" name="level">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </Form.Control>
+                            </Form.Group>
+
+                        </Modal.Body>
+                        <Modal.Footer className="pop-footer">
+                            <Button type="submit" onClick={this.handleClose} >
+                                Create
                             </Button>
-                    </Modal.Footer>
+                        </Modal.Footer>
+                    </form>
                 </Modal>
 
             </div >

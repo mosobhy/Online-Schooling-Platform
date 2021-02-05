@@ -17,7 +17,6 @@ class AllNotification extends Component {
                 this.setState({
                     notification: data
                 })
-                console.log(this.state.notification);
             })
         
 
