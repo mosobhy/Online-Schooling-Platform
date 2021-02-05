@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var redis = require('redis');
+var app = require('../app');
 
 // add even listener to teh reids port
 const REDIS_PORT = process.env.PORT || 6379;

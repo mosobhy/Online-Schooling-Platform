@@ -404,20 +404,21 @@ def create_course(request, username):
         course_name = request.POST['name']
         level = request.POST['level']
 
+        print(course_code, course_name, level)
+
         # validate fileds
         errors = []
 
         # check if course code is exists 
         if (value_is_exists("course_code",course_code,Course)):
-            errors.append({"coursecode":"course code already exist"})
+            return JsonResponse({"coursecode":"course code already exist"})
 
         # check if course name is valid 
         if course_name.isalpha() == False:
-            errors.append({"coursename" : "course name is not valid"})
+            return JsonResponse({"coursename" : "course name is not valid"})
 
         # validate level 
         try:
-            int(level)
             if int(level) > 7:
                 errors.append({"levellen" : "level must be less than 7"})
         except:
@@ -433,6 +434,8 @@ def create_course(request, username):
         
         # commit change 
         course.save()
+
+        print('course created successfully')
 
         # if no errors return success 
         return JsonResponse({'success': True}, status=200)
