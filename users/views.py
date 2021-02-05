@@ -407,22 +407,22 @@ def create_course(request, username):
         print(course_code, course_name, level)
 
         # validate fileds
-        errors = []
+        errors = {}
 
         # check if course code is exists 
         if (value_is_exists("course_code",course_code,Course)):
             return JsonResponse({"coursecode":"course code already exist"})
 
         # check if course name is valid 
-        if course_name.isalpha() == False:
+        if course_name.replace(" ","").isalpha() == False:
             return JsonResponse({"coursename" : "course name is not valid"})
 
         # validate level 
         try:
             if int(level) > 7:
-                errors.append({"levellen" : "level must be less than 7"})
+                errors.update({"levellen" : "level must be less than 7"})
         except:
-            errors.append({"levelint" : "level must be integer"})
+            errors.update({"levelint" : "level must be integer"})
 
         # check if not found errors 
         if len(errors) != 0:
