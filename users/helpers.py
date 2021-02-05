@@ -52,13 +52,13 @@ def courseQuerySetSerializer(course_set):
     ''' This function accepts a course set and convert it to list object '''
     if not course_set:
         return None
-    courses = {}
+    courses = []
 
     for course in course_set:
-        courses.update({
+        courses.append({
             'course_name': course.course_name,
             'course_code': course.course_code,
-            'level': course.level
+            'level': course.level,
         })
 
     return courses
