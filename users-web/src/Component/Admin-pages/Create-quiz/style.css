@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+body {
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.App {
+  height: 100vh;
+}
+
+.quiz-img {
+  width: 27%;
+}
+
+.quiz-btn {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  border: none;
+  background-color: #003366;
+  padding: .5rem 1.5rem;
+  border-radius: 0px;
+  transition: 0.5s;
+}
+
+.quiz-btn:hover {
+  color: #fff;
+  background-color: #D6A419;
+}
+
+/* ======================== pop up style =============================== */
+
+
+.pop-parent{
+  background-color: rgba(0, 51, 102 , 0.4);
+}
+
+.pop-parent .pop-header{
+  background-color: #F1F1E6 !important;
+
+}
+.pop-parent .pop-header > div{
+  font-family: 'Piedra', cursive;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+ 
+}
+.pop-parent .pop-body{
+  background-color: #F1F1E6 !important;
+  border: none !important;
+}
+.pop-parent .pop-body label{
+  font-family: 'Gidugu', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+
+}
+.pop-parent .pop-body input , .pop-parent .pop-body select{
+  background-color: #F1F1E6 !important;
+  border-color: #D6A419 !important;
+  border-radius: 0px;
+  margin: 0.5rem 0px;
+}
+.pop-parent .pop-body input::placeholder , .pop-parent .pop-body select::placeholder{
+  font-family: 'Gidugu', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+.pop-parent .pop-body input:focus , .pop-parent .pop-body select:focus{
+  border-color: #D6A419 !important;
+  box-shadow: 2px 2px 6px 1px #D6A419;
+}
+
+.pop-parent .pop-footer{
+  background-color: #F1F1E6 !important;
+  border: none !important;
+  text-align: center !important;
+}
+.pop-parent .pop-footer button{
+  background-color: #003366;
+  border-radius: 0px;
+  padding: 0.1rem 1rem;
+  font-family: 'Gidugu', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+
+.sub-form {
+  border: 1px solid #61615e !important;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+/* ********* Slider *************  */

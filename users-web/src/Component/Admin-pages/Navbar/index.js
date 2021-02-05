@@ -9,7 +9,8 @@ class AdminNav extends Component {
 
     state = {
         show: false,
-        randomValue: ''
+        randomValue: '',
+        resualt: {}
     }
     handleClose = () => {
         this.setState({
@@ -58,7 +59,13 @@ class AdminNav extends Component {
 
         request.onload = () => {
             const response = JSON.parse(request.responseText);
-            console.log(response);
+            this.setState({
+                resualt: response
+            })
+            if (this.state.resualt.success) {
+                this.handleClose();
+                alert("success")
+            }
 
         }
 
@@ -126,10 +133,10 @@ class AdminNav extends Component {
 
 
                             <Form.Label>Course Name</Form.Label>
-                            <Form.Control className='namefield' name="name" type="text" placeholder="Name...." />
+                            <Form.Control className='namefield' name="name" type="text" placeholder="Name...."  />
 
                             <Form.Label>Course Code</Form.Label>
-                            <Form.Control className='codefield' name="code" type="text" placeholder="Code...." value={this.state.randomValue} readOnly />
+                            <Form.Control className='codefield' name="code" type="text" placeholder="Code...." value={this.state.randomValue} readOnly required />
                             <button className="btn " type="button" onClick={this.generateCode}>Generate Code</button>
 
                             <Form.Group controlId="exampleForm.ControlSelect1">
@@ -141,10 +148,13 @@ class AdminNav extends Component {
                                     <option value="4">4</option>
                                 </Form.Control>
                             </Form.Group>
-
+                            <div className="errorHandel">
+                                <p>{this.state.resualt.coursename}</p>
+                                <p>{ this.state.resualt.coursecode}</p>
+                            </div>
                         </Modal.Body>
                         <Modal.Footer className="pop-footer">
-                            <Button type="submit" onClick={this.handleClose} >
+                            <Button type="submit"  >
                                 Create
                             </Button>
                         </Modal.Footer>
