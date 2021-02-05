@@ -11,24 +11,41 @@
       padding-top: 1rem;
       width: 25%;
       height: 25%;
-  }
+}
 .start-page p{
       font-family: 'Tinos', serif;
       color: #8c8c8c;
       padding: 3px;
-  }
-#fileForm input::-webkit-file-upload-button{
-    outline: none;
-  border: none;
-  font-family: 'Tinos', serif;
-  color:steelblue ;
-  padding: 3px;
-  background-color: transparent;
-    cursor: pointer;
-    margin-left: 35% !important;
 }
 
-#fileForm input{
-   color: transparent;
-   cursor: pointer;
+.pop-body .inputFile::-webkit-file-upload-button{
+  background-color: #D6A419;
+  font-family: 'Gidugu', sans-serif;
+  font-size: 1.3rem;
+  color: #fff;
+  border-radius: 0px;
+  padding: 3px 0.4rem;
+  margin-bottom: 0.9rem !important;
+  border: none;
+  transition: 0.5s;
+}
+.pop-body .inputFile::-webkit-file-upload-button:hover{
+  background-color: #ffe680 ;
+}
+
+.pop-body .inputFile{
+   color: #8c8c8c;
+   font-family: 'Gidugu', sans-serif;
+  outline: none !important;
+  border: none !important;
+}
+
+.start-page span{
+  color: cornflowerblue;
+  cursor: pointer;
+  font-family: 'Tinos', serif;
+  transition: 0.5s;
+}
+.start-page span:hover{
+  color: darkblue;
 }
