@@ -10,7 +10,8 @@ class AdminNav extends Component {
     state = {
         show: false,
         randomValue: '',
-        resualt: {}
+        resualt: {},
+        data: [],
     }
     handleClose = () => {
         this.setState({
@@ -81,6 +82,29 @@ class AdminNav extends Component {
 
     };
 
+    handelReturnCourses = () => {
+        let userInfo = localStorage.getItem("userInfo");
+        userInfo = JSON.parse(userInfo);
+
+        //SEND REQUEST TO SERVER
+        const request = new XMLHttpRequest();
+        const csrftoken = this.getCookie('csrftoken');
+
+        request.open("get", `http://127.0.0.1:8000/api/view-courses/${userInfo.username}/`);
+
+        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        request.setRequestHeader("X-CSRFToken", csrftoken);
+
+
+        request.onload = () => {
+             const response = JSON.parse(request.responseText);
+            console.log(response)
+
+        }
+        request.send();
+        return false;
+
+    }
     getCookie = (name) => {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -111,7 +135,7 @@ class AdminNav extends Component {
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="m-auto">
                                 <a onClick={this.handleShow} className="admin-link">create course</a>
-                                <Link to="/admin/view" className="admin-link">View courses</Link>
+                                <Link to="/admin/view" onClick={this.handelReturnCourses} className="admin-link">View courses</Link>
                             </Nav>
                             <div className="text-white icone-group" >
                                 <IoMdNotificationsOutline />
@@ -133,7 +157,7 @@ class AdminNav extends Component {
 
 
                             <Form.Label>Course Name</Form.Label>
-                            <Form.Control className='namefield' name="name" type="text" placeholder="Name...."  />
+                            <Form.Control className='namefield' name="name" type="text" placeholder="Name...." />
 
                             <Form.Label>Course Code</Form.Label>
                             <Form.Control className='codefield' name="code" type="text" placeholder="Code...." value={this.state.randomValue} readOnly required />
@@ -150,7 +174,7 @@ class AdminNav extends Component {
                             </Form.Group>
                             <div className="errorHandel">
                                 <p>{this.state.resualt.coursename}</p>
-                                <p>{ this.state.resualt.coursecode}</p>
+                                <p>{this.state.resualt.coursecode}</p>
                             </div>
                         </Modal.Body>
                         <Modal.Footer className="pop-footer">

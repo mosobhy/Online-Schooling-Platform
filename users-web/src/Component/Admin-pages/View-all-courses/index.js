@@ -7,35 +7,27 @@ import "./style.css";
 
 class ViewAllCourses extends Component {
     state = {
-        tableItems: []
+        data: []
     }
-    componentDidMount() {
-        fetch("https://jsonplaceholder.typicode.com/todos")
-            .then(req => req.json())
-            .then(data => {
-                this.setState({
-                    tableItems: data
-                })
-            })
-    }
+   
 
     render() {
-        const { tableItems } = this.state;
-        const body = tableItems.map((item) => {
-            return (
-                <react.Fragment key={item.id}>
-                    <tr >
-                        <td>{item.userId}</td>
-                        <td>{item.title}</td>
-                        <td>{item.completed}</td>
-                        <td><button className="btn view-button" ><Link to="/course/">View</Link></button></td>
-                        <td><button className="btn delete-button" >Delete</button></td>
-                    </tr>
-                </react.Fragment>
+        // const { tableItems } = this.state;
+        // const body = tableItems.map((item) => {
+        //     return (
+        //         <react.Fragment key={item.id}>
+        //             <tr >
+        //                 <td>{item.userId}</td>
+        //                 <td>{item.title}</td>
+        //                 <td>{item.completed}</td>
+        //                 <td><button className="btn view-button" ><Link to="/course/">View</Link></button></td>
+        //                 <td><button className="btn delete-button" >Delete</button></td>
+        //             </tr>
+        //         </react.Fragment>
 
-            )
+        //     )
 
-        });
+        // });
         return (
             <div>
                 <Navbar />
@@ -51,7 +43,7 @@ class ViewAllCourses extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {body}
+                            {/* {body} */}
 
                         </tbody>
                     </Table>
