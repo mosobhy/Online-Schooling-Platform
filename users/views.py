@@ -30,7 +30,7 @@ def dotdotdot(request):
 # creating a quiz by instructor
 @require_http_methods(['POST'])
 @csrf_exempt
-@login_required(login_url='/api/login/')
+# @login_required(login_url='/api/login/')
 def create_quiz(request, username, course_code):
     ''' Create a quiz record '''
 
@@ -143,7 +143,7 @@ def view_specific_course(request, username, course_code):
 
 # view courses that a student has registerd for.
 @require_http_methods(['GET'])
-@login_required(login_url='/api/login/')
+# @login_required(login_url='/api/login/')
 def view_all_courses(request, username):
     """
     This function should return all the courses that a user of type instrctor
@@ -155,22 +155,23 @@ def view_all_courses(request, username):
     """
     if request.method == 'GET':
         
+        print('the fucking user state [view all courses]: ', request.user.is_authenticated)
         # check if the user logged in
-        try:
-            logged_user = request.session[username]
-        except:
-            return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
+        # if not request.user.is_authenticated:
+        #     print('user is not logged in ya dude -------------------')
+        #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
  
-        if logged_user != username:
-            return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
+        # # if logged_user != username:
+        # #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
         
         # query the user's registered in courses
         user = User.objects.get(username=username)
         if user.is_staff:
             courses = courseQuerySetSerializer(user.created_courses.all())
+
         else:
-            print(user)
             courses = courseQuerySetSerializer(user.enrolled_courses.all())
+
         if courses is None:
             return JsonResponse({'error': 'No courses to view'}, status=404)
         
@@ -180,13 +181,17 @@ def view_all_courses(request, username):
 
 
 # limiting request method to this view for just the post method
-@require_http_methods(['POST'])
+@require_http_methods(['GET', 'POST'])
 # @ensure_csrf_cookie
 @csrf_exempt
 def login_user(request):
     """
     This veiw function should check if user exiting into the database via
-    authenticate() metod, if not None, login in the user
+    authenticate() metod, if not None, login in the user via 
+
+    1. querying the UserInfo for this user
+    2. update the value of the is_authenticate to True
+
     Return: 
         json = success:True, user:user_data
     
@@ -194,36 +199,55 @@ def login_user(request):
     """
     # access the data send from the frontend
 
-    if request.is_ajax():
-        if request.method == 'POST':
+    if request.method == 'POST':
 
-            # redis_name = redis_server.get('name')
-            # print(f'Data fetched from redis is: {redis_name}')
+        # redis_name = redis_server.get('name')
+        # print(f'Data fetched from redis is: {redis_name}')
 
-            # access the json object of user's cridentials sent from frontend
-            username = request.POST['username']
-            password = request.POST['password']
+        # access the json object of user's cridentials sent from frontend
+        username = request.POST['username']
+        password = request.POST['password']
 
-            # check upon the user
-            user = authenticate(request, username=username, password=password)
+        print('user before authenticaing', request.user)
 
-            if user is not None:
-                # log in the user
-                login(request, user)
+        # check upon the user
+        user = authenticate(request, username=username, password=password)
 
-                # return the user object
-                # cors = {"Access-Control-Allow-Origin": "*"}
-                user = user_serializer(user)
-                success = {'success': True}
+        if user is not None:
+            # log in the user
+            user_info = user.user_info
 
-                return JsonResponse({ **success, **user }, status=200)
-            else:
-                return JsonResponse({'error': 'Invalid credinitals'}, status=401)   # unauthorized
+            # log in this user
+            user_info.login_user()
 
+
+            # login(request, user)
+            # print('we are in sessions here dude: ', request.session.items())
+
+            # print('the fucking user state: ' ,request.user.is_authenticated)
+            # print('user after authentiacting and login: ', request.user)
+
+            # return the user object
+            my_user = user_serializer(user)
+            success = {'success': True}
+
+            return JsonResponse({ **success, **my_user }, status=200)
         else:
-            return JsonResponse({'error': 'Method not Allowed'}, status=405)    # this to handle the login required part ( if the user reached via)
+            return JsonResponse({'error': 'Invalid credinitals'}, status=401)   # unauthorized
+
     else:
-        JsonResponse({'error': 'Redirect To Login'}, status=303)
+        return JsonResponse({'error': 'Redirect To Login'}, status=303)
+
+
+@require_http_methods(['GET'])
+def logout(request, username):
+    # get user
+    user = User.objects.get(username=username)   
+    user_info = user.user_info
+
+    if user_info.is_authenticated:
+        user_info.logout_user()
+        return JsonResponse({'success': True}, status=200)
 
 
 @require_http_methods(['POST'])
@@ -265,7 +289,7 @@ def register_as_instructor(request):
         if validate_email(email) == False:
             error.update({"email" : "It's not valid email"})
         # check if ssn is less than 20 number
-        if len(ssn) > 14 or len(ssn) < 14:
+        if len(ssn) != 14:
             error.update({"SSN" : "SSN is must be 14"})
         # check if ssn is less than 20 number
 
@@ -290,11 +314,11 @@ def register_as_instructor(request):
         # now login the user
         login(request, user)
 
-        user = user_serializer(user)
+        my_user = user_serializer(user)
         success = {'success': True}
 
         # return success message 
-        return JsonResponse({ **success, **user }, status=200)
+        return JsonResponse({ **success, **my_user }, status=200)
 
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -341,7 +365,7 @@ def register_as_student(request):
         if validate_email(email) == False:
             error.update({"email" : "It's not valid email"})
         # check if ssn is less than 20 number
-        if len(ssn) > 14 or len(ssn) < 14:
+        if len(ssn) != 14:
             error.update({"SSN" : "SSN is must be 14"})
         # check if ssn is less than 20 number
         if len(university_id) > 10 and len(university_id) < 5:
@@ -373,11 +397,11 @@ def register_as_student(request):
         # now login the user
         login(request, user)
 
-        user = user_serializer(user)
+        my_user = user_serializer(user)
         success = {'success': True}
 
         # return success message 
-        return JsonResponse({ **user, **success }, status=200)
+        return JsonResponse({ **my_user, **success }, status=200)
 
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)

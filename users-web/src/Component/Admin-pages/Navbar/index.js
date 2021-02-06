@@ -97,8 +97,8 @@ class AdminNav extends Component {
 
 
         request.onload = () => {
-             const response = JSON.parse(request.responseText);
-            console.log(response)
+            //  const response = JSON.parse(request.responseText);
+            console.log('the response is : ' + request.responseText)
 
         }
         request.send();
