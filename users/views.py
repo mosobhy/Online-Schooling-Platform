@@ -155,13 +155,13 @@ def view_all_courses(request, username):
     if request.method == 'GET':
         
         # check if the user logged in
-        try:
-            logged_user = request.session[username]
-        except:
-            return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
+        # try:
+        #     logged_user = request.session[username]
+        # except:
+        #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
  
-        if logged_user != username:
-            return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
+        # if logged_user != username:
+        #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
         
         # query the user's registered in courses
         user = User.objects.get(username=username)
