@@ -80,15 +80,15 @@ def create_quiz(request, username, course_code):
 
 
 # delete a course
-@require_http_methods(['DELETE'])
-@login_required(login_url='/api/login/')
-@csrf_exempt
+@require_http_methods(['GET'])
+# @login_required(login_url='/api/login/')
+# @csrf_exempt
 def delete_course(request, username, course_code):
     """
     This function should delete a course from the database when an instructor
     clicks the delete button on a specific course
     """
-    if request.method == 'DELETE':
+    if request.method == 'GET':
         user = User.objects.get(username=username)
         if user.is_staff == False:
             return JsonResponse({'error': 'User not allowed to delete'}, status=403)
