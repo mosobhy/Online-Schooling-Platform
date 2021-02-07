@@ -89,7 +89,7 @@ def delete_course(request, username, course_code):
     """
     if request.method == 'DELETE':
         user = User.objects.get(username=username)
-        if not user.is_staff:
+        if user.is_staff == False:
             return JsonResponse({'error': 'User not allowed to delete'}, status=403)
 
         # qurey for this course and delete it
