@@ -606,7 +606,7 @@ def upload_material(request, username, course_code):
             return JsonResponse({"error":"user and course not match"}, status=400)
         
         # get description and check it 
-        description = request.POST["description"];
+        description = request.POST["description"]
             
         # get file that come from server 
         myfile = request.FILES['file']

@@ -8,6 +8,8 @@ import "./style.css";
 class ViewAllCourses extends Component {
     state = {
         data: [],
+        studentData: [],
+    
     }
 
     componentDidMount() {
@@ -81,7 +83,15 @@ class ViewAllCourses extends Component {
 
         request.onload = () => {
             const response = JSON.parse(request.responseText);
-            console.log(response)
+            if (response.success) {
+                this.setState({
+                    studentData: response.enrolled_students
+                });
+                localStorage.setItem("studentEnroll", JSON.stringify(this.state.studentData))
+                localStorage.setItem("code" , code)
+                this.props.history.push(`/course/`)
+             
+            }
         }
         request.send();
         return false;
