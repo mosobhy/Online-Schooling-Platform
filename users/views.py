@@ -82,6 +82,7 @@ def create_quiz(request, username, course_code):
 # delete a course
 @require_http_methods(['DELETE'])
 @login_required(login_url='/api/login/')
+@csrf_exempt
 def delete_course(request, username, course_code):
     """
     This function should delete a course from the database when an instructor
