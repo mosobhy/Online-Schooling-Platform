@@ -6,33 +6,110 @@ import './style.css';
 
 class AllCourses extends Component {
     state = {
-        tableItems: []
+        data: [],
+        studentData: [],
+    
     }
+
     componentDidMount() {
-        fetch("https://jsonplaceholder.typicode.com/todos")
-            .then(req => req.json())
-            .then(data => {
+        //HANDEL GET ALL COURSES REQUEST
+        let userInfo = localStorage.getItem("studentInfo");
+        userInfo = JSON.parse(userInfo);
+
+        //SEND REQUEST TO SERVER
+        const request = new XMLHttpRequest();
+        const csrftoken = this.getCookie('csrftoken');
+
+        request.open("get", `http://127.0.0.1:8000/api/view-courses/${userInfo.username}/`);
+
+        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        request.setRequestHeader("X-CSRFToken", csrftoken);
+
+
+        request.onload = () => {
+            const response = JSON.parse(request.responseText);
+            if (response.success) {
                 this.setState({
-                    tableItems: data
+                    data: response.courses
                 })
-            })
+                console.log(this.state.data)
+            }
+        }
+        request.send();
+        return false;
+
+
+
     }
+
+    
+    // //VIEW COURSE FUNCTION
+    // handelViewCourse = (code) => {
+    //     //SEND REQUEST TO SERVER
+    //     let userInfo = localStorage.getItem("userInfo");
+    //     userInfo = JSON.parse(userInfo);
+    //     const request = new XMLHttpRequest();
+    //     const csrftoken = this.getCookie('csrftoken');
+
+    //     request.open("get", `http://127.0.0.1:8000/api/view-a-course/${userInfo.username}/${code}`);
+
+    //     request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    //     request.setRequestHeader("X-CSRFToken", csrftoken);
+
+
+    //     request.onload = () => {
+    //         const response = JSON.parse(request.responseText);
+    //         if (response.success) {
+    //             this.setState({
+    //                 studentData: response.enrolled_students
+    //             });
+    //             localStorage.setItem("studentEnroll", JSON.stringify(this.state.studentData))
+    //             localStorage.setItem("code" , code)
+    //             this.props.history.push(`/course/`)
+             
+    //         }
+    //     }
+    //     request.send();
+    //     return false;
+   
+    // }
+
+
+    getCookie = (name) => {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
 
     render() {
-        const { tableItems } = this.state;
-        const body = tableItems.map((item) => {
-            return (
-                <react.Fragment key={item.id}>
-                    <tr >
-                        <td>{item.userId}</td>
-                        <td>{item.title}</td>
-                        <td>{item.completed}</td>
-                        <td><button className="btn view-button" ><Link to="/YourMaterials/">Visit</Link></button></td>
-                    </tr>
-                </react.Fragment>
+        // const { data } = this.state;
+        // const body = data.map((item) => {
+        //     return (
+        //         <react.Fragment key={item.course_code}>
+        //             <tr >
+        //                 <td>{item.course_name}</td>
+        //                 <td>{item.course_code}</td>
+        //                 <td>{item.level}</td>
+        //                 <td><button className="btn view-button" onClick={() => this.handelViewCourse(item.course_code)}>
+        //                    Visit</button></td>
+        //             </tr>
+        //         </react.Fragment>
 
-            )
-        });
+        //     )
+
+        // });
         return (
             <div>
                 <Navbar />
@@ -47,7 +124,7 @@ class AllCourses extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {body}
+                            {/* {body} */}
 
                         </tbody>
                     </Table>

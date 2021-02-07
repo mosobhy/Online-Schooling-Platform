@@ -93,7 +93,7 @@ class UploadMaterials extends Component {
                         </Modal.Header>
 
 
-                        <form onSubmit={this.handelFileUpload} enctype="multipart/form-data">
+                        <form onSubmit={this.handelFileUpload} encType="multipart/form-data">
                             <Modal.Body className="pop-body" >
                                 <Form.Label>Select File</Form.Label>
                                 <br />
