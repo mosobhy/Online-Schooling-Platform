@@ -158,22 +158,13 @@ def view_all_courses(request, username):
         
         print('the fucking user state [view all courses]: ', request.user.is_authenticated)
         # check if the user logged in
-<<<<<<< HEAD
         # try:
         #     logged_user = request.session[username]
         # except:
         #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
- 
+
         # if logged_user != username:
         #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
-=======
-        # if not request.user.is_authenticated:
-        #     print('user is not logged in ya dude -------------------')
-        #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
- 
-        # # if logged_user != username:
-        # #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
->>>>>>> 764ea8da6e45f870d5e7c00942b0ca10cccbdb97
         
         # query the user's registered in courses
         user = User.objects.get(username=username)
