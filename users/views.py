@@ -655,7 +655,7 @@ def delete_material(request, username, mat_id):
             return JsonResponse({'error': 'material no found'}, status=403)
         # check if user log in login 
         #must use it even if use @login_require
-        if user.username != request.user.username:
+        if mat_to_delete.user != user:
             return JsonResponse({'error': 'user name not match'}, status=403)
 
         # check if user is staff 
