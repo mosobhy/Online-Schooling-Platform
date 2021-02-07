@@ -82,7 +82,33 @@ class AdminNav extends Component {
 
     };
 
+<<<<<<< HEAD
  
+=======
+    handelReturnCourses = () => {
+        let userInfo = localStorage.getItem("userInfo");
+        userInfo = JSON.parse(userInfo);
+
+        //SEND REQUEST TO SERVER
+        const request = new XMLHttpRequest();
+        const csrftoken = this.getCookie('csrftoken');
+
+        request.open("get", `http://127.0.0.1:8000/api/view-courses/${userInfo.username}/`);
+
+        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        request.setRequestHeader("X-CSRFToken", csrftoken);
+
+
+        request.onload = () => {
+            //  const response = JSON.parse(request.responseText);
+            console.log('the response is : ' + request.responseText)
+
+        }
+        request.send();
+        return false;
+
+    }
+>>>>>>> 764ea8da6e45f870d5e7c00942b0ca10cccbdb97
     getCookie = (name) => {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {

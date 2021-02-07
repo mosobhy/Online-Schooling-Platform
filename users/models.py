@@ -11,6 +11,17 @@ class UserInfo(models.Model):
     ssn = models.CharField(null=True,max_length=14)
     university_id = models.CharField(null=True,max_length=20)
     level = models.IntegerField(null=True)
+    is_authenticated = models.BooleanField(default=False)
+
+    # these two functions are temporary till after final exams
+    def login_user(self):
+        # login in the user via updating the value of the last field
+        self.is_authenticated = True
+    
+    def logout_user(self):
+        # logout the user via shutting down the value of the is_auth...
+        self.is_authenticated = False
+        
 
     def userSerializer(self):
         ''' Return the user object as a dictionary object '''
