@@ -521,7 +521,7 @@ def join_course(request, username, course_code):
         if (
             (username != course_to_join.created_by_instructor.username) 
             and (not user.is_staff) 
-            and (user.level == course_to_join.level)
+            and (user.user_info.level == course_to_join.level)
             ):
 
             # check if the user didn't yet enrolled
