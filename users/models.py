@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 import jsonfield
+import json
 
 
 # create the user class which is going to be populated for all users
@@ -25,7 +26,17 @@ class UserInfo(models.Model):
 
     def userSerializer(self):
         ''' Return the user object as a dictionary object '''
-        pass
+
+        return {
+            'username': self.user.username,
+            'first_name': self.user.first_name,
+            'last_name': self.user.last_name,
+            'email': self.user.email,
+            'is_staff': self.user.is_staff,
+            'ssn': self.ssn,
+            'university_id': self.university_id,
+            'level': self.level
+        }
 
     # track the number of students created 
     @staticmethod
@@ -54,7 +65,12 @@ class Course(models.Model):
             Return the course object and all of its related stuff as a
             dictionary object 
         '''
-        pass
+        return {
+            'course_code': self.course_code,
+            'course_name': self.course_name,
+            'level': self.level,
+            'enrolled_students': [ stu.userSerializer() for stu in self.students.all() ]
+        }
 
     @staticmethod
     def _getCourseCount(username):
@@ -82,7 +98,13 @@ class Matrial(models.Model):
             Return the matrial object and all of its related stuff 
             as a dictionray object
         '''
-        pass
+        return {
+            'instructor': self.user.username,
+            'course_code': self.course.course_code,
+            'course_name': self.course.course_name,
+            'description': self.description,
+            'path': self.path
+        }
 
     @staticmethod
     def _getMaterialCount(course_code):
@@ -113,7 +135,14 @@ class Quiz(models.Model):
             Return the quiz object and all of its related stuff as 
             a dicitonary object
         '''
-        pass
+        return {
+            'course_code': self.course.course_code,
+            'course_name': self.course.course_name,
+            'quiz_name': self.name,
+            'start_time': str(self.start_time),
+            'end_time': str(self.end_time),
+            'questions': json.loads(self.question)
+        }
 
 
     @staticmethod
@@ -131,19 +160,24 @@ class Quiz(models.Model):
 
 
 class Result(models.Model):
-    quiz = models.ForeignKey(Quiz, default=None, on_delete=models.CASCADE, related_name='taken_by') # this will dispaly the results of quiz.. quiz.taken_by.all()
+    quiz = models.ForeignKey(Quiz, default=None, on_delete=models.CASCADE, related_name='taken_by') # this will dispaly the results of quiz.. quiz.taken_by.all() all the result instances
     student = models.ForeignKey(settings.AUTH_USER_MODEL, default=None, on_delete=models.CASCADE, related_name='quizs_reuslts')
-    # querying for the quize details of some quiz result
-    # result = Result.quiz_details.get(pk=Quiz.objects.get(pk=id))
-    # results = quiz_obj.quiz_details.all()
     grade = models.IntegerField(null=True)
 
-    def resultSerializer(self):
+    def resultSerializuserSerializerer(self):
         '''
             Return the result object and all of its related stuff
             as a dictionray object
         '''
-        pass
+        return {
+            'quiz': self.quiz.coures.course_name,
+            'quiz_name': self.quiz.name,
+            'start_time': str(self.quiz.start_time),
+            'end_time': str(self.quiz.end_time),
+            'student': self.student.username,
+            'ssn': self.student.ssn,
+            'grade': self.grade
+        }
 
     def __str__(self):
         return str(self.user)

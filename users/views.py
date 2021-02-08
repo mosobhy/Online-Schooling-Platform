@@ -139,11 +139,40 @@ def view_specific_course(request, username, course_code):
 
 
 # view course's details for a student
+@require_http_methods(['GET'])
+def view_student_course(request, username, course_code):
+    '''
+        this function should return an json object with a specific course
+        in terms of a student prespective
+    '''
+    if request.method == 'GET':
+        
+        # check upon the student is logged in or not
+        user = User.objects.get(username=username)
+        if not user:
+            return JsonResponse({'error': 'Something went wrong on server(student not found)'}, status=404)
+
+        # enrure the login
+        if ensure_login(user) == False:
+            return JsonResponse({'error': 'Login First'}, status=401)   # unauthorized (not logged in)
+        
+        # get the course data and return it
+        course = Course.objects.get(course_code=course_code)
+
+        # get the materials of this course
+        matrials = course.uploaded_materials.all()
+
+        return JsonResponse({
+            'success': True,
+            'matrials': [ mat.matrialSerializer() for mat in matrials ]
+        }, status=200)
+    
+    else:
+        return JsonResponse({'error': 'Method not Allowed'}, status=405)
 
 
 # view courses that a student has registerd for.
 @require_http_methods(['GET'])
-# @login_required(login_url='/api/login/')
 def view_all_courses(request, username):
     """
     This function should return all the courses that a user of type instrctor
@@ -154,21 +183,11 @@ def view_all_courses(request, username):
     THE COURSES DATA SHOULD BE CHACHED IN THE CLIENT
     """
     if request.method == 'GET':
-        
-        print('the fucking user state [view all courses]: ', request.user.is_authenticated)
-        # check if the user logged in
-        # if not request.user.is_authenticated:
-        #     print('user is not logged in ya dude -------------------')
-        #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
- 
-        # # if logged_user != username:
-        # #     return JsonResponse({'error': 'something went wrong, user supposed to be logged in'}, status=401)
-        
-        # query the user's registered in courses
+
+        # check if the user has logged in        
         user = User.objects.get(username=username)
         if user.is_staff:
             courses = courseQuerySetSerializer(user.created_courses.all())
-
         else:
             courses = courseQuerySetSerializer(user.enrolled_courses.all())
 
@@ -604,10 +623,11 @@ def upload_material(request, username, course_code):
             return JsonResponse({"error":"user and course not match"}, status=400)
         
         # get description and check it 
-        description = request.POST["description"];
+        description = request.POST["description"]
             
         # get file that come from server 
         myfile = request.FILES['file']
+
         fs = FileSystemStorage()
         # get base dir of project
         base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -668,3 +688,4 @@ def delete_material(request, username, mat_id):
         return JsonResponse({'success': True}, status=200)
     else:
         return JsonResponse({'error': 'Method not Allowed'}, status=405)
+

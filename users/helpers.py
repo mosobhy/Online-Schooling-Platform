@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 import re 
+from functools import wraps
 from .models import *
 """
 Inside this file, we have to create the helper static functions
@@ -72,3 +73,9 @@ def singleCourseSerializer(course):
         'level': course.level,
         'enrolled_students': [ user_serializer(stu) for stu in course.students.all() ]
     }
+
+def ensure_login(user):
+    ''' this function argument is a user object '''
+    if user.user_info.is_authenticated:
+        return True
+    return False
