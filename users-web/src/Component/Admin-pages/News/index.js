@@ -6,43 +6,48 @@ import "./style.css";
 
 class News extends Component {
     state = {
-        users:[]
+        users: []
     }
     componentDidMount() {
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    users:data
-                })
-            });
-    };
+        let student = localStorage.getItem("studentEnorll");
+        student = JSON.parse(student);
+        this.setState({
+            users: student
+        });
+        console.log(this.state.users)
+    }
+
     render() {
-        const { users } = this.state;
-        const user = users.map(user => {
-            return (
-                <div className="news-content d-flex justify-content-between" key={user.id}>
-                    <h4>{ user.name}</h4>
-                <div className="news-icons">
-                    <AiOutlineCheck />
-                    <AiOutlineClose />
-                </div>
-            </div>
-            )
-        })
+
         return (
+
             <div>
                 <Navbar />
                 <CourseNav />
-                <div className="news-parent" >
 
-
-                    <h3>Students who want to join this class : </h3>
-                   {user}
-                </div>
+                {this.state.users ? (
+                    <div className="news-parent" >
+                        <h3>Students who want to join this class : </h3>
+                        <div className="news-content d-flex justify-content-between" >
+                            <h4>ahlam</h4>
+                            <div className="news-icons">
+                                <AiOutlineCheck />
+                                <AiOutlineClose />
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                        <div className="Student-Qize-Parent">
+                            <img src="/image/student.jpg" className="img-fluid" />
+                            <p>There are no <span>Student</span> Enrolled in this class.</p>
+                        </div>
+                    )}
 
 
             </div>
+
+
+
 
 
         )

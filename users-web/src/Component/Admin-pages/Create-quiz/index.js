@@ -64,8 +64,9 @@ class CreateQuiz extends Component {
         e.preventDefault();
         if (this.state.counter <= this.state.value) {
             this.FormQuiz();
+            this.cleanData();
         } else {
-           alert("")
+           console.log("hello")
         }
 
     }
@@ -75,6 +76,17 @@ class CreateQuiz extends Component {
             counter: this.state.counter + 1
         });
     }
+
+    cleanData = () => {
+        document.getElementById('title').value = '';
+        document.getElementById('firstAn').value = '';
+        document.getElementById('secondAn').value = '';
+        document.getElementById('thirdAn').value = '';
+        document.getElementById('fourthAn').value = '';
+        document.getElementById('correctAn').value = '';
+        document.getElementById('point').value = '';
+    }
+
 
 
     FormQuiz = () => {
@@ -107,7 +119,6 @@ class CreateQuiz extends Component {
       
     
         let FormBodyArray =
-            <Carousel.Item >
                 <Modal.Body className="pop-body">
                     <div className="sub-form">
                        
@@ -144,7 +155,7 @@ class CreateQuiz extends Component {
                         </form>
                     </div>
                 </Modal.Body>
-            </Carousel.Item>
+     
 
 
 
@@ -187,11 +198,11 @@ class CreateQuiz extends Component {
                         <Modal.Title>Quiz</Modal.Title>
                     </Modal.Header>
 
-                    <Carousel controls={false}>
+            
 
                         {FormBodyArray}
 
-                    </Carousel>
+              
 
 
                     <Modal.Footer className="pop-footer">

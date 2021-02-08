@@ -80,16 +80,17 @@ def create_quiz(request, username, course_code):
 
 
 # delete a course
-@require_http_methods(['DELETE'])
-@login_required(login_url='/api/login/')
+@require_http_methods(['GET'])
+# @login_required(login_url='/api/login/')
+# @csrf_exempt
 def delete_course(request, username, course_code):
     """
     This function should delete a course from the database when an instructor
     clicks the delete button on a specific course
     """
-    if request.method == 'DELETE':
+    if request.method == 'GET':
         user = User.objects.get(username=username)
-        if not user.is_staff:
+        if user.is_staff == False:
             return JsonResponse({'error': 'User not allowed to delete'}, status=403)
 
         # qurey for this course and delete it
@@ -186,6 +187,10 @@ def view_all_courses(request, username):
 
         # check if the user has logged in        
         user = User.objects.get(username=username)
+
+        if ensure_login(user) == False:
+            return JsonResponse({'error': 'Login First'}, status=401)
+
         if user.is_staff:
             courses = courseQuerySetSerializer(user.created_courses.all())
         else:
@@ -674,7 +679,7 @@ def delete_material(request, username, mat_id):
             return JsonResponse({'error': 'material no found'}, status=403)
         # check if user log in login 
         #must use it even if use @login_require
-        if user.username != request.user.username:
+        if mat_to_delete.user != user:
             return JsonResponse({'error': 'user name not match'}, status=403)
 
         # check if user is staff 
