@@ -3,7 +3,7 @@
 ### usage: 
         '127.0.0.1:8000/api/login/'     OR
         'localhost/api/login/'
-        
+
 ### method 
         'POST'
 
@@ -13,16 +13,16 @@ the following data should be sent as json object
         password
 
 ### returns
-    
-    ** if the user doesn't exist **
 
+    ** if the user doesn't exist **
+    
     {
         error: 'invalid credintials',
         status: 401
     }
-
+    
     ** if the user does exist **
-
+    
     {
         success: True,
         username: ....,
@@ -46,9 +46,9 @@ the following data should be sent as json object
 
 ### required data
     ** a json object of the following data **
-
+    
     NOTE: that the html input tags must have the same as the following data
-
+    
     firstname
     lastname
     username
@@ -59,20 +59,20 @@ the following data should be sent as json object
 
 ### returns
     if not successfully registered, you get back
-
+    
     {
         errors: [
             'first name': 'first name is not valid',
             and so on for other data fields......
         ]
     }
-
+    
     if successfully registered, you will get back
     {
         success: True,
         username: .....,
         firstname: ...., 
-
+    
         and so on for other data fields of instructor
     }
 
@@ -88,7 +88,7 @@ the following data should be sent as json object
 
 ### required data
     this endpoind require a url parameter to be passed thourgh the url
-
+    
     username
 
 ### returns
@@ -100,14 +100,14 @@ the following data should be sent as json object
         {'error': 'something went wrong, user supposed to be logged in'
     }
     ```
-
+    
     2. if user has no courses to view
     ```json
     {
         error: 'NO courses to view'
     }
     ```
-
+    
     ** success **
     ```json
     {
@@ -126,8 +126,36 @@ the following data should be sent as json object
     }
     ```
     NOTE: these courses' codes should be associated with each course in order to use 
-
+    
     it again when trying to get the details of each course
+
+# view_specific_course (for student)
+
+### url endpoint
+
+'127.0.0.1/api/view-stu-course/username/course_code/'
+
+
+
+### HTTP Method
+
+'GET'
+
+
+
+### Required data
+
+as URL parameters pass the username of the student and the course_code to view all its related details
+
+and matrials
+
+
+
+### Returns
+
+​	**error**
+
+​	```{error: ....,}``
 
 
 
@@ -143,7 +171,7 @@ the following data should be sent as json object
 ### required data
 
     This route accept its data as a url parameters
-
+    
     username    (instructor)
     course_code
 
@@ -156,16 +184,16 @@ the following data should be sent as json object
     }
     ```
     but this error rarly to happen
-
+    
     ```json
     {
         error: 'Something went wrong, Course has not been fetched from db'
     }
     ```
     if that happen, that means that you didn't store the course_code propery in data- attribute
-
+    
     ** success **
-
+    
     ```json
     {
         success: True,
@@ -200,7 +228,7 @@ the following data should be sent as json object
 
 ### required data
     this route accepts data as url parameters
-
+    
     username (instructor)
     course_code
 
@@ -213,14 +241,14 @@ the following data should be sent as json object
     }
     ```
     this error should never appear, cuz it means that a student could access the side of instructor
-
+    
     ```json
     {
         error: 'Course Not found, it sounds like an issue with frontend'
     }
     ```
     this may happen if you don't store the course_code in the data- attribute for each course
-
+    
     ** success **
     ```json
     {
@@ -241,9 +269,9 @@ the following data should be sent as json object
     this route accepts data as url parameters and post parameters
     	username (instructor)
     post parameters
-	code
+    code
     	name
-   	level (less than 7)
+    level (less than 7)
 
 ### returns
 
@@ -251,10 +279,10 @@ the following data should be sent as json object
     ```json
     {
         errors: [{"coursecode":"course code already exist"},
-		{"coursename" : "course name is not valid"},
-		{"levellen" : "level must be less than 7"},
-		{"levelint" : "level must be integer"}
-		]
+    	{"coursename" : "course name is not valid"},
+    	{"levellen" : "level must be less than 7"},
+    	{"levelint" : "level must be integer"}
+    	]
     }
     
     ** success **
@@ -277,8 +305,8 @@ the following data should be sent as json object
 ### required data
     this route accepts data as url parameters
     	username (student)
-	coursecode
-   
+    coursecode
+
 
 ### returns
 
@@ -287,7 +315,7 @@ the following data should be sent as json object
     {
         {'error': 'Soemthing went Wrong in frontend, No such Course'}
     }
-	
+    
     ```json
     {
         {'error': 'Student Already Enrolled in this course'}
@@ -312,8 +340,8 @@ the following data should be sent as json object
 ### required data
     this route accepts data as url parameters
     	username (student)
-	coursecode
-   
+    coursecode
+
 
 ### returns
 
@@ -321,11 +349,11 @@ the following data should be sent as json object
     ```json
     {
         errors [
-		{"username":"user name not exist"}
-		{"course":"course not exist"}
-	]
+    	{"username":"user name not exist"}
+    	{"course":"course not exist"}
+    ]
     }
-	
+    
     ```json
     {
         {"error":"student not join course"}
@@ -351,11 +379,11 @@ the following data should be sent as json object
 ### required data
     this route accepts data as url parameters
     	username (student)
-	coursecode
+    coursecode
     in POST method
-	file (type file)
-	description (text)
-   
+    file (type file)
+    description (text)
+
 
 ### returns
 
@@ -363,11 +391,11 @@ the following data should be sent as json object
     ```json
     {
         errors [
-		{"username":"user name not exist"}
-		{"course":"course not exist"}
-	]
+    	{"username":"user name not exist"}
+    	{"course":"course not exist"}
+    ]
     }
-	
+    
     ```json
     {
         {"error":"user and course not match"}
@@ -377,9 +405,9 @@ the following data should be sent as json object
     ```json
     {
         "matrials": [
-		{"path": "dsdfdsc.txt", "description": null}, 
-		{"path": "debug_29sxBVy.log", "description": "adfasdfsdf"}
-	]
+    	{"path": "dsdfdsc.txt", "description": null}, 
+    	{"path": "debug_29sxBVy.log", "description": "adfasdfsdf"}
+    ]
     }
     ```
 
@@ -395,7 +423,7 @@ the following data should be sent as json object
 ### required data
     this route accepts data as url parameters
     	username (student)
-	materialid   
+    materialid   
 
 ### returns
 
@@ -405,17 +433,18 @@ the following data should be sent as json object
         {'error': 'User not found'}
     }
 
-	
+
+​	
     ```json
     {
         {'error': 'material no found'}
     }
-
+    
     ```json
     {
         {'error': 'user name not match'}
     }
-
+    
     ```json
     {
         {'error': 'User not allowed to delete'}
@@ -440,7 +469,7 @@ the following data should be sent as json object
     **url parameters**
     this route accepts two url parameters (course_code) for which you are going
     to create this quiz and (username) of the currently logged in instructor
-
+    
     **post data**
     a formData obj with all of this data
     1. start_time
