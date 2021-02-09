@@ -22,3 +22,125 @@
       color: #8c8c8c;
       padding: 3px;
   }
+
+
+  /* ******************************************************************************  */
+
+  .quiz-app {
+    background-color: #252d4a;
+    width: 450px;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: space-evenly;
+    min-height: 200px ;
+    transform: translateX(5rem) ;
+    transform: translate(5rem , 15rem);
+  }
+  
+  .score-section {
+    display: flex;
+    font-size: 24px;
+    align-items: center;
+    color: #ffffff;
+
+  }
+  
+  
+  .question-section {
+    width: 100%;
+  }
+  
+  .question-count {
+    margin-bottom: 20px;
+    color: #ffffff;
+
+  }
+  
+  .question-count span {
+    font-size: 28px;
+    color: #ffffff;
+  }
+  
+  .question-text {
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+  
+  
+  /* ANSWERS/RIGHT SECTION */
+  .answer-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .quiz-app button {
+    width: 100%;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #252d4a;
+    border-radius: 15px;
+    display: flex;
+    padding: 5px;
+    justify-content: flex-start;
+    align-items: center;
+    border: 5px solid #234668;
+    cursor: pointer ;
+    margin-bottom: 1rem
+  }
+  
+
+
+  button:hover {
+    background-color: #555e7d;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+
+  /* ######################## Counter Down ######################## */
+
+  #timer {
+    font-size: 3em;
+    font-weight: 100;
+    color: white;
+    text-shadow: 0 0 20px #48C8FF;
+    background: #0D1A29;
+    text-align: center;
+    font-weight: lighter;
+    font-family: sans-serif;
+    padding: 70px 50px;
+    height: 100vh;
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  #timer div {
+    display: inline-block;
+    min-width: 90px;
+  }
+  
+  #timer div span {
+    color: #B1CDF1;
+    display: block;
+    font-size: .35em;
+    font-weight: 400;
+  }
+
+ #countText {
+   font-size: 1.9rem;
+   border: 1px #48C8FF solid ;
+   padding: 1rem;
+   margin-bottom: 2rem;
+ }
+
+ .quiz-time {
+   background-color: aqua;
+   transform: translate(20rem , 3rem);
+ }

@@ -3,16 +3,19 @@ import Navbar from "../Navbar/index";
 import CourseNav from "../Course-Nav/index";
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import "./style.css";
-import { Carousel } from 'react-bootstrap';
 
 class CreateQuiz extends Component {
 
     state = {
+
         show: false,
         showQuizForm: false,
         value: '',
         data: [],
-        counter: 0
+        counter: 0 , 
+        quizTime : '' , 
+        quizDate : '' , 
+        quizPeriod : 0
     }
 
     handleClose = () => {
@@ -32,11 +35,28 @@ class CreateQuiz extends Component {
         })
     }
 
-    showFirstQu = () => {
+    showFirstQu = (e) => {
+       //2021-02-19 06:39
+       
+       e.preventDefault();
         this.setState({
+            quizDate : document.getElementById('quizDate').value ,
+            quizTime : document.getElementById('quizTime').value , 
+            quizPeriod :document.getElementById('quiz-Per').value ,
             show: false,
             showQuizForm: true
         })
+        console.log(this.state.quizTime , this.state.quizPeriod);
+        let QuizDate = JSON.stringify(this.state.quizDate); 
+        localStorage.setItem("QuizDate" , QuizDate) ;
+
+        let QuizTime = JSON.stringify(this.state.quizTime); 
+        localStorage.setItem("QuizTime" , QuizTime) ;
+
+        let QuizPeriod = JSON.stringify(this.state.quizPeriod); 
+        localStorage.setItem("quizPeriod" , QuizPeriod) ;
+        
+        // console.log(document.getElementById('quizDate').value);
     }
 
     CloseCreateQuizForm = () => {
@@ -57,21 +77,26 @@ class CreateQuiz extends Component {
         this.state.value = e.target.value;
     }
 
-
+    // clearQuiz () => {
+    //     localStorage.clear() ;
+    // }
 
     handleGetData = (e) => {
      
         e.preventDefault();
-        if (this.state.counter <= this.state.value) {
+        if (this.state.counter <= (this.state.value )) {
             this.FormQuiz();
             this.cleanData();
         } else {
-           console.log("hello")
+        let data = JSON.stringify(this.state.data); 
+        localStorage.setItem("my-data" , data) ;
+        
         }
+        console.log(this.state.quizTime);
 
     }
 
-    decrCounter = () => {
+    increaseCounter = () => {
         this.setState({
             counter: this.state.counter + 1
         });
@@ -91,26 +116,47 @@ class CreateQuiz extends Component {
 
     FormQuiz = () => {
 
-        const title = document.getElementById('title').value;
+        const questionText = document.getElementById('title').value;
+        const point = document.getElementById('point').value;
+        const isCorrect = document.getElementById('correctAn').value;
         const firstAn = document.getElementById('firstAn').value;
         const secondAn = document.getElementById('secondAn').value;
         const thirdAn = document.getElementById('thirdAn').value;
         const fourthAn = document.getElementById('fourthAn').value;
-        const correctAn = document.getElementById('correctAn').value;
-        const point = document.getElementById('point').value;
+
+        let firstCorr = false ;
+        let secondCorr = false ;
+        let thirdCorr = false ;  
+        let fourthCorr = false ;  
+        
+        if (firstAn == isCorrect ) {
+            firstCorr = true ;
+        }
+        else if (secondCorr == isCorrect){
+            secondCorr = true ;
+        }
+        else if (thirdAn == isCorrect){
+            thirdCorr = true ;
+        }
+        else{
+            fourthCorr = true ;
+        }
+
+        let answers = [
+            { answerText : firstAn , isCorrect :  firstCorr},
+            { answerText : secondAn , isCorrect : secondCorr},
+            { answerText : thirdAn , isCorrect  : thirdCorr} ,
+            { answerText : fourthAn , isCorrect : fourthCorr},
+        ];
 
         const Container = {
-            title: title,
-            first: firstAn,
-            second: secondAn,
-            third: thirdAn,
-            fourth: fourthAn,
-            correctAn: correctAn,
+            questionText: questionText,
+            answerOptions : answers ,
             point: point
         };
 
         this.state.data.push(Container);
-        console.log(this.state.data);
+        // console.log(this.state.data);
     }
 
 
@@ -122,11 +168,11 @@ class CreateQuiz extends Component {
                 <Modal.Body className="pop-body">
                     <div className="sub-form">
                        
-                        {/* ***** Question ******* */}
+                        {/* * Question *** */}
                         <form onSubmit={this.handleGetData } >
                             <Form.Label>Question Title</Form.Label>
                             <Form.Control type="text" placeholder="Enter Title" id="title" />
-                            {/* **** Answers ******** */}
+                            {/* * Answers *** */}
                             <Form.Label>Question Answers</Form.Label>
                             <div className='AnswerOptions'>
                                 <Row>
@@ -144,14 +190,15 @@ class CreateQuiz extends Component {
                                     </Col>
                                 </Row>
                             </div>
-                            {/* **** Correst Answer ******** */}
+                            {/* * Correst Answer *** */}
                             <Form.Label>Correct Answer</Form.Label>
                             <Form.Control type="text" placeholder="Enter the correct Answer" id="correctAn" />
-                            {/* **** Question Degree ******** */}
+                            {/* * Question Degree *** */}
                             <Form.Label>Question Points</Form.Label>
                             <Form.Control type="text" placeholder="Enter the Point" id="point" />
-
-                            <button className="btn-danger btn" type="submit" onClick={this.decrCounter} > Submit </button>
+                            <div className="sub-btn">
+                            <button type="submit" onClick={this.increaseCounter} > Submit </button>
+                            </div>
                         </form>
                     </div>
                 </Modal.Body>
@@ -170,7 +217,10 @@ class CreateQuiz extends Component {
                     <div className="quiz-img">
                         <img src="/image/quiz.jpg" className=" img-fluid" />
                     </div>
-                    <button onClick={this.handleShow} className="quiz-btn">&lt; Create Quiz / &gt;</button>
+                   <div>
+                   <button onClick={this.handleShow} className="quiz-btn">&lt; Create New Quiz / &gt;</button>
+                   <button onClick={this.clearQuiz} className="quiz-btn clear-quiz">&lt; Delete Last Quiz / &gt;</button>
+                   </div>
                 </div>
 
                 {/* ############# pop up quiz #################  */}
@@ -179,15 +229,23 @@ class CreateQuiz extends Component {
                         <Modal.Title>Quiz</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="pop-body">
-
+                    <form onSubmit={this.showFirstQu } >
                         <Form.Label>Number Of Questions</Form.Label>
                         <Form.Control type="text" placeholder="Enter A Number" onChange={e => this.change(e)} />
 
+                        <Form.Label>Enter The Quiz Date</Form.Label>
+                        <Form.Control type="date" id="quizDate"/>
+
+                        <Form.Label>Enter The Quiz Starting Time</Form.Label>
+                        <Form.Control type="time" id="quizTime"/>
+
+                        <Form.Label>Enter The Quiz Period</Form.Label>
+                        <Form.Control type="Number" id="quiz-Per"  />
+                           
+                            <button type="submit" className="createQuizBtn"> Submit </button>
+                    </form>
                     </Modal.Body>
                     <Modal.Footer className="pop-footer">
-                        <Button onClick={this.showFirstQu}>
-                            Submit
-                            </Button>
                     </Modal.Footer>
                 </Modal>
 
@@ -206,8 +264,8 @@ class CreateQuiz extends Component {
 
 
                     <Modal.Footer className="pop-footer">
-                        <Button type="button" >
-                            Next
+                        <Button type="button" onClick={this.CloseCreateQuizForm}>
+                            Go To Quiz
                 </Button>
                     </Modal.Footer>
                 </Modal>

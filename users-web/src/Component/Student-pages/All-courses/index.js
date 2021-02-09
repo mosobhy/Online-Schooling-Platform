@@ -31,6 +31,7 @@ class AllCourses extends Component {
             this.setState({
                 data: response
             })
+            console.log(response)
         }
         request.send();
         return false;
