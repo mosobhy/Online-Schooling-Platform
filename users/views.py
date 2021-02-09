@@ -89,7 +89,14 @@ def delete_course(request, username, course_code):
     clicks the delete button on a specific course
     """
     if request.method == 'GET':
-        user = User.objects.get(username=username)
+        # if user log in 
+        try:
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
+        except:
+            return JsonResponse({'login': 'User must login'}, status=403)
+
         if user.is_staff == False:
             return JsonResponse({'error': 'User not allowed to delete'}, status=403)
 
@@ -117,7 +124,14 @@ def view_specific_course(request, username, course_code):
     of the clicked upon course to this endpoint
     """
     if request.method == 'GET':
-        user = User.objects.get(username=username)
+        # if user log in 
+        try:
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)    
+        except:
+            return JsonResponse({'login': 'User must login'}, status=403)
+
         if not user.is_staff:
             return JsonResponse({'error': 'User not an instructor'}, status=403)
 
@@ -148,14 +162,13 @@ def view_student_course(request, username, course_code):
     '''
     if request.method == 'GET':
         
-        # check upon the student is logged in or not
-        user = User.objects.get(username=username)
-        if not user:
-            return JsonResponse({'error': 'Something went wrong on server(student not found)'}, status=404)
-
-        # enrure the login
-        if ensure_login(user) == False:
-            return JsonResponse({'error': 'Login First'}, status=401)   # unauthorized (not logged in)
+        # if user log in 
+        try:
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
+        except:
+            return JsonResponse({'login': 'User must login'}, status=403)
         
         # get the course data and return it
         course = Course.objects.get(course_code=course_code)
@@ -185,11 +198,13 @@ def view_all_courses(request, username):
     """
     if request.method == 'GET':
 
-        # check if the user has logged in        
-        user = User.objects.get(username=username)
-
-        if ensure_login(user) == False:
-            return JsonResponse({'error': 'Login First'}, status=401)
+        # if user log in 
+        try:
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
+        except:
+            return JsonResponse({'login': 'User must login'}, status=403)
 
         if user.is_staff:
             courses = courseQuerySetSerializer(user.created_courses.all())
@@ -448,8 +463,16 @@ def create_course(request, username):
     # git data from post form
     if request.method == "POST":
 
+
+        # if user log in 
+        try:
+            instructor = User.objects.get(username=username)
+            if ensure_login(instructor) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
+        except:
+            return JsonResponse({'login': 'User must login'}, status=403)
+
         # check if an instructor
-        instructor = User.objects.get(username=username)
         if not instructor.is_staff:
             return JsonResponse({'error': 'Not permitted to create course'}, status=403)
 
@@ -511,24 +534,34 @@ def join_course(request, username, course_code):
     #get data from post 
     if request.method == 'GET':
         
-        # check if the user is in the same level and allowed to enter a course
-        user = User.objects.get(username=username)
-        course_to_join = Course.objects.get(course_code=course_code)
-        
-        if course_to_join is None:
+        # if user log in 
+        try:
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
+        except:
+            return JsonResponse({'login': 'User must login'}, status=403)
+
+        try:
+            course_to_join = Course.objects.get(course_code=course_code)
+        except:
             return JsonResponse({'error': 'Soemthing went Wrong in frontend, No such Course'}, status=404)
 
-        if (
-            (username != course_to_join.created_by_instructor.username) 
-            and (not user.is_staff) 
-            and (user.user_info.level == course_to_join.level)
-            ):
+        if user.is_staff:
+            return JsonResponse({'error': 'Staff not allow to join course'}, status=404)
+        
+        if user.user_info.level != course_to_join.level:
+            return JsonResponse({'error': 'must be in the same level'}, status=404)
+        
 
-            # check if the user didn't yet enrolled
+        # check if the user didn't yet enrolled
+        try:
             is_enrolled = user.enrolled_courses.get(course_code=course_code)
-            if is_enrolled:
-                return JsonResponse({'error': 'Student Already Enrolled in this course'}, status=403)
+            return JsonResponse({'error': 'Student Already Enrolled in this course'}, status=403)
+        except:
+            is_enrolled = False
 
+        if not is_enrolled:
             # log the user into the course
             course_to_join.students.add(user)
             course_to_join.save()
@@ -554,11 +587,13 @@ def view_material(request, username, course_code):
         #return JsonResponse({"name":username}, status=200)
         errors = []
 
-        # try to get student that ask the course
+        # if user log in 
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
         except:
-            errors.append({"username":"user name not exist"})
+            return JsonResponse({'login': 'User must login'}, status=403)
         # try to get the course
         try:
             code = Course.objects.get(course_code = course_code)
@@ -605,18 +640,22 @@ def upload_material(request, username, course_code):
 
     if request.method == "POST":
        
-        errors = []
+        errors = {}
 
         # try to get user that upload file
+        # if user log in 
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
         except:
-            errors.append({"username":"user name not exist"})
+            return JsonResponse({'login': 'User must login'}, status=403)
+
         # try to get the course
         try:
             course_code = Course.objects.get(course_code = course_code)
         except:
-            errors.append({"course":"course not exist"})
+            errors.update({"course":"course not exist"})
         
         # if errors found return errors 
         if len(errors) != 0:
@@ -668,10 +707,13 @@ def delete_material(request, username, mat_id):
     # i use get becouse delete not work 
     if request.method == 'GET':
         # try to get user name 
+        # if user log in 
         try:
             user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'login': 'User must login'}, status=403)   
         except:
-            return JsonResponse({'error': 'User not found'}, status=403)
+            return JsonResponse({'login': 'User must login'}, status=403)
         # try to get material 
         try:
             mat_to_delete = Matrial.objects.get(id=mat_id)
