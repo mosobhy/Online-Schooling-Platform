@@ -44,8 +44,8 @@ class UploadMaterials extends Component {
 
 
         request.onload = () => {
-            const response = JSON.parse(request.responseText);
-            console.log(response)
+            // const response = JSON.parse(request.responseText);
+            console.log(request.responseText)
         }
         const data = new FormData();
         data.append("file", file);

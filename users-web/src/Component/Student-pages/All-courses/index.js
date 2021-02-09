@@ -8,7 +8,7 @@ class AllCourses extends Component {
     state = {
         data: [],
         studentData: [],
-    
+
     }
 
     componentDidMount() {
@@ -28,12 +28,9 @@ class AllCourses extends Component {
 
         request.onload = () => {
             const response = JSON.parse(request.responseText);
-            if (response.success) {
-                this.setState({
-                    data: response.courses
-                })
-                console.log(this.state.data)
-            }
+            this.setState({
+                data: response
+            })
         }
         request.send();
         return false;
@@ -42,11 +39,11 @@ class AllCourses extends Component {
 
     }
 
-    
+
     // //VIEW COURSE FUNCTION
     // handelViewCourse = (code) => {
     //     //SEND REQUEST TO SERVER
-    //     let userInfo = localStorage.getItem("userInfo");
+    //     let userInfo = localStorage.getItem("studentInfo");
     //     userInfo = JSON.parse(userInfo);
     //     const request = new XMLHttpRequest();
     //     const csrftoken = this.getCookie('csrftoken');
@@ -63,15 +60,14 @@ class AllCourses extends Component {
     //             this.setState({
     //                 studentData: response.enrolled_students
     //             });
-    //             localStorage.setItem("studentEnroll", JSON.stringify(this.state.studentData))
     //             localStorage.setItem("code" , code)
-    //             this.props.history.push(`/course/`)
-             
+    //             this.props.history.push(`/YourMaterials/`)
+
     //         }
     //     }
     //     request.send();
     //     return false;
-   
+
     // }
 
 
@@ -94,46 +90,50 @@ class AllCourses extends Component {
 
 
     render() {
-        // const { data } = this.state;
-        // const body = data.map((item) => {
-        //     return (
-        //         <react.Fragment key={item.course_code}>
-        //             <tr >
-        //                 <td>{item.course_name}</td>
-        //                 <td>{item.course_code}</td>
-        //                 <td>{item.level}</td>
-        //                 <td><button className="btn view-button" onClick={() => this.handelViewCourse(item.course_code)}>
-        //                    Visit</button></td>
-        //             </tr>
-        //         </react.Fragment>
-
-        //     )
-
-        // });
         return (
             <div>
                 <Navbar />
-                <div className="d-flex justify-content-center">
-                    <Table striped bordered hover className="table-student-control">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Course Name</th>
-                                <th>Course Code</th>
-                                <th>Views</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* {body} */}
 
-                        </tbody>
-                    </Table>
+                {this.state.data.error ? (
+                    <div className="Student-JoinCourse-Parent mt-5">
+                        <img src="/image/all-courses.jpg" className="img-fluid" />
+                        <p> There are no <span>Courses</span> to View.</p>
+                        <p> Check back later....</p>
+                    </div>
+                ) : (
+                        <div className="d-flex justify-content-center">
+                            <Table striped bordered hover className="table-student-control">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Course Name</th>
+                                        <th>Course Code</th>
+                                        <th>Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* {this.state.data.courses.map((item) => {
+                                        <react.Fragment key={item.course_code}>
+                                            <tr >
+                                                <td>{item.course_name}</td>
+                                                <td>{item.course_code}</td>
+                                                <td>{item.level}</td>
+                                                <td><button className="btn view-button" onClick={() => this.handelViewCourse(item.course_code)}>
+                                                    Visit</button></td>
+                                            </tr>
+                                        </react.Fragment>
+                                    })} */}
+
+                                </tbody>
+                            </Table>
 
 
-                </div>
+                        </div>
+
+                    )}
+
+
             </div>
-
-
         )
     }
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, option, Form, Button, Modal } from 'react-bootstrap';
 import { IoMdNotificationsOutline, IoIosHelpCircleOutline } from "react-icons/io";
 import { FaUserTie } from "react-icons/fa";
+import axios from "axios";
 import "./style.css";
 
 class AdminNav extends Component {
@@ -82,6 +83,29 @@ class AdminNav extends Component {
 
     };
 
+    handelSendNotification = () => {
+        //GET INPUTS VALUE
+        const courseName = document.querySelector('.namefield').value;
+        const courseCode = document.querySelector('.codefield').value;
+        const courseLevel = document.querySelector('.levelfield').value;
+        //GET USERNAME FROM LOCALSTORAGE
+        let userInfo = localStorage.getItem("userInfo");
+        userInfo = JSON.parse(userInfo);
+
+            const data = new FormData();
+            data.append('username', userInfo.username);
+            data.append('coursename', courseName);
+
+
+        axios.get("/jsonData.json" ,data)
+        .then(respon => {
+             respon.data.createCourse = data ;
+             console.log(respon.data.createCourse)
+        });
+
+       
+    }
+
  
     getCookie = (name) => {
         let cookieValue = null;
@@ -156,7 +180,7 @@ class AdminNav extends Component {
                             </div>
                         </Modal.Body>
                         <Modal.Footer className="pop-footer">
-                            <Button type="submit"  >
+                            <Button type="submit"  onClick={this.handelSendNotification}>
                                 Create
                             </Button>
                         </Modal.Footer>
