@@ -258,7 +258,9 @@ def login_user(request):
 
             # log in this user
             user_info.login_user()
-
+            
+            user_info.is_authenticated = True
+            user_info.save()
 
             # login(request, user)
             # print('we are in sessions here dude: ', request.session.items())
