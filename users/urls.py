@@ -4,6 +4,10 @@ from . import views
 
 # the url patters
 urlpatterns = [
+    # for instructors
+    path('go-live/<str:username>/<str:room_id>/', views.go_live),
+    # for students
+    path('join-live/<str:username>/<str:room_id>/', views.join_live),
     path('view-stu-course/<str:username>/<str:course_code>/', views.view_student_course),
     path('logout/<str:username>/', views.logout),
     path('create-quiz/<str:username>/<str:course_code>/', views.create_quiz),

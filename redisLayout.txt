@@ -1,0 +1,9 @@
+
+'sfwqfqwewiorxvnew' -> {
+    
+    instructor: 'username',
+    stu_username: f'first_name + last_name',
+    stu_username: f'first_name + last_name'
+
+    and so on
+}

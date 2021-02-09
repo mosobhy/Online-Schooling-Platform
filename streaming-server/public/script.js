@@ -1,7 +1,12 @@
 //get a reference to socket
 const socket = io('/');
+var mypeer = new Peer(undefined, {
+    host: '/',
+    port: '4001'
+})
 
-socket.emit('join_room', 'mosobhy', 'this is a room id');
+// note that the username will be extraced from the redis data
+socket.emit('join_room', 'mosobhy', room_id);
 
 // listen to the broadcasted event
 // the username in this function comes from the serevr (and its the same as above)

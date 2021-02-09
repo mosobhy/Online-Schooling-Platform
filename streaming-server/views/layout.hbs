@@ -15,6 +15,18 @@
             grid-auto-rows: 300px;
         }
     </style>
+    <script>
+        const room_id = '{{ room_id }}'
+
+        // now users is a json object containing all the information came from redis
+        const users = {{ data }}
+        
+        for (let item in users) {
+            console.log('user is: ', item, 'and his name: ', users[item]);
+        }
+
+
+    </script>
 </head>
 <body>
 

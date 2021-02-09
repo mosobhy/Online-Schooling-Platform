@@ -18,10 +18,12 @@ class UserInfo(models.Model):
     def login_user(self):
         # login in the user via updating the value of the last field
         self.is_authenticated = True
+        self.save()
     
     def logout_user(self):
         # logout the user via shutting down the value of the is_auth...
         self.is_authenticated = False
+        self.save()
         
 
     def userSerializer(self):

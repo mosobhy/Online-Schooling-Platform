@@ -1,10 +1,16 @@
+const { json } = require('express');
 const express = require('express');
 const hbs = require('express-handlebars');
 const path = require('path');
+const redis = require('redis');
 
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+// configure the redis client
+const REDIS_PORT = process.env.PORT || 6379;
+const redis_client = redis.createClient(REDIS_PORT);
 
 // configure the view engine to render handlebars templates
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views'}));
@@ -17,9 +23,33 @@ app.use(express.static('public'));
 // this route will be reached from the django server having a room_id associated with
 app.get('/:room_id', (req, res) => {
 
-    // do all the work related to the extracing the room data here
+    // restore all the data of this particular room
+    redis_client.hgetall(req.params.room_id, function(err, response) {
+        if (response) {
 
-    res.render('room', {room_id: req.params.room_id});
+            console.log(typeof(response));
+
+            console.log(response)
+
+            console.log(response.instructor)
+
+            for(let item in response) {
+                // item is going to access the key
+                console.log('user is:', item, 'and his username: ',response[item])
+            }
+
+            // const data = JSON.parse(response);
+
+            res.render('room', {
+                room_id: req.params.room_id,
+                data: data
+            });
+
+        } else {
+            res.render('room', {error: 'No users in this Room'});
+        }
+    });
+    
 })
 
 // handle the socket, and connect to it

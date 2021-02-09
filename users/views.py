@@ -21,11 +21,52 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 # connect this application to the same server as nodejs server
 redis_server = redis.Redis('localhost')
 
+@require_http_methods(['GET'])
+def go_live(request, username, room_id):
+    ''' This function should store all the users into a hashmap with the room_id as key '''
+
+    if request.method == 'GET':
+        # instructor
+        user = User.objects.get(username=username)
+        if not user:
+            return JsonResponse({'error': 'No such user'}, status=404)
+
+        # ensure login
+        if ensure_login(user) == False:
+            return JsonResponse({'error': 'Login First'}, status=401)
+
+        # store instructor
+        if user.is_staff:
+            # sfwefoavqawef, instructor, someusername
+            redis_server.hset(room_id, 'instructor', user.username)
+            return JsonResponse({'success': True}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
 
 @require_http_methods(['GET'])
-@login_required(login_url='/api/login/')
-def dotdotdot(request):
-    pass
+def join_live(request, username, room_id):
+    ''' This function should store the students data into redis server '''
+
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        if not user:
+            return JsonResponse({'error': 'No such user'}, status=404)
+
+        # ensure login
+        if ensure_login(user) == False:
+            return JsonResponse({'error': 'Login First'}, status=401)
+
+        if user.is_staff == False:
+            # get where the room_id
+            # sfwefoavqawef, mosobhy, mohamedSobhy
+            redis_server.hset(room_id, user.username, user.first_name + user.last_name.capitalize())
+            return JsonResponse({'success': True}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
 
 # creating a quiz by instructor
 @require_http_methods(['POST'])
@@ -40,7 +81,12 @@ def create_quiz(request, username, course_code):
             # access the quiz data
             if not username or not course_code:
                 return JsonResponse({'error': 'Could not access url parameters'}, status=404)
-            
+
+            # get the user object
+            user = User.objects.get(username=username)
+            if ensure_login(user) == False:
+                return JsonResponse({'error': 'Login First'}, status=401)
+
             # check upon the post data
             # note the version of json passed by the frontend should be
             # stringfyied and i will convert it here into json
@@ -50,9 +96,6 @@ def create_quiz(request, username, course_code):
             # get the course name
             course = Course.objects.get(course_code=course_code)
             course_instructor = course.created_by_instructor
-
-            # get the user object
-            user = User.objects.get(username=username)
 
             if course_instructor != user:
                 return JsonResponse({'error': 'Not allowed to create quizes'}, status=401)
@@ -81,8 +124,6 @@ def create_quiz(request, username, course_code):
 
 # delete a course
 @require_http_methods(['GET'])
-# @login_required(login_url='/api/login/')
-# @csrf_exempt
 def delete_course(request, username, course_code):
     """
     This function should delete a course from the database when an instructor
