@@ -30,16 +30,18 @@ class ViewAllCourses extends Component {
 
         request.onload = () => {
             const response = JSON.parse(request.responseText);
-            // if (response.success) {
-            //     this.setState({
-            //         data: response.courses
-            //     })
-            //     
-            // }
-            // this.setState({
-            //     errorShow : response
-            // })
-            console.log(response)
+            if (response.success) {
+                this.setState({
+                    data: response.courses
+                })
+            }
+
+            if(response.error){
+                  this.setState({
+                    errorShow: response.error
+                })
+            }
+            
         }
         request.send();
         return false;
@@ -143,11 +145,7 @@ class ViewAllCourses extends Component {
         return (
             <div>
                 <Navbar />
-                {/* {this.state.errorShow?(
-                    this.state.errorShow.map(err => {
-                        <p>err</p>
-                    })
-                ):(   */}
+
                 <div className="d-flex justify-content-center my-5">
                     <Table striped bordered hover className="table-control">
                         <thead>
@@ -167,6 +165,9 @@ class ViewAllCourses extends Component {
 
 
                 </div>
+                
+                  <p className="mt-5 pt-5">{this.state.errorShow}</p>
+             
               
             </div>
 

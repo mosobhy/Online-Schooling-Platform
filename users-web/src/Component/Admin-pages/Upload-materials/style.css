@@ -49,3 +49,16 @@
 .start-page span:hover{
   color: darkblue;
 }
+
+.show-materials-parent {
+  position : relative ;
+}
+
+.show-materials-parent svg{
+   position: absolute;
+   top: 25%;
+   right : 5%;
+   font-size : 2rem;
+   cursor : pointer ;
+   
+  }
