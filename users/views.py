@@ -243,13 +243,9 @@ def login_user(request):
 
             # log in this user
             user_info.login_user()
-
-
-            # login(request, user)
-            # print('we are in sessions here dude: ', request.session.items())
-
-            # print('the fucking user state: ' ,request.user.is_authenticated)
-            # print('user after authentiacting and login: ', request.user)
+            user_info.save()
+            
+            print('user status: ',user_info.is_authenticated)
 
             # return the user object
             my_user = user_serializer(user)
@@ -333,10 +329,10 @@ def register_as_instructor(request):
         info = UserInfo(user = user, ssn = ssn)
         # commit change 
         user.save()
-        info.save()
 
         # now login the user
-        login(request, user)
+        info.login_user()
+        info.save()
 
         my_user = user_serializer(user)
         success = {'success': True}
@@ -416,10 +412,10 @@ def register_as_student(request):
         info = UserInfo(user = user, ssn = ssn, university_id = university_id, level = level)
         # commit change 
         user.save()
-        info.save()
 
         # now login the user
-        login(request, user)
+        info.login_user()
+        info.save()
 
         my_user = user_serializer(user)
         success = {'success': True}
